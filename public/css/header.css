@@ -1,0 +1,114 @@
+:root {
+    --big_icon_size: 1.35em;
+    --moon_icon: 0.5em;
+    --sun_icon: var(--big_icon_size);
+    --animation_speed: 1s;
+    --text_animation_speed: 0.25s;
+}
+
+:root[data-theme='dark'] {
+    --big_icon_size: 1.35em;
+    --moon_icon: var(--big_icon_size);
+    --sun_icon: 0.5em;
+}
+
+.header, .footer {
+    background-color: var(--nav_background);
+}
+
+#headerNav {
+    justify-content: space-between
+}
+
+.navbar .container {
+    align-items: baseline;
+}
+
+.navbar-brand, .navbar-brand:hover {
+    color: var(--nav_brand);
+}
+
+.nav-link {
+    color: var(--nav_text);
+    cursor: pointer;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+    color: var(--nav_text_hover);
+}
+
+.navbar-toggler {
+    color: var(--nav_text);
+    border-color: var(--nav_toggler_border);
+}
+
+.navbar-toggler-icon {
+    background-image: var(--nav_toggler_icon);
+}
+
+.footer {
+    margin-top: auto;
+}
+
+.bi-moon {
+    transition: color var(--text_animation_speed), font-size var(--animation_speed);
+    font-size: var(--moon_icon);
+}
+
+.bi-brightness-high {
+    transition: color var(--text_animation_speed), font-size var(--animation_speed);
+    font-size: var(--sun_icon);
+}
+
+.change_theme_text {
+    display: none;
+}
+
+.auth_text {
+    display: none;
+}
+
+.bi-person-circle {
+    transition: color var(--text_animation_speed), font-size var(--animation_speed);
+    font-size: var(--big_icon_size);
+}
+
+.dropdown-menu {
+    background-color: var(--nav_background);
+}
+
+.dropdown-item {
+    color: var(--nav_text);
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    color: var(--nav_text_hover);
+    background-color: var(--body_background);
+}
+
+.right_icon {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 991px) {
+    .bi-moon {
+        display: none;
+    }
+
+    .bi-person-circle {
+        display: none;
+    }
+
+    .bi-brightness-high {
+        display: none;
+    }
+
+    .change_theme_text {
+        display: inline;
+    }
+
+    .auth_text {
+        display: inline;
+    }
+}
