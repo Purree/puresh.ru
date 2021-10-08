@@ -1,4 +1,9 @@
 <x-app-layout>
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
         <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
             <div class="row">
                 <div class="col-sm-12 col-md-6"></div>
@@ -36,8 +41,9 @@
                                     {{ $user->permissions->$permission ? 'true' : 'false' }}
                                     </td>
                                 @endforeach
-                                <td><button class="btn btn-warning">Редактировать</button></td>
-                                <td><button data-id="{{ $user->id }}" class="btn btn-danger">Удалить</button></td>
+                                <td><a href="{{ route('admin.editUser') }}" class="btn btn-warning">Редактировать</a></td>
+                                <td><livewire:admin.delete-user :user="$user" :page="request()->fullUrl()"/></td>
+{{--                                <td><button data-id="{{ $user->id }}" class="btn btn-danger">Удалить</button></td>--}}
                             </tr>
                         @endforeach
                         </tbody>

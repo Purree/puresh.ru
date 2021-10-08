@@ -23,9 +23,17 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
         return view('user');
     })->name('user');
 
-    Route::middleware('can:administrate,App\Models\Permission')->group(function() {
+    Route::get('/profile/show', function () {
+        return redirect()->route('profile.settings');
+    })->name('profile.show');
+
+
+    Route::name('admin.')->middleware('can:administrate,App\Models\Permission')->group(function() {
         Route::get('/admin', [AdminController::class, 'showAllUsers'])
-            ->name('admin');
+            ->name('main');
+
+        Route::get('/admin/editUser', [AdminController::class, 'editUser'])
+            ->name('editUser');
     });
 
     Route::middleware('canany:App\Models\Permission,administrate,see_notes')->group(function() {

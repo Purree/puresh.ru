@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Jetstream\DeleteUser;
 use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
+use JetBrains\PhpStorm\Pure;
 
 class AdminController extends Controller
 {
@@ -22,5 +24,10 @@ class AdminController extends Controller
             'users' => $users,
             'permissions' => $allPermissions
         ]);
+    }
+
+    public function editUser()
+    {
+        redirect(route('admin.main'));
     }
 }

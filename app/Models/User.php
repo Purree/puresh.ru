@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Laravel\JetStream\Features;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -67,5 +69,22 @@ class User extends Authenticatable
     public function permissions(): HasOne
     {
         return $this->hasOne(Permission::class);
+    }
+
+
+    /**
+     * Delete the user's profile photo.
+     *
+     * @return void
+     */
+    public function deleteProfilePhoto(): void
+    {
+        if (!Features::managesProfilePhotos()) {
+
+            return;
+
+        }
+
+        Storage::disk($this->profilePhotoDisk())->delete($this->profile_photo_path);
     }
 }
