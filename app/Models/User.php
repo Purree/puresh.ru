@@ -77,12 +77,10 @@ class User extends Authenticatable
      *
      * @return void
      */
-    public function deleteProfilePhoto(): void
+    public function deleteProfilePhotoFromDirectory(): void
     {
         if (!Features::managesProfilePhotos()) {
-
             return;
-
         }
 
         Storage::disk($this->profilePhotoDisk())->delete($this->profile_photo_path);

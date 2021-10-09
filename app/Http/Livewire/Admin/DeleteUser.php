@@ -38,7 +38,6 @@ class DeleteUser extends Component
         $test = new DeleteUserService;
         $test->delete($this->user);
 
-        Redirect::back()->with('message','Operation Successful !');
         return redirect($this->page)->with('message',"Пользователь #{$this->user->id} ({$this->user->name}) успешно удалён.");
     }
 }

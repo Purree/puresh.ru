@@ -41,9 +41,8 @@
                                     {{ $user->permissions->$permission ? 'true' : 'false' }}
                                     </td>
                                 @endforeach
-                                <td><a href="{{ route('admin.editUser') }}" class="btn btn-warning">Редактировать</a></td>
-                                <td><livewire:admin.delete-user :user="$user" :page="request()->fullUrl()"/></td>
-{{--                                <td><button data-id="{{ $user->id }}" class="btn btn-danger">Удалить</button></td>--}}
+                                <td><a href="{{ route('admin.editUser', ['userId'=>$user->id]) }}" class="btn btn-warning">Редактировать</a></td>
+                                <td><livewire:admin.delete-user :user="$user" :page="request()->fullUrl()"/></td>  {{-- Удаление --}}
                             </tr>
                         @endforeach
                         </tbody>

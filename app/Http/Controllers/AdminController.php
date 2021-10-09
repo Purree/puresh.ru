@@ -28,6 +28,16 @@ class AdminController extends Controller
 
     public function editUser()
     {
-        redirect(route('admin.main'));
+        $userId = request()->userId;
+        if(is_null($userId)){
+            return redirect()->route('admin.main');
+        }
+
+        $allPermissions = Permission::getAll();
+
+        return view('admin.editUser', [
+            'user' => User::with('permissions')->findOrFail($userId),
+            'permissions' => $allPermissions
+        ]);
     }
 }

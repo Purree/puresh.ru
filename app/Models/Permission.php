@@ -63,9 +63,10 @@ class Permission extends Model
      */
     public static function getAll(): array
     {
+        define("App\Models\INVISIBLE_COLS", ['user_id', 'id']);
         // Get all column names
         $columnList = Schema::getColumnListing('permissions');
         // Delete user_id from columns
-        return array_diff($columnList, ['user_id']);
+        return array_diff($columnList, INVISIBLE_COLS);
     }
 }
