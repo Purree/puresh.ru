@@ -25,7 +25,7 @@ class PermissionFactory extends Factory
     {
         return [
             // Create user and get id of created user
-            'user_id' => User::factory()->create()->id,
+            'user_id' => User::factory(),
             'is_admin' => random_int(0, 1),
             'notes' => random_int(0, 1)
         ];

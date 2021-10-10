@@ -6,7 +6,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Routing\Redirector;
 use Livewire\Component;
 use App\Actions\Jetstream\DeleteUser as DeleteUserService;
 
@@ -31,7 +31,7 @@ class DeleteUser extends Component
         return view('livewire.admin.delete-user');
     }
 
-    public function deleteUser()
+    public function deleteUser(): Redirector|Application|RedirectResponse
     {
         $this->validate();
 

@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     })->name('profile.show');
 
 
-    Route::name('admin.')->middleware('can:administrate,App\Models\Permission')->group(function() {
+    Route::name('admin.')->middleware(['can:administrate,App\Models\Permission', 'password.confirm'])->group(function() {
         Route::get('/admin', [AdminController::class, 'showAllUsers'])
             ->name('main');
 

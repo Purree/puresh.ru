@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Permission;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -64,6 +65,22 @@ class UserFactory extends Factory
                     return ['name' => $user->name.'\'s Team', 'user_id' => $user->id, 'personal_team' => true];
                 }),
             'ownedTeams'
+        );
+    }
+
+    /**
+     * Indicate that the user should have a permissions.
+     *
+     * @return $this
+     */
+    public function withPermissions()
+    {
+        return $this->has(
+            Permission::factory()
+                ->state(function (array $attributes, User $user) {
+                    return ['user_id' => $user->id];
+                }),
+            'permissions'
         );
     }
 }
