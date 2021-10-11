@@ -76,6 +76,7 @@
     <a href="https://vk.com/id149159673" class="row align-items-center display-4 fw-bold text-reset text-decoration-none contact_links" target="_blank"><div class="col fake_block"></div><div class="col contact_content">ВКонтакте</div><div class="vkLogo col contact_content"></div></a>
     <a href="https://t.me/ppuurree" class="row align-items-center display-4 fw-bold  text-reset text-decoration-none contact_links" target="_blank"><div class="col fake_block"></div><div class="col contact_content">Telegram</div><div class="tgLogo col contact_content"></div></a>
     <a href="https://discord.gg/U8ndEXXnSw" class="row align-items-center display-4 fw-bold text-reset text-decoration-none contact_links" target="_blank"><div class="col fake_block"></div><div class="col contact_content">Discord</div><div class="dsLogo col contact_content"></div></a>
+    <a href="https://github.com/Purree/" class="row align-items-center display-4 fw-bold text-reset text-decoration-none contact_links" target="_blank"><div class="col fake_block"></div><div class="col contact_content">GitHub</div><div class="ghLogo col contact_content"></div></a>
     <a href="mailto:kirill_malygin@internet.ru" class="row align-items-center display-4 fw-bold text-reset text-decoration-none contact_links" target="_blank"><div class="col fake_block"></div><div class="col contact_content">Почта</div><div class="mailLogo col contact_content"></div></a>
 </main>
 

@@ -20,7 +20,7 @@
                     <x-jet-label value="{{ __('Email') }}" />
 
                     <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }}" type="email"
-                                 name="email" :value="old('email')" required />
+                                 name="email" :value="old('email')" required autocomplete="on" />
                     <x-jet-input-error for="email"></x-jet-input-error>
                 </div>
 

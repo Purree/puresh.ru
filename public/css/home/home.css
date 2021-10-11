@@ -1,12 +1,14 @@
 :root {
     --vk_logo: url(../../pictures/main/vk_logo_dark.png);
     --ds_logo: url(../../pictures/main/discord_logo_dark.png);
+    --gh_logo: url(../../pictures/main/GitHub-Mark-64px.png);
     --contact_text_hover: rgba(0, 0, 0, .5);
 }
 
 :root[data-theme='dark'] {
     --vk_logo: url(../../pictures/main/vk_logo_light.png);
     --ds_logo: url(../../pictures/main/discord_logo_light.png);
+    --gh_logo: url(../../pictures/main/GitHub-Mark-Light-64px.png);
     --contact_text_hover: rgba(255, 255, 255, .75);
 }
 
@@ -57,39 +59,34 @@ body {
 }
 
 .vkLogo {
-    transition: background var(--animation_speed);
     background: var(--vk_logo) no-repeat;
-    background-size: contain;
-    min-width: 64px;
-    min-height: 64px;
-    margin: 32px;
 }
 
 .tgLogo {
     background: url("../../pictures/main/TelegramLogo.png") no-repeat;
-    background-size: contain;
-    min-width: 64px;
-    min-height: 64px;
-    margin: 32px;
 }
 
 .dsLogo {
-    transition: background var(--animation_speed);
     background: var(--ds_logo) no-repeat;
+}
+
+.mailLogo {
+    background: url(../../pictures/main/mailru_Logo.jpg) no-repeat;
+}
+
+.ghLogo {
+    background: var(--gh_logo) no-repeat;
+}
+
+
+
+.vkLogo, .tgLogo, .dsLogo, .mailLogo, .ghLogo {
     background-size: contain;
     min-width: 64px;
     min-height: 64px;
     margin: 32px;
 }
 
-.mailLogo {
-    transition: background var(--animation_speed);
-    background: url(../../pictures/main/mailru_Logo.jpg) no-repeat;
-    background-size: contain;
-    min-width: 64px;
-    min-height: 64px;
-    margin: 32px;
-}
 
 @media (max-width: 991px) {
     .tech_img img {
@@ -108,4 +105,3 @@ body {
         display: none;
     }
 }
-
