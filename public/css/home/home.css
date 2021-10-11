@@ -9,7 +9,7 @@
     --vk_logo: url(../../pictures/main/vk_logo_light.png);
     --ds_logo: url(../../pictures/main/discord_logo_light.png);
     --gh_logo: url(../../pictures/main/GitHub-Mark-Light-64px.png);
-    --contact_text_hover: rgba(255, 255, 255, .75);
+    --contact_text_hover: rgba(255, 255, 255, .5);
 }
 
 *{
@@ -29,7 +29,7 @@
 }
 
 
-.contact_links:hover > .contact_content {
+.contact_content:hover {
     transition: color var(--text_animation_speed) !important;
     color: var(--contact_text_hover);
 }
@@ -63,7 +63,7 @@ body {
 }
 
 .tgLogo {
-    background: url("../../pictures/main/TelegramLogo.png") no-repeat;
+    background: url(../../pictures/main/TelegramLogo.png) no-repeat;
 }
 
 .dsLogo {
