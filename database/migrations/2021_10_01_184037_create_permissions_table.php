@@ -23,6 +23,7 @@ class CreatePermissionsTable extends Migration
                 ->onDelete('cascade');
             $table->tinyInteger('is_admin')->default('0');
             $table->tinyInteger('notes')->default('0');
+            $table->tinyInteger('events')->default('0');
         });
     }
 

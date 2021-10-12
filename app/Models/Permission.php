@@ -25,16 +25,7 @@ class Permission extends Model
      *
      * @var string[]
      */
-    protected $guarded = [];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'user_id'
-    ];
+    protected $guarded = ['id'];
 
 
     /**
@@ -47,6 +38,7 @@ class Permission extends Model
         'notes' => 'boolean',
     ];
 
+    private const INVISIBLE_COLS = ['user_id', 'id'];
 
     /**
      * Get the user who owns the permissions
@@ -63,10 +55,9 @@ class Permission extends Model
      */
     public static function getAll(): array
     {
-        define("App\Models\INVISIBLE_COLS", ['user_id', 'id']);
         // Get all column names
         $columnList = Schema::getColumnListing('permissions');
         // Delete user_id from columns
-        return array_diff($columnList, INVISIBLE_COLS);
+        return array_diff($columnList, self::INVISIBLE_COLS);
     }
 }
