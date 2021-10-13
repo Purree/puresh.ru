@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\InvalidDateException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,7 +32,22 @@ class Event extends Model
      * @var array
      */
     protected $casts = [
-        'is_admin' => 'boolean',
-        'notes' => 'boolean',
+        'is_event_recurrent' => 'boolean',
+        'happen_at' => 'datetime',
     ];
+
+
+    /**
+     * Set happen at.
+     *
+     * @throws InvalidDateException
+     */
+    public function setHappenAtAttribute($value): void
+    {
+        if($value < now()){
+            throw new InvalidDateException('This date is less than the current.');
+        }
+
+        $this->attributes['happen_at'] = $value;
+    }
 }

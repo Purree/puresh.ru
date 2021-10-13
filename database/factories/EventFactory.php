@@ -25,7 +25,7 @@ class EventFactory extends Factory
     {
         return [
             'title' => $this->faker->name,
-            'happen_at' => $this->faker->dateTime,
+            'happen_at' => $this->faker->dateTimeBetween(now(), '+1 year'),
             'is_event_recurrent' => $this->faker->boolean,
         ];
     }
