@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,10 +15,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Create permissions and users
-            User::factory()
-                ->withPermissions()
-                ->count(200)
-                ->create();
+        User::factory()
+            ->withPermissions()
+            ->count(200)
+            ->create();
     }
 }

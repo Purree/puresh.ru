@@ -9,8 +9,15 @@
 
     <x-slot name="form">
 
-        <x-jet-action-message on="saved">
-            {{ __('Saved.') }}
+{{--        <x-jet-action-message on="saved">--}}
+{{--            {{ __('Saved.') }}--}}
+{{--        </x-jet-action-message>--}}
+        <x-jet-action-message on="refresh-navigation-menu">
+            {{ __('Done.') }}
+        </x-jet-action-message>
+
+        <x-jet-action-message on="upload:errored">
+            {{ 'Ошибка загрузки' }}
         </x-jet-action-message>
 
         <!-- Profile Photo -->
@@ -44,7 +51,7 @@
                 <x-jet-secondary-button class="mt-2 me-2" type="button" x-on:click.prevent="$refs.photo.click()">
                     {{ __('Select A New Photo') }}
 				</x-jet-secondary-button>
-				
+
 				@if ($this->user->profile_photo_path)
                     <x-jet-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
                         <div wire:loading wire:target="deleteProfilePhoto" class="spinner-border spinner-border-sm" role="status">

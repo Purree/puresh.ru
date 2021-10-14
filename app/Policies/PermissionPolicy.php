@@ -29,4 +29,9 @@ class PermissionPolicy
     {
         return $user->permissions->notes === true;
     }
+
+    public function see_events(User $user)
+    {
+        return $user->permissions->events === true;
+    }
 }

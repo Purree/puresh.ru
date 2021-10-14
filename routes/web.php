@@ -38,8 +38,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
 
     Route::middleware('canany:App\Models\Permission,administrate,see_notes')->group(function() {
         Route::get('/notes', function () {
-            return view('notes.notes');
+            return view('events.events');
         })->name('notes');
+    });
+
+    Route::middleware('canany:App\Models\Permission,administrate,see_events')->group(function() {
+        Route::get('/events', function () {
+            return view('notes.notes');
+        })->name('events');
     });
 });
 
