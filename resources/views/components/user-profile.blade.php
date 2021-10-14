@@ -30,7 +30,7 @@
 
                     <div class="text">
                         {{-- Проверка прав пользователя, если он админ, остальные проверки не выполняются --}}
-                        @can('administrate', App\Models\Permission::class)
+                        @can('manage_data', App\Models\Permission::class)
                             <p class="text-danger">Вы администратор</p>
                         @else
                             @can('see_notes', App\Models\Permission::class)
@@ -39,7 +39,7 @@
                         @endcan
 
                         {{-- Проверка есть ли хоть одно право у пользователя, если нет вообще, то сообщение об этом --}}
-                        @canany(['administrate', 'see_notes'], App\Models\Permission::class)
+                        @canany(['manage_data', 'see_notes'], App\Models\Permission::class)
                         @else
                             Пока у вас нет прав ¯\_(ツ)_/¯
                         @endcan

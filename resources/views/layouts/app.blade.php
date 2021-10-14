@@ -26,18 +26,16 @@
         <x-header>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('user') }}">Перейти в профиль</a></li>
-            @can('administrate', App\Models\Permission::class)
+            @can('manage_data', App\Models\Permission::class)
                 <li class="nav-item"><a class="nav-link" href="{{ route('admin.main') }}">Админ панель</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('notes') }}">Заметки</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('events') }}">События</a></li>
-            @else
-                @can('see_notes', App\Models\Permission::class)
-                    <li class="nav-item"><a class="nav-link" href="{{ route('notes') }}">Заметки</a></li>
-                @endcan
-                @can('see_events', App\Models\Permission::class)
-                    <li class="nav-item"><a class="nav-link" href="{{ route('events') }}">События</a></li>
-                @endcan
             @endcan
+            @can('see_notes', App\Models\Permission::class)
+                <li class="nav-item"><a class="nav-link" href="{{ route('notes') }}">Заметки</a></li>
+            @endcan
+            @can('see_events', App\Models\Permission::class)
+                <li class="nav-item"><a class="nav-link" href="{{ route('events') }}">События</a></li>
+            @endcan
+
         </x-header>
 
         <!-- Page Content -->

@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     })->name('profile.show');
 
 
-    Route::name('admin.')->middleware(['can:administrate,App\Models\Permission', 'password.confirm'])->group(function() {
+    Route::name('admin.')->middleware(['can:manage_data,App\Models\Permission', 'password.confirm'])->group(function() {
         Route::get('/admin', [AdminController::class, 'showAllUsers'])
             ->name('main');
 
@@ -36,15 +36,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
             ->name('editUser');
     });
 
-    Route::middleware('canany:App\Models\Permission,administrate,see_notes')->group(function() {
+    Route::middleware('can:see_notes, App\Models\Permission')->group(function() {
         Route::get('/notes', function () {
-            return view('events.events');
+            return view('notes.notes');
         })->name('notes');
     });
 
-    Route::middleware('canany:App\Models\Permission,administrate,see_events')->group(function() {
+    Route::middleware('can:see_events, App\Models\Permission')->group(function() {
         Route::get('/events', function () {
-            return view('notes.notes');
+            return view('events.events');
         })->name('events');
     });
 });

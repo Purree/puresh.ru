@@ -11,26 +11,30 @@ class PermissionPolicy
     use HandlesAuthorization;
 
     /**
-     * Create a new policy instance.
+     * Perform pre-authorization checks.
      *
-     * @return void
+     * @param User $user
+     * @param string $ability
+     * @return void|bool
      */
-    public function __construct()
+    public function before(User $user, string $ability)
     {
-        //
+        if ($user->permissions->is_admin) {
+            return true;
+        }
     }
 
-    public function administrate(User $user)
+    public function manage_data(User $user): bool
     {
         return $user->permissions->is_admin === true;
     }
 
-    public function see_notes(User $user)
+    public function see_notes(User $user): bool
     {
         return $user->permissions->notes === true;
     }
 
-    public function see_events(User $user)
+    public function see_events(User $user): bool
     {
         return $user->permissions->events === true;
     }
