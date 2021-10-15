@@ -16,7 +16,6 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->timestamp('happen_at');
-            $table->string('styles_path', 2048)->nullable();
             $table->string('title');
             $table->boolean('is_event_recurrent')->default(true);
         });
