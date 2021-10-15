@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EventsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,9 +44,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     });
 
     Route::middleware('can:see_events, App\Models\Permission')->group(function() {
-        Route::get('/events', function () {
-            return view('events.events');
-        })->name('events');
+        Route::get('/events', [EventsController::class, 'showEvents'])
+            ->name('events');
     });
 });
 

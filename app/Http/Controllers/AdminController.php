@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Jetstream\DeleteUser;
 use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
-use JetBrains\PhpStorm\Pure;
 
 class AdminController extends Controller
 {

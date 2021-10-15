@@ -17,29 +17,19 @@ const COLOR_CODES = {
     }
 };
 
-let dateFuture = new Date('2022-06-12 15:23:16');
+let eventHappenAt = document.querySelector("#timer").dataset.happenAt
+let dateFuture = new Date(eventHappenAt);
 let dateNow = new Date();
-console.log(dateNow, dateFuture)
-let seconds = Math.floor((dateFuture - (dateNow))/1000);
-let minutes = Math.floor(seconds/60);
-let hours = Math.floor(minutes/60);
-let days = Math.floor(hours/24);
-
-hours = hours-(days*24);
-minutes = minutes-(days*24*60)-(hours*60);
-seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
-console.log(days, hours, minutes, seconds)
 
 
 
-
-
+// let timePassed = 60 - getLeftTime(dateNow, dateFuture)['seconds'];
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
-let remainingPathColor = COLOR_CODES.info.color;
 
-document.getElementById('base-timer-path-remaining').classList += " " + remainingPathColor;
+
+setRemainingPathColor(null);
 
 startTimer();
 
@@ -50,38 +40,50 @@ function onTimesUp() {
     setCircleDasharray();
     setRemainingPathColor(null);
     clearInterval(timerInterval);
+    if(insertEverythingAndReturnIsItsLastDay()) return 'stop';
     startTimer();
 }
 
-function insertTime() {
-    document.getElementById("base-timer-label").innerHTML = formatTime(
-        timeLeft
-    );
+function insertEverythingAndReturnIsItsLastDay() {
+    insertTime("seconds");
+    insertTime("minutes");
+    insertTime("hours");
+    insertTime("days");
+    return Object.values(getLeftTime(dateNow, dateFuture)).every(el => el === 0);
+}
+
+function insertTime(type = "seconds") {
+    document.querySelector(`.base-timer[data-type ='${type}'] #base-timer-label`).innerHTML = getLeftTime(
+        dateNow, dateFuture
+    )[type];
 }
 
 function startTimer() {
+    if(insertEverythingAndReturnIsItsLastDay()) return 'stop'
     timerInterval = setInterval(() => {
         timePassed = timePassed += 1;
         timeLeft = TIME_LIMIT - timePassed;
-        insertTime();
+        dateNow.setSeconds(dateNow.getSeconds() + 1);
+        insertEverythingAndReturnIsItsLastDay();
         setCircleDasharray();
         setRemainingPathColor(timeLeft);
 
-        if (timeLeft === 0) {
+        if (getLeftTime(dateNow, dateFuture)['seconds'] === 0) {
             onTimesUp();
         }
     }, 1000);
 }
 
-function formatTime(time) {
-    // const minutes = Math.floor(time / 60);
-    let seconds = time % 60;
+function getLeftTime(startTime, endTime) {
+    let seconds = Math.floor((endTime - (startTime))/1000);
+    let minutes = Math.floor(seconds/60);
+    let hours = Math.floor(minutes/60);
+    let days = Math.floor(hours/24);
 
-    if (seconds < 10) {
-        seconds = `0${seconds}`;
-    }
-
-    return `${seconds}`;
+    hours = hours-(days*24);
+    minutes = minutes-(days*24*60)-(hours*60);
+    seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
+    return {days: days, hours: hours, minutes: minutes, seconds: seconds};
 }
 
 function updateElementColor(removedColor, addedColor, elementId = "base-timer-path-remaining") {
