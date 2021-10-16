@@ -15,6 +15,8 @@ class EventsController extends Controller
      */
     public function showEvents(): View
     {
+        Event::validateAllDates();
+
         $events = Event::paginate(10);
 
         return view('events.events', [

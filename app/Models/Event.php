@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Exceptions\InvalidDateException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use JetBrains\PhpStorm\ArrayShape;
+use Illuminate\Database\Eloquent\Collection;
 
 class Event extends Model
 {
@@ -44,10 +46,88 @@ class Event extends Model
      */
     public function setHappenAtAttribute($value): void
     {
-        if($value < now()){
+        if ($value < now()) {
             throw new InvalidDateException('This date is less than the current.');
         }
 
         $this->attributes['happen_at'] = $value;
+    }
+
+    /**
+     * Check if all dates are greater than today
+     */
+    public static function validateAllDates(): void
+    {
+        $expiredEvents = self::getExpiredEvents();
+
+        if($expiredEvents['expiredRecurrentEvents']) {
+            self::updateDates('set valid year', $expiredEvents['expiredRecurrentEvents']);
+        }
+
+        if($expiredEvents['expiredNonRecurrentEvents']) {
+            self::deleteEvents($expiredEvents['expiredNonRecurrentEvents']);
+        }
+    }
+
+
+    /**
+     * Update dates according to $actionsOverTime
+     *
+     * @param string $actionsOverTime
+     * @param Collection|array $dates
+     */
+    public static function updateDates(string $actionsOverTime, Collection | array $dates): void
+    {
+        foreach ($dates as $date) {
+            $validYear = null;
+            if($actionsOverTime === 'set valid year'){
+                $validYear = date('Y');
+            }
+
+
+            if(date('Y-m-d H:i:s', strtotime($date->happen_at . $validYear)) < now()){
+                ++$validYear;
+            }
+
+            $date->happen_at = date('Y-m-d H:i:s',
+                strtotime($date->happen_at .
+                $validYear ?: $actionsOverTime)
+            );
+
+            $date->save();
+        }
+    }
+
+    /**
+     * Delete events from db
+     *
+     * @param Collection|array $events
+     */
+    public static function deleteEvents(Collection | array $events): void
+    {
+        foreach ($events as $event) {
+            $event->delete();
+        }
+    }
+
+    /**
+     * Return expired events
+     *
+     * @return array
+     */
+    #[ArrayShape(['expiredNonRecurrentEvents' => "mixed", 'expiredRecurrentEvents' => "mixed"])] public static function getExpiredEvents(): array
+    {
+        $expiredRecurrentDates = self::where('happen_at', '<', now())
+            ->where('is_event_recurrent', true)
+            ->get();
+
+        $expiredDates = self::where('happen_at', '<', now())
+            ->where('is_event_recurrent', false)
+            ->get();
+
+        return [
+            'expiredNonRecurrentEvents' => $expiredDates->count() > 0 ? $expiredDates : false,
+            'expiredRecurrentEvents' => $expiredRecurrentDates->count() > 0 ? $expiredRecurrentDates : false
+        ];
     }
 }
