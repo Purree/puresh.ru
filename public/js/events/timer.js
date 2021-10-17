@@ -1,44 +1,73 @@
 document.querySelectorAll('#timer').forEach(timer => {
-    const TIME_LIMIT = 60;
-    const FULL_DASH_ARRAY = 283;
-    const WARNING_THRESHOLD = TIME_LIMIT/2;
-    const ALERT_THRESHOLD = TIME_LIMIT/4;
+    const eventHappenAt = timer.dataset.happenAt
+    const dateFuture = new Date(eventHappenAt);
+    const dateNow = new Date();
 
-    const COLOR_CODES = {
-        info: {
-            color: "green"
-        },
-        warning: {
-            color: "orange",
-            threshold: WARNING_THRESHOLD
-        },
-        alert: {
-            color: "red",
-            threshold: ALERT_THRESHOLD
-        }
+    const SECONDS_LIMIT = 60;
+    const MINUTES_LIMIT = SECONDS_LIMIT;
+    const HOURS_LIMIT = 24;
+    const DAYS_LIMIT =
+        Math.ceil(
+                getLeftTime(dateNow, dateFuture)['days']/365
+            ) * 365;
+
+    const LIMITS = {
+        'seconds': SECONDS_LIMIT,
+        'minutes': MINUTES_LIMIT,
+        'hours': HOURS_LIMIT,
+        'days': DAYS_LIMIT
     };
+    const FULL_DASH_ARRAY = 283;
 
-    let eventHappenAt = timer.dataset.happenAt
-    let dateFuture = new Date(eventHappenAt);
-    let dateNow = new Date();
+    const COLOR_CODES = (separator = 'seconds') => {
+        return {
+            info: {
+                color: "green"
+            },
+            warning: {
+                color: "orange",
+                threshold: LIMITS[separator]/2
+            },
+            alert: {
+                color: "red",
+                threshold: LIMITS[separator]/4
+            }
+        }};
 
-
-
-// let timePassed = 60 - getLeftTime(dateNow, dateFuture)['seconds'];
-    let timePassed = 0;
-    let timeLeft = TIME_LIMIT;
+    let passed = {
+        'seconds': LIMITS['seconds'] - getLeftTime(dateNow, dateFuture)['seconds'],
+        'minutes': LIMITS['minutes'] - getLeftTime(dateNow, dateFuture)['minutes'],
+        'hours': LIMITS['hours'] - getLeftTime(dateNow, dateFuture)['hours'],
+        'days': LIMITS['days'] - getLeftTime(dateNow, dateFuture)['days'],
+    };
+    let timeLeft = {
+        'seconds': LIMITS['seconds'],
+        'minutes': LIMITS['minutes'],
+        'hours': LIMITS['hours'],
+        'days': LIMITS['days']
+    };
     let timerInterval = null;
-
-
-    setRemainingPathColor(null);
 
     startTimer();
 
     function onTimesUp() {
-        timePassed = 0
-        timeLeft = TIME_LIMIT
+        if(passed['minutes'] === LIMITS['minutes']){
+            passed['minutes'] = 0
+        }
+        if(passed['hours'] === LIMITS['hours']){
+            passed['hours'] = 0
+        }
+        if(passed['days'] === LIMITS['days']){
+            passed['days'] = 0
+        }
+
+        passed['seconds'] = 0
+        timeLeft['seconds'] = LIMITS['seconds']
         insertTime();
-        setCircleDasharray();
+        setCircleDasharray('seconds');
+        setCircleDasharray('minutes');
+        setCircleDasharray('hours');
+        setCircleDasharray('days');
         setRemainingPathColor(null);
         clearInterval(timerInterval);
         if(insertEverythingAndReturnIsItsLastDay()) return 'stop';
@@ -60,14 +89,24 @@ document.querySelectorAll('#timer').forEach(timer => {
     }
 
     function startTimer() {
-        if(insertEverythingAndReturnIsItsLastDay()) return 'stop'
+        if(insertEverythingAndReturnIsItsLastDay()) return 'stop';
+
         timerInterval = setInterval(() => {
-            timePassed = timePassed += 1;
-            timeLeft = TIME_LIMIT - timePassed;
+            passed['seconds'] = passed['seconds'] += 1;
             dateNow.setSeconds(dateNow.getSeconds() + 1);
             insertEverythingAndReturnIsItsLastDay();
-            setCircleDasharray();
-            setRemainingPathColor(timeLeft);
+            setCircleDasharray('seconds');
+            timeLeft['seconds'] = LIMITS['seconds'] - passed['seconds'];
+            setRemainingPathColor(timeLeft['seconds'], 'seconds');
+            setCircleDasharray('minutes');
+            timeLeft['minutes'] = LIMITS['minutes'] - passed['minutes'];
+            setRemainingPathColor(timeLeft['minutes'], 'minutes');
+            setCircleDasharray('hours');
+            timeLeft['hours'] = LIMITS['hours'] - passed['hours'];
+            setRemainingPathColor(timeLeft['hours'], 'hours');
+            setCircleDasharray('days');
+            timeLeft['days'] = LIMITS['days'] - passed['days'];
+            setRemainingPathColor(timeLeft['days'], 'days');
 
             if (getLeftTime(dateNow, dateFuture)['seconds'] === 0) {
                 onTimesUp();
@@ -87,37 +126,41 @@ document.querySelectorAll('#timer').forEach(timer => {
         return {days: days, hours: hours, minutes: minutes, seconds: seconds};
     }
 
-    function updateElementColor(removedColor, addedColor, elementId = "base-timer-path-remaining") {
+    function updateElementColor(removedColor, addedColor, separator = "seconds") {
         timer
-            .querySelector(`#${elementId}`)
+            .querySelector(`#base-timer-path-remaining.${separator}`)
             .classList.remove(removedColor);
         timer
-            .querySelector(`#${elementId}`)
+            .querySelector(`#base-timer-path-remaining.${separator}`)
             .classList.add(addedColor);
     }
 
-    function setRemainingPathColor(timeLeft) {
-        const {alert, warning, info} = COLOR_CODES;
-        if (timeLeft === null) {
-            updateElementColor(alert.color, info.color)
+    function setRemainingPathColor(timeLeft, separator = 'seconds') {
+        const {alert, warning, info} = COLOR_CODES(separator);
+        if (timeLeft > warning.threshold) {
+            updateElementColor(alert.color, info.color, separator)
         } else if (timeLeft <= alert.threshold) {
-            updateElementColor(warning.color, alert.color)
+            updateElementColor(warning.color, alert.color, separator)
         } else if (timeLeft <= warning.threshold) {
-            updateElementColor(info.color, warning.color)
+            updateElementColor(info.color, warning.color, separator)
         }
     }
 
-    function calculateTimeFraction() {
-        const rawTimeFraction = (timeLeft / TIME_LIMIT);
-        return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+    function calculateTimeFraction(separator = 'seconds') {
+        const rawTimeFraction = (timeLeft[separator] / LIMITS[separator]);
+        return rawTimeFraction - (1 / LIMITS[separator]) * (1 - rawTimeFraction);
     }
 
-    function setCircleDasharray() {
+    function setCircleDasharray(separator = 'seconds') {
         const circleDasharray = `${(
-            calculateTimeFraction() * FULL_DASH_ARRAY
-        ).toFixed(0)} 283`;
+            calculateTimeFraction(separator) * FULL_DASH_ARRAY
+        ).toFixed(0)} ${FULL_DASH_ARRAY}`;
         timer
-            .querySelector("#base-timer-path-remaining")
+            .querySelector(`#base-timer-path-remaining.${separator}`)
             .setAttribute("stroke-dasharray", circleDasharray);
     }
 })
+
+
+// TODO: Адаптивная вёрстка для таймеров, почистить этот код, раскидать всё по функциям из этой каши
+// TODO: Проверить с другими часовыми поясами

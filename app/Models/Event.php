@@ -79,11 +79,8 @@ class Event extends Model
     public static function updateDates(string $actionsOverTime, Collection | array $dates): void
     {
         foreach ($dates as $date) {
-            $validYear = null;
-            if($actionsOverTime === 'set valid year'){
-                $validYear = date('Y');
-            }
-
+            $validYear =
+                $actionsOverTime === 'set valid year' ? date('Y') : null;
 
             if(date('Y-m-d H:i:s', strtotime($date->happen_at . $validYear)) < now()){
                 ++$validYear;
@@ -91,7 +88,7 @@ class Event extends Model
 
             $date->happen_at = date('Y-m-d H:i:s',
                 strtotime($date->happen_at .
-                $validYear ?: $actionsOverTime)
+                $validYear ?? $actionsOverTime)
             );
 
             $date->save();
@@ -131,3 +128,7 @@ class Event extends Model
         ];
     }
 }
+
+// TODO: Сделать возможность делать повторение события через кастомное кол-во времени
+// TODO: Сделать, чтобы можно было рефакторить валидировать только часть дат
+// TODO: Добавить добавление нового таймера в админку

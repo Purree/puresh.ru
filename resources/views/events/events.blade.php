@@ -19,7 +19,7 @@
                                                 <path
                                                     id="base-timer-path-remaining"
                                                     stroke-dasharray="283"
-                                                    class="base-timer__path-remaining"
+                                                    class="base-timer__path-remaining {{ $separator }}"
                                                     d="
                                               M 50, 50
                                               m -45, 0
