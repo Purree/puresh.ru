@@ -7,22 +7,16 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 
-        <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         @livewireStyles
 
         <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
-        <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-{{--        <x-jet-banner />--}}
-
-        <!-- Page Heading -->
         <x-header>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('user') }}">Перейти в профиль</a></li>
@@ -38,7 +32,6 @@
 
         </x-header>
 
-        <!-- Page Content -->
         <main class="container my-5">
             {{ $slot }}
         </main>

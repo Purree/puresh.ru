@@ -42,8 +42,8 @@
 
 .base-timer__label {
     position: absolute;
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     top: 0;
     display: flex;
     align-items: center;
@@ -53,11 +53,22 @@
 
 .base-type__label {
     position: absolute;
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     top: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
+}
+
+@media (max-width: 480px) {
+    .base-timer__label {
+        font-size: 14px;
+    }
+
+    .base-type__label{
+        top: 14px;
+        font-size: 10px;
+    }
 }

@@ -1,7 +1,11 @@
 document.querySelectorAll('#timer').forEach(timer => {
     const eventHappenAt = timer.dataset.happenAt
-    const dateFuture = new Date(eventHappenAt);
     const dateNow = new Date();
+    let dateFuture = new Date(eventHappenAt);
+
+    if (dateFuture <= dateNow) {
+        dateFuture = dateNow
+    }
 
     const SECONDS_LIMIT = 60;
     const MINUTES_LIMIT = SECONDS_LIMIT;
@@ -64,10 +68,6 @@ document.querySelectorAll('#timer').forEach(timer => {
         passed['seconds'] = 0
         timeLeft['seconds'] = LIMITS['seconds']
         insertTime();
-        setCircleDasharray('seconds');
-        setCircleDasharray('minutes');
-        setCircleDasharray('hours');
-        setCircleDasharray('days');
         setRemainingPathColor(null);
         clearInterval(timerInterval);
         if(insertEverythingAndReturnIsItsLastDay()) return 'stop';
@@ -95,23 +95,20 @@ document.querySelectorAll('#timer').forEach(timer => {
             passed['seconds'] = passed['seconds'] += 1;
             dateNow.setSeconds(dateNow.getSeconds() + 1);
             insertEverythingAndReturnIsItsLastDay();
-            setCircleDasharray('seconds');
-            timeLeft['seconds'] = LIMITS['seconds'] - passed['seconds'];
-            setRemainingPathColor(timeLeft['seconds'], 'seconds');
-            setCircleDasharray('minutes');
-            timeLeft['minutes'] = LIMITS['minutes'] - passed['minutes'];
-            setRemainingPathColor(timeLeft['minutes'], 'minutes');
-            setCircleDasharray('hours');
-            timeLeft['hours'] = LIMITS['hours'] - passed['hours'];
-            setRemainingPathColor(timeLeft['hours'], 'hours');
-            setCircleDasharray('days');
-            timeLeft['days'] = LIMITS['days'] - passed['days'];
-            setRemainingPathColor(timeLeft['days'], 'days');
-
+            updateCircles('seconds', 'minutes', 'hours', 'days')
             if (getLeftTime(dateNow, dateFuture)['seconds'] === 0) {
                 onTimesUp();
             }
         }, 1000);
+    }
+
+
+    function updateCircles(...separators) {
+        separators.forEach(el => {
+            setCircleDasharray(el);
+            timeLeft[el] = LIMITS[el] - passed[el];
+            setRemainingPathColor(timeLeft[el], el);
+        })
     }
 
     function getLeftTime(startTime, endTime) {
@@ -126,15 +123,6 @@ document.querySelectorAll('#timer').forEach(timer => {
         return {days: days, hours: hours, minutes: minutes, seconds: seconds};
     }
 
-    function updateElementColor(removedColor, addedColor, separator = "seconds") {
-        timer
-            .querySelector(`#base-timer-path-remaining.${separator}`)
-            .classList.remove(removedColor);
-        timer
-            .querySelector(`#base-timer-path-remaining.${separator}`)
-            .classList.add(addedColor);
-    }
-
     function setRemainingPathColor(timeLeft, separator = 'seconds') {
         const {alert, warning, info} = COLOR_CODES(separator);
         if (timeLeft > warning.threshold) {
@@ -146,9 +134,13 @@ document.querySelectorAll('#timer').forEach(timer => {
         }
     }
 
-    function calculateTimeFraction(separator = 'seconds') {
-        const rawTimeFraction = (timeLeft[separator] / LIMITS[separator]);
-        return rawTimeFraction - (1 / LIMITS[separator]) * (1 - rawTimeFraction);
+    function updateElementColor(removedColor, addedColor, separator = "seconds") {
+        timer
+            .querySelector(`#base-timer-path-remaining.${separator}`)
+            .classList.remove(removedColor);
+        timer
+            .querySelector(`#base-timer-path-remaining.${separator}`)
+            .classList.add(addedColor);
     }
 
     function setCircleDasharray(separator = 'seconds') {
@@ -159,8 +151,9 @@ document.querySelectorAll('#timer').forEach(timer => {
             .querySelector(`#base-timer-path-remaining.${separator}`)
             .setAttribute("stroke-dasharray", circleDasharray);
     }
+
+    function calculateTimeFraction(separator = 'seconds') {
+        const rawTimeFraction = (timeLeft[separator] / LIMITS[separator]);
+        return rawTimeFraction - (1 / LIMITS[separator]) * (1 - rawTimeFraction);
+    }
 })
-
-
-// TODO: Адаптивная вёрстка для таймеров, почистить этот код, раскидать всё по функциям из этой каши
-// TODO: Проверить с другими часовыми поясами
