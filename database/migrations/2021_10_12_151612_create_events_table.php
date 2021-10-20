@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->timestamp('happen_at');
             $table->string('title');
             $table->boolean('is_event_recurrent')->default(true);
+            $table->unsignedBigInteger('repetition_in_seconds')->nullable();
         });
     }
 
