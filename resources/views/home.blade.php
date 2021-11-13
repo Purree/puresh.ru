@@ -61,6 +61,12 @@
             <img class="img-fluid" src="{{ asset('pictures/main/vue.png') }}" alt="vue js">
         </div>
         <div class="col-30 tech_img">
+            <img class="img-fluid" src="{{ asset('pictures/main/react.png') }}" alt="react js">
+        </div>
+        <div class="col-30 tech_img">
+            <img class="img-fluid" src="{{ asset('pictures/main/react-native.png') }}" alt="react-native">
+        </div>
+        <div class="col-30 tech_img">
             <img class="img-fluid" src="{{ asset('pictures/main/bootstrap.png') }}" alt="bootstrap">
         </div>
         <div class="col-30 tech_img">
