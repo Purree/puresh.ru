@@ -1,0 +1,15 @@
+.noteContainer {
+    background-color: var(--nav_background);
+    /*или #1b5d36 если выполнен*/
+    position: relative;
+    padding: 10px;
+}
+.noteInformation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.noteControl {
+    display: flex;
+}
