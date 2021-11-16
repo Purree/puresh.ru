@@ -24,7 +24,7 @@ class EventFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->name,
+            'title' => $this->faker->words(3, true),
             'happen_at' => $this->faker->dateTimeBetween(now(), '+1 year'),
             'is_event_recurrent' => $this->faker->boolean,
         ];

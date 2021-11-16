@@ -23,6 +23,7 @@ class CreateNotesTable extends Migration
             $table->text('text');
             $table->boolean('is_completed');
             $table->string('note_image_path', 2048)->nullable();
+            $table->timestamp('created_at');
             $table->timestamp('completed_at')->nullable();
         });
     }
