@@ -9,16 +9,12 @@
 
     <x-slot name="form">
 
-{{--        <x-jet-action-message on="saved">--}}
-{{--            {{ __('Saved.') }}--}}
-{{--        </x-jet-action-message>--}}
+
         <x-jet-action-message on="refresh-navigation-menu">
             {{ __('Done.') }}
         </x-jet-action-message>
 
-        <x-jet-action-message on="upload:errored">
-            {{ 'Ошибка загрузки' }}
-        </x-jet-action-message>
+        <x-jet-validation-errors></x-jet-validation-errors>
 
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())

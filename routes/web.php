@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,9 +39,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     });
 
     Route::middleware('can:see_notes, App\Models\Permission')->group(function() {
-        Route::get('/notes', function () {
-            return view('notes.notes');
-        })->name('notes');
+        Route::get('/notes', [NoteController::class, 'showNotes'])
+            ->name('notes');
     });
 
     Route::middleware('can:see_events, App\Models\Permission')->group(function() {

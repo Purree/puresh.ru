@@ -34,6 +34,7 @@ class NoteFactory extends Factory
     #[ArrayShape([
         'user_id' => "mixed",
         'text' => "string",
+        'title' => "string",
         'is_completed' => "bool",
         'created_at' => \DateTime::class,
         'completed_at' => \DateTime::class
@@ -42,6 +43,7 @@ class NoteFactory extends Factory
         return [
             'user_id' => $this->getRandomUser(),
             'text' => $this->faker->text,
+            'title' => $this->faker->name,
             'is_completed' => $this->faker->boolean,
             'created_at' => $this->faker->dateTimeBetween('-2 years', '-1 year'),
             'completed_at' => $this->faker->dateTimeBetween('-1 year', now()),

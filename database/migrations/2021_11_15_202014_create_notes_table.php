@@ -20,6 +20,7 @@ class CreateNotesTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->string('title');
             $table->text('text');
             $table->boolean('is_completed');
             $table->string('note_image_path', 2048)->nullable();

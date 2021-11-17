@@ -13,7 +13,7 @@ class Note extends Pivot
     public $timestamps = ["created_at"]; // only want to used created_at column
     public const UPDATED_AT = null; // and updated by default null set
 
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'user_id'];
 
     protected $table = 'notes';
 
