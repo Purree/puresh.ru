@@ -15,6 +15,7 @@ class NoteSeeder extends Seeder
     public function run(): void
     {
         Note::factory()
+            ->withCollaborators()
             ->count(300)
             ->create();
     }

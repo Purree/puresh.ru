@@ -3,17 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Note extends Pivot
+class Note extends Model
 {
     use HasFactory;
 
     public $timestamps = ["created_at"]; // only want to used created_at column
     public const UPDATED_AT = null; // and updated by default null set
 
-    protected $guarded = ['id', 'user_id'];
+    protected $guarded = ['id'];
 
     protected $table = 'notes';
 
@@ -31,5 +33,14 @@ class Note extends Pivot
     public function user(): BelongsTo
     {
         return $this->belongsTo('App\User');
+    }
+
+
+    /**
+     * Get user collaborators.
+     */
+    public function collaborators(): HasMany
+    {
+        return $this->hasMany(NoteCollaborators::class);
     }
 }
