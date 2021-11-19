@@ -9,9 +9,9 @@
                 </div>
                 <div class="noteControl">
                     <div class="text-nowrap">
-                        <div>Добавлено {{ $note->created_at }}</div>
+                        <div>Добавлено {{ date('Yг. mм. dд.  H:i:s', $note->created_at) }}</div>
                         @if($note->completed_at)
-                            <div>Выполнено {{ $note->completed_at }}</div>
+                            <div>Выполнено {{ date('Yг. mм. dд.  H:i:s', $note->completed_at) }}</div>
                         @endif
                     </div>
                     <div class="btn-group" role="group" aria-label="Basic example">
