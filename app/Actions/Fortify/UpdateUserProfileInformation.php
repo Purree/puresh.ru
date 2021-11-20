@@ -27,7 +27,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
-            $user->updateProfilePhoto($input['photo']);
+            if ($this->identify_apng($input['photo'])) {
+                back()->with('error', 'Использование apng запрещено');
+            } else {
+                $user->updateProfilePhoto($input['photo']);
+            }
         }
 
         if ($input['email'] !== $user->email &&
@@ -39,6 +43,19 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email' => $input['email'],
             ])->save();
         }
+    }
+
+    /**
+     * Check if png is apng
+     *
+     * @param $filename
+     * @return bool
+     */
+    protected function identify_apng($file): bool
+    {
+        $img_bytes = file_get_contents($file->path());
+
+        return $img_bytes && str_contains(substr($img_bytes, 0, strpos($img_bytes, 'IDAT')), 'acTL');
     }
 
     /**
