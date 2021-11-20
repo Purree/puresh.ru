@@ -45,31 +45,12 @@ class NoteFactory extends Factory
     ])] public function definition(): array
     {
         return [
-            'user_id' => User::getRandom(),
+            'user_id' => User::inRandomOrder()->first(),
             'text' => $this->faker->text,
             'title' => $this->faker->name,
             'is_completed' => $this->faker->boolean,
             'created_at' => $this->faker->dateTimeBetween('-2 years', '-1 year'),
             'completed_at' => $this->randomizeCompletedAt(),
         ];
-    }
-
-
-    /**
-     * Indicate that the note should have a collaborators.
-     *
-     * @return $this
-     * @throws Exception
-     */
-    public function withCollaborators(int $collaboratorsCount = 3): static
-    {
-        return $this->has(
-            NoteCollaborators::factory()->count($collaboratorsCount)
-                ->state(function (array $attributes, Note $note) {
-                    echo random_int(0, 3);
-                    return ['user_id' => User::getRandom(), 'note_id' => $note->id];
-                }),
-            'collaborators'
-        );
     }
 }

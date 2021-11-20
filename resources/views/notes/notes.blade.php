@@ -31,12 +31,14 @@
                          src="https://img3.akspic.ru/originals/2/1/3/5/6/165312-atmosfera-svet-astronomicheskij_obekt-art-nauka-3840x2160.jpg">
                 </div>
             </div>
-            <div>
-                Совладельцы:
-                @foreach($note->collaborators as $collaborator)
-                    <span>{{ $users->find($collaborator->user_id)->name }}</span>
-                @endforeach
-            </div>
+            @if(!empty(current($note->user))) {{--        Get first object element and check is it empty        --}}
+                <div>
+                    Совладельцы:
+                    @foreach($note->user as $user)
+                        <span>{{ $user->name }}</span>
+                    @endforeach
+                </div>
+            @endif
             @if(!$note->is_completed)
                 <button type="button" class="btn btn-success">Выполнил</button>
             @else
@@ -46,5 +48,3 @@
     @endforeach
     {{ $notes->onEachSide(1)->links() }}
 </x-app-layout>
-
-{{--Todo: Fix n+1 problem--}}
