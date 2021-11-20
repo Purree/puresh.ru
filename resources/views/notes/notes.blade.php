@@ -33,10 +33,9 @@
             </div>
             <div>
                 Совладельцы:
-                <span>Владимир Путин</span>,
-                <span>Пладимир Вутин</span>,
-                <span>Плов По-флотски</span>,
-                <span>Макароны обжаренные</span>
+                @foreach($note->collaborators as $collaborator)
+                    <span>{{ $users->find($collaborator->user_id)->name }}</span>
+                @endforeach
             </div>
             @if(!$note->is_completed)
                 <button type="button" class="btn btn-success">Выполнил</button>
@@ -47,3 +46,5 @@
     @endforeach
     {{ $notes->onEachSide(1)->links() }}
 </x-app-layout>
+
+{{--Todo: Fix n+1 problem--}}
