@@ -1,6 +1,7 @@
 <x-app-layout>
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
+    <script src="{{ asset('js/notes/replaceLinksInText.js') }}"></script>
     @foreach($notes as $note)
         <div class="noteContainer mb-5">
             <div class="noteInformation">
@@ -23,21 +24,23 @@
                 </div>
             </div>
             <div class="mb-3">
-                <div class="fs-5">{{ $note->text }}</div>
+                <div class="fs-5 note-text">{{ $note->text }}</div>
                 {{--Если будет ссылка, отрисовывать её так, чтобы можно было кликнуть--}}
-                <div class="d-flex justify-content-center mt-2 imgLoading">
-                    <div class="spinner-border" role="status"></div>
-                    <img class="d-none" width="100%"
-                         src="https://img3.akspic.ru/originals/2/1/3/5/6/165312-atmosfera-svet-astronomicheskij_obekt-art-nauka-3840x2160.jpg">
-                </div>
+                @if($note->note_image_path)
+                    <div class="d-flex justify-content-center mt-2 imgLoading">
+                        <div class="spinner-border" role="status"></div>
+                        <img class="d-none" width="100%"
+                             src="{{ $note->note_image_path }}">
+                    </div>
+                @endif
             </div>
             @if(!empty(current($note->user))) {{--        Get first object element and check is it empty        --}}
-                <div>
-                    Совладельцы:
-                    @foreach($note->user as $user)
-                        <span>{{ $user->name }}</span>
-                    @endforeach
-                </div>
+            <div>
+                Совладельцы:
+                @foreach($note->user as $user)
+                    <span>{{ $user->name }}</span>
+                @endforeach
+            </div>
             @endif
             @if(!$note->is_completed)
                 <button type="button" class="btn btn-success">Выполнил</button>
