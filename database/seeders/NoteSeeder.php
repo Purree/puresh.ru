@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Note;
+use App\Models\NoteImage;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Seeder;
@@ -26,5 +27,8 @@ class NoteSeeder extends Seeder
             $users = User::inRandomOrder()->take(random_int(0, 3))->pluck('id');
             $note->user()->attach($users);
         }
+
+        NoteImage::factory()
+            ->count(300)->create();
     }
 }

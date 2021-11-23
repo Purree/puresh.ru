@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Note;
 use App\Models\NoteImage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,8 @@ class NoteImageFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'note_id' => Note::inRandomOrder()->first(),
+            'note_image_path' => 'https://source.unsplash.com/random',
         ];
     }
 }
