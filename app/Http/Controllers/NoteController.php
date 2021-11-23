@@ -11,11 +11,10 @@ class NoteController extends Controller
     public function showNotes(): View
     {
 
-        $notes = Note::with('user')->paginate(10);
+        $notes = Note::with('user', 'images')->paginate(10);
 
         return view('notes.notes', [
-            'notes' => $notes,
-            'users' => User::all()
+            'notes' => $notes
         ]);
     }
 }

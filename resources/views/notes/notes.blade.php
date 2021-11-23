@@ -25,13 +25,14 @@
             </div>
             <div class="mb-3">
                 <div class="fs-5 note-text">{{ $note->text }}</div>
-                {{--Если будет ссылка, отрисовывать её так, чтобы можно было кликнуть--}}
-                @if($note->note_image_path)
-                    <div class="d-flex justify-content-center mt-2 imgLoading">
-                        <div class="spinner-border" role="status"></div>
-                        <img class="d-none" width="100%"
-                             src="{{ $note->note_image_path }}">
-                    </div>
+                @if(!empty(current($note->images))) {{--        Get first object element and check is it empty        --}}
+                    @foreach($note->images as $image)
+                        <div class="d-flex justify-content-center mt-2 imgLoading">
+                            <div class="spinner-border" role="status"></div>
+                            <img class="d-none" width="100%"
+                                 src="{{ $image->note_image_path }}">
+                        </div>
+                    @endforeach
                 @endif
             </div>
             @if(!empty(current($note->user))) {{--        Get first object element and check is it empty        --}}
