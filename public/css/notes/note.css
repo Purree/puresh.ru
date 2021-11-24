@@ -13,3 +13,6 @@
 .noteControl {
     display: flex;
 }
+.imageContainer {
+    height: 50vh;
+}
