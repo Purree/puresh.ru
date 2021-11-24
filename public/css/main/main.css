@@ -19,7 +19,7 @@
 }
 
 :root[data-theme='dark'] {
-    --nav_background: rgb(39, 41, 45);
+    --nav_background: rgb(105, 116, 133);
     --nav_text: rgba(255, 255, 255, .55);
     --nav_toggler_border: rgba(255, 255, 255, .1);
     --nav_brand: #fff !important;

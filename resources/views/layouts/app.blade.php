@@ -13,7 +13,6 @@
 
         @livewireStyles
 
-        <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">

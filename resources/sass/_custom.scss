@@ -98,13 +98,62 @@
 }
 
 .card-footer:last-child {
-  border-radius: 0 0 0.475rem 0.475rem;
+    border-radius: 0 0 0.475rem 0.475rem;
 }
 
 .dropdown-menu {
-  width: 220px;
+    width: 220px;
 }
 
 .small {
-  font-size: .875rem !important;
+    font-size: .875rem !important;
+}
+
+// Declaring variables
+:root {
+    --nav_background: rgb(234, 231, 229);
+    --done_background: #9fbeb2;
+    --nav_text: rgba(39, 41, 45, 1);
+    --nav_toggler_border: rgb(0, 0, 0);
+    --nav_brand: rgb(0, 0, 0) !important;
+    --nav_text_hover: rgba(0, 0, 0, .5);
+    --nav_toggler_icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    --body_background: rgb(242, 242, 242);
+    --text: rgb(0, 0, 0);
+    --main_background: rgb(255, 255, 255);
+}
+
+:root[data-theme='dark'] {
+    --nav_background: rgb(39, 41, 45);
+    --done_background: #232a23;
+    --nav_text: rgba(255, 255, 255, .55);
+    --nav_toggler_border: rgba(255, 255, 255, .1);
+    --nav_brand: #fff !important;
+    --nav_text_hover: #FFFFFFBF;
+    --nav_toggler_icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    --body_background: #2d2f33;
+    --text: rgba(255, 255, 255, .9);
+    --main_background: #2b2b2f;
+}
+
+// Override the colors to match the dark theme
+body, .img-thumbnail, .form-range:focus::-webkit-slider-thumb, .nav-tabs .nav-item.show .nav-link, .accordion-button, .accordion-item, .bg-body, .table {
+    background: var(--body_background);
+}
+
+body, .table, .form-select, .input-group-text, .btn-outline-dark, .btn-outline-dark:disabled, .btn-outline-dark.disabled, .dropdown-menu, .dropdown-item, .dropdown-item-text, .accordion-button, .list-group-item-action:active, .list-group-item, .popover-body, .link-dark, .dropdown-toggle::after, .btn-secondary {
+    color: var(--text);
+} // .btn, .btn:hover deleted because white color on buttons looks bad
+// .form-control, .form-control:focus, .form-control::-webkit-file-upload-button, .form-control::file-selector-button, .form-control::-webkit-file-upload-button, .form-control-plaintext removed for the same reason
+
+.card-body, .card, .card-footer, .modal-content, .dropdown .btn-secondary {
+    background: var(--nav_background);
+}
+
+// Custom styles
+
+.btn-without-styles {
+    color: var(--nav_text);
+    padding: 0;
+    margin: 0;
 }
