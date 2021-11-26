@@ -48,4 +48,14 @@ class Note extends Model
     {
         return $this->hasMany(NoteImage::class);
     }
+
+
+    /**
+     * Change is complete status to the opposite
+     */
+    public function changeCheckedStatus()
+    {
+        $this->is_completed = !$this->is_completed;
+        $this->save();
+    }
 }
