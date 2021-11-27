@@ -38,7 +38,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
             ->name('editUser');
     });
 
-    Route::middleware('can:see_notes, App\Models\Permission')->group(function() {
+    Route::middleware(['can:see_notes, App\Models\Permission', 'can:viewAny, App\Models\Note'])->group(function() {
         Route::get('/notes', [NoteController::class, 'showNotes'])
             ->name('notes');
     });

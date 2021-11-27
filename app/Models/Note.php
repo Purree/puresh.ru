@@ -53,7 +53,7 @@ class Note extends Model
     /**
      * Change is complete status to the opposite
      */
-    public function changeCheckedStatus()
+    public function changeCheckedStatus(): void
     {
         $this->is_completed = !$this->is_completed;
         $this->save();
