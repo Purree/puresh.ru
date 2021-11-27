@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Models\Permission;
-use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Contracts\View\View;
 
 class NoteController extends Controller
 {
@@ -15,16 +14,18 @@ class NoteController extends Controller
     {
 
         $notes = [];
+
         if(Gate::allows('manage_data', Permission::class)){
             $notes = Note::with('user', 'images')->paginate(10);
         } else {
-            $notes = Note::with('user', 'images')->where('user_id', Auth::id())->paginate(10);
+            $notes = Note::with('user', 'images')
+                ->where('user_id', Auth::id())
+                ->orWhereRelation('user', 'user_id', '=', Auth::id())
+                ->paginate(10);
         }
 
         return view('notes.notes', [
             'notes' => $notes
         ]);
-
-        // TODO: Show notes there user is collaborator
     }
 }

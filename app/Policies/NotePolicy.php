@@ -44,7 +44,7 @@ class NotePolicy
      */
     public function view(User $user, Note $note): Response|bool
     {
-        return ($this->viewAny($user)) && ($user->id === $note->user_id || $note->user);
+        return ($this->viewAny($user)) && ($user->id === $note->user_id || $note->user->contains($user->id));
     }
 
     /**
