@@ -91,6 +91,10 @@
     align-items: center;
 }
 
+.active {
+    color: var(--nav_brand);
+}
+
 @media (max-width: 991px) {
     .bi-moon {
         display: none;
