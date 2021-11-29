@@ -26,16 +26,16 @@ class PermissionPolicy
 
     public function manage_data(User $user): bool
     {
-        return $user->permissions->is_admin === true;
+        return (boolean)$user->permissions->is_admin;
     }
 
     public function see_notes(User $user): bool
     {
-        return $user->permissions->notes === true;
+        return (boolean)$user->permissions->notes;
     }
 
     public function see_events(User $user): bool
     {
-        return $user->permissions->events === true;
+        return (boolean)$user->permissions->events;
     }
 }

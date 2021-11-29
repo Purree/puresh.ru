@@ -33,13 +33,16 @@
                         @can('manage_data', App\Models\Permission::class)
                             <p class="text-danger">Вы администратор</p>
                         @else
+                            @can('see_events', App\Models\Permission::class)
+                                <p class="text-info">Вы можете видеть события</p>
+                            @endcan
                             @can('see_notes', App\Models\Permission::class)
                                 <p class="text-info">Вы можете видеть заметки</p>
                             @endcan
                         @endcan
 
                         {{-- Проверка есть ли хоть одно право у пользователя, если нет вообще, то сообщение об этом --}}
-                        @canany(['manage_data', 'see_notes'], App\Models\Permission::class)
+                        @canany(['manage_data', 'see_notes', 'see_events'], App\Models\Permission::class)
                         @else
                             Пока у вас нет прав ¯\_(ツ)_/¯
                         @endcan
