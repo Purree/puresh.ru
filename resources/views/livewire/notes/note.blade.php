@@ -43,7 +43,7 @@
                 <div class="carousel-inner">
                     @foreach($note->images as $image)
                         <div class="carousel-item {{ $loop->first ? 'active' : '' }} imgLoading w-100 imageContainer">
-                            <div class="spinner-border position-absolute bottom-50 end-50" role="status"></div>
+                            <div class="spinner-border position-absolute bottom-50 end-50 d-none" role="status"></div>
                             <img src="{{ $image->note_image_path }}" class="d-block h-100 ml-auto mr-auto" alt="Note image" loading="lazy" style="margin-left: auto; margin-right: auto">
                         </div>
                     @endforeach
