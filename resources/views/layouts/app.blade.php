@@ -16,26 +16,34 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <x-header>
+    <x-header>
+        <li class="nav-item">
+            <a class="nav-link {{ Route::is('user') ? 'active' : '' }}" href="{{ route('user') }}">Перейти в профиль</a>
+        </li>
+        @can('manage_data', App\Models\Permission::class)
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('user') }}">Перейти в профиль</a></li>
-            @can('manage_data', App\Models\Permission::class)
-                <li class="nav-item"><a class="nav-link" href="{{ route('admin.main') }}">Админ панель</a></li>
-            @endcan
-            @can('see_notes', App\Models\Permission::class)
-                <li class="nav-item"><a class="nav-link" href="{{ route('notes') }}">Заметки</a></li>
-            @endcan
-            @can('see_events', App\Models\Permission::class)
-                <li class="nav-item"><a class="nav-link" href="{{ route('events') }}">События</a></li>
-            @endcan
+                <a class="nav-link {{ Route::is('admin.main') ? 'active' : '' }}" href="{{ route('admin.main') }}">Админ
+                    панель</a>
+            </li>
+        @endcan
+        @can('see_notes', App\Models\Permission::class)
+            <li class="nav-item">
+                <a class="nav-link {{ Route::is('notes') ? 'active' : '' }}" href="{{ route('notes') }}">Заметки</a>
+            </li>
+        @endcan
+        @can('see_events', App\Models\Permission::class)
+            <li class="nav-item">
+                <a class="nav-link {{ Route::is('events') ? 'active' : '' }}" href="{{ route('events') }}">События</a>
+            </li>
+        @endcan
 
-        </x-header>
+    </x-header>
 
-        <main class="container my-5">
-            {{ $slot }}
-        </main>
+    <main class="container my-5">
+        {{ $slot }}
+    </main>
 
-        @stack('modals')
+    @stack('modals')
 
         @livewireScripts
 
