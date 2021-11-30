@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Notes;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,14 +15,24 @@ class Note extends Component
 
     public object $note;
 
+
     public function render(): Factory|View|Application
     {
         return view('livewire.notes.note');
     }
 
-    public function changeNoteStatus($id) {
+    /**
+     * @throws AuthorizationException
+     */
+    public function changeNoteStatus($id): void
+    {
         $this->authorize('update', $this->note);
 
         $this->note->changeCheckedStatus();
+    }
+
+    public function emitUpDeletedId(): void
+    {
+        $this->emit('setDeletedId', $this->note);
     }
 }

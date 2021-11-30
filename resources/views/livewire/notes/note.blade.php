@@ -10,16 +10,18 @@
                     <div>Выполнено {{ date('Yг. mм. dд.  H:i:s', $note->completed_at) }}</div>
                 @endif
             </div>
+            <div wire:loading class="spinner-border" role="status"></div>
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button data-id="{{ $note->id }}" type="button" class="btn btn-secondary"><i
-                        class="bi bi-pen"></i></button>
-                <button data-id="{{ $note->id }}" type="button" class="btn btn-secondary"><i
-                        class="bi bi-trash"></i></button>
-                @if(!$note->is_completed)
-                    <button type="button" class="btn btn-success" wire:click="changeNoteStatus({{ $note->id }})"><i class="bi bi-check-circle"></i></button>
-                @else
-                    <button type="button" class="btn btn-danger" wire:click="changeNoteStatus({{ $note->id }})"><i class="bi bi-x-circle"></i></button>
-                @endif
+                <button data-id="{{ $note->id }}" type="button" class="btn btn-secondary">
+                    <i class="bi bi-pen"></i></button>
+
+                <button data-id="{{ $note->id }}" type="button" wire:click="emitUpDeletedId({{$note->id}})"
+                        class="btn btn-danger">
+                    <i class="bi bi-trash"></i></button>
+
+                <button type="button" class="btn {{ !$note->is_completed ? 'btn-success' : 'btn-danger' }}"
+                        wire:click="changeNoteStatus({{ $note->id }})"><i
+                        class="bi {{ !$note->is_completed ? 'bi-check-circle' : 'bi-x-circle' }}"></i></button>
             </div>
         </div>
     </div>
@@ -27,7 +29,7 @@
         <div class="fs-5 note-text">{{ $note->text }}</div>
         @if(!empty(current($note->images))) {{--        Get first object element and check is it empty        --}}
         @if($note->images->count() === 1)
-            <div class="d-flex justify-content-center mt-2 imgLoading imageContainer">
+            <div class="d-flex justify-content-center mt-2 imgLoading imageContainer" wire:ignore>
                 <div class="spinner-border" role="status"></div>
                 <img class="d-none h-100 ml-auto mr-auto"
                      src="{{ $note->images->first()->note_image_path }}">

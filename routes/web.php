@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventsController;
-use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,7 +38,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     });
 
     Route::middleware(['can:see_notes, App\Models\Permission', 'can:viewAny, App\Models\Note'])->group(function() {
-        Route::get('/notes', [NoteController::class, 'showNotes'])
+        Route::get('/notes', App\Http\Livewire\Notes\Notes::class)
             ->name('notes');
     });
 

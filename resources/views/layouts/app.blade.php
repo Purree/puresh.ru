@@ -18,22 +18,22 @@
     <body class="font-sans antialiased">
     <x-header>
         <li class="nav-item">
-            <a class="nav-link {{ Route::is('user') ? 'active' : '' }}" href="{{ route('user') }}">Перейти в профиль</a>
+            <a class="nav-link {{ Route::is('user') ? 'active fw-bold' : '' }}" href="{{ route('user') }}">Перейти в профиль</a>
         </li>
         @can('manage_data', App\Models\Permission::class)
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('admin.main') ? 'active' : '' }}" href="{{ route('admin.main') }}">Админ
+                <a class="nav-link {{ Route::is('admin.main') ? 'active fw-bold' : '' }}" href="{{ route('admin.main') }}">Админ
                     панель</a>
             </li>
         @endcan
         @can('see_notes', App\Models\Permission::class)
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('notes') ? 'active' : '' }}" href="{{ route('notes') }}">Заметки</a>
+                <a class="nav-link {{ Route::is('notes') ? 'active fw-bold' : '' }}" href="{{ route('notes') }}">Заметки</a>
             </li>
         @endcan
         @can('see_events', App\Models\Permission::class)
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('events') ? 'active' : '' }}" href="{{ route('events') }}">События</a>
+                <a class="nav-link {{ Route::is('events') ? 'active fw-bold' : '' }}" href="{{ route('events') }}">События</a>
             </li>
         @endcan
 

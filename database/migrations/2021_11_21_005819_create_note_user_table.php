@@ -14,8 +14,8 @@ class CreateNoteUserTable extends Migration
     public function up(): void
     {
         Schema::create('note_user', function (Blueprint $table) {
-            $table->foreignId('note_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('note_id')->constrained()->onDelete("cascade");
+            $table->foreignId('user_id')->constrained()->onDelete("cascade");
         });
     }
 
