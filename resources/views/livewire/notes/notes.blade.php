@@ -5,7 +5,7 @@
 
     @foreach($notes as $note)
         @can('view', $note)
-            <livewire:notes.note :note="$note" :key="$note->id"/>
+            <livewire:notes.note :note="$note" :wire:key="$note->id"/>
         @endcan
     @endforeach
 
@@ -30,22 +30,28 @@
         </div>
     </div>
 
-    {{-- Handle modal hide event and set "deletedId" to 0, handle server answer and open modal, whan data is ready --}}
+    {{-- Handle modal hide event and set "deletedId" to 0,
+    prevent body scrolling on modal close,
+    handle server answer and open modal, whan data is ready --}}
     <script>
+        let scrollY = 0;
+
         document.addEventListener('hide.bs.modal', function () {
-        @this.deletedNote
-            = []
+            @this.deletedNote = []
+        })
+
+        document.addEventListener('show.bs.modal', function () {
+            scrollY = window.scrollY
+        })
+
+        document.addEventListener('hidden.bs.modal', function () {
+            window.scrollTo(0, parseInt(scrollY || '0'));
         })
 
 
         document.addEventListener('showConfirmationModal', function () {
             document.querySelector('#modalTrigger').click()
         })
-
-        // document.addEventListener('hidden.bs.modal', function (event) {
-        //     event.preventDefault()
-        //     event.stopPropagation()
-        // })
     </script>
 </div>
 
