@@ -143,11 +143,14 @@ body, .img-thumbnail, .form-range:focus::-webkit-slider-thumb, .nav-tabs .nav-it
 
 body, .table, .form-select, .input-group-text, .btn-outline-dark, .btn-outline-dark:disabled, .btn-outline-dark.disabled, .dropdown-menu, .dropdown-item, .dropdown-item-text, .accordion-button, .list-group-item-action:active, .list-group-item, .popover-body, .link-dark, .dropdown-toggle::after, .btn-secondary {
     color: var(--text);
-} // .btn, .btn:hover deleted because white color on buttons looks bad
-// .form-control, .form-control:focus, .form-control::-webkit-file-upload-button, .form-control::file-selector-button, .form-control::-webkit-file-upload-button, .form-control-plaintext removed for the same reason
+}
 
 .card-body, .card, .card-footer, .modal-content, .dropdown .btn-secondary {
     background: var(--nav_background);
+}
+
+.modal-header, .modal-footer {
+    border-color: var(--nav_toggler_border);
 }
 
 // Custom styles

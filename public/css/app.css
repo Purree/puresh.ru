@@ -11011,6 +11011,10 @@ body, .table, .form-select, .input-group-text, .btn-outline-dark, .btn-outline-d
   background: var(--nav_background);
 }
 
+.modal-header, .modal-footer {
+  border-color: var(--nav_toggler_border);
+}
+
 .btn-without-styles {
   color: var(--nav_text);
   padding: 0;
