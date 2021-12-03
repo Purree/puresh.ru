@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 class EventsController extends Controller
 {
     /**
-     * Show all users
+     * Show all events
      *
      * @return View
      */

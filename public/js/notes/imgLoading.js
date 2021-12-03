@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
             onImageLoad(element, image)
         } else {
             element.querySelector('.spinner-border').classList.remove('d-none')
+            image.classList.add('d-none')
             image.onload = () => {
                 onImageLoad(element, image)
             }

@@ -12,8 +12,8 @@
             </div>
             <div wire:loading class="spinner-border" role="status"></div>
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button data-id="{{ $note->id }}" type="button" class="btn btn-secondary">
-                    <i class="bi bi-pen"></i></button>
+                <a href="{{ route('notes.edit', $id = $note->id) }}" type="button" class="btn btn-secondary d-flex align-items-center">
+                    <i class="bi bi-pen"></i></a>
 
                 <button data-id="{{ $note->id }}" type="button" wire:click="emitUpDeletedId({{$note->id}})"
                         class="btn btn-danger">
@@ -30,8 +30,8 @@
         @if(!empty(current($note->images))) {{--        Get first object element and check is it empty        --}}
         @if($note->images->count() === 1)
             <div class="d-flex justify-content-center mt-2 imgLoading imageContainer" wire:ignore>
-                <div class="spinner-border" role="status"></div>
-                <img class="d-none h-100 ml-auto mr-auto"
+                <div class="d-none spinner-border" role="status"></div>
+                <img class="h-100 ml-auto mr-auto"
                      src="{{ $note->images->first()->note_image_path }}">
             </div>
         @else

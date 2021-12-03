@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Notes extends Component
 {
     use AuthorizesRequests;
+    use WithPagination;
 
     protected object $notes;
 
@@ -34,6 +36,11 @@ class Notes extends Component
         return view('livewire.notes.notes', ['notes' => $this->notes]);
     }
 
+    public function paginationView(): string
+    {
+        return 'pagination::tailwind';
+    }
+
     /**
      * Sets the deletedNote to the note of the applicant for deletion,
      * which will be stored there until the user confirms the action
@@ -49,7 +56,7 @@ class Notes extends Component
 
     #[NoReturn] public function deleteNote($id): void
     {
-        $note = Note::find($id);
+        $note = Note::findOrFail($id);
 
         $this->authorize('delete', $note);
 

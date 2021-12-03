@@ -40,6 +40,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::middleware(['can:see_notes, App\Models\Permission', 'can:viewAny, App\Models\Note'])->group(function() {
         Route::get('/notes', App\Http\Livewire\Notes\Notes::class)
             ->name('notes');
+
+        Route::get('/notes/edit/{id}', App\Http\Livewire\Notes\NoteEdit::class)
+            ->name('notes.edit');
     });
 
     Route::middleware('can:see_events, App\Models\Permission')->group(function() {

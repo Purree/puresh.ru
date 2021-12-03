@@ -10,8 +10,7 @@
     @endforeach
 
     {{-- Invisible button what trigger modal --}}
-    <button data-bs-toggle="modal" data-bs-target="#deleteConfirm" id="modalTrigger" data-bs-scroll="false"></button>
-    {{ $notes->onEachSide(1)->links() }}
+    <button data-bs-toggle="modal" data-bs-target="#deleteConfirm" id="modalTrigger" data-bs-scroll="false" class="d-none"></button>
     <!-- Modal -->
     <div wire:ignore.self class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -28,6 +27,10 @@
                 </div>
             </div>
         </div>
+    </div>
+    <!-- Pagination -->
+    <div wire:ignore>
+        {{ $notes->onEachSide(1)->links() }}
     </div>
 
     {{-- Handle modal hide event and set "deletedId" to 0,
