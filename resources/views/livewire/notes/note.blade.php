@@ -68,7 +68,7 @@
     <div>
         Совладельцы:
         @foreach($note->user as $user)
-            <span>{{ $user->name }}</span>
+            <span>{{ $user->email }}</span>
         @endforeach
     </div>
     @endif

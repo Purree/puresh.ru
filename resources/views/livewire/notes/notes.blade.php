@@ -1,7 +1,7 @@
 <div>
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
-    <script src="{{ asset('js/notes/replaceLinksInText.js') }}"></script>
+    <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
 
     @foreach($notes as $note)
         @can('view', $note)

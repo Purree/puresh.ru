@@ -10999,7 +10999,7 @@ textarea.form-control-lg {
   --main_background: #2b2b2f;
 }
 
-body, .img-thumbnail, .form-range:focus::-webkit-slider-thumb, .nav-tabs .nav-item.show .nav-link, .accordion-button, .accordion-item, .bg-body, .table {
+body, .input-group-text, .img-thumbnail, .form-range:focus::-webkit-slider-thumb, .nav-tabs .nav-item.show .nav-link, .accordion-button, .accordion-item, .bg-body, .table {
   background: var(--body_background);
 }
 
@@ -11011,7 +11011,7 @@ body, .table, .form-select, .input-group-text, .btn-outline-dark, .btn-outline-d
   background: var(--nav_background);
 }
 
-.modal-header, .modal-footer {
+.modal-header, .modal-footer, .input-group-text, .btn-outline-secondary, .form-control {
   border-color: var(--nav_toggler_border);
 }
 
