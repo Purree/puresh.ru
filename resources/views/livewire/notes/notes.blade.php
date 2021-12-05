@@ -3,11 +3,17 @@
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
 
+    {{ $paginator = $notes->onEachSide(1) }}
+    @if($paginator->lastPage() < $pageNumber)
+        <script>location.href='{{ route('notes') }}'</script>
+    @endif
+
     @foreach($notes as $note)
         @can('view', $note)
             <livewire:notes.note :note="$note" :wire:key="$note->id"/>
         @endcan
     @endforeach
+
 
     {{-- Invisible button what trigger modal --}}
     <button data-bs-toggle="modal" data-bs-target="#deleteConfirm" id="modalTrigger" data-bs-scroll="false" class="d-none"></button>
@@ -30,7 +36,7 @@
     </div>
     <!-- Pagination -->
     <div wire:ignore>
-        {{ $notes->onEachSide(1)->links() }}
+        {{ $paginator->links() }}
     </div>
 
     {{-- Handle modal hide event and set "deletedId" to 0,

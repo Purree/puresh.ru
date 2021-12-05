@@ -21,6 +21,11 @@ class Notes extends Component
     protected $listeners = ['setDeletedId'];
 
     public array $deletedNote = [];
+    public string $pageNumber = '1';
+
+    public function mount() {
+        $this->pageNumber = $_GET['page'] ?? '1';
+    }
 
     public function render()
     {
