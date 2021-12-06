@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
+    <script src="{{ asset('js/notes/replaceTabsInTextarea.js') }}"></script>
 
     <div class="noteContainer mb-5">
 
@@ -43,7 +44,7 @@
         <div class="mb-3">
             <textarea type="text" class="form-control d-none" maxlength="2000" placeholder="Описание" aria-label="Описание" id="descriptionEdit" wire:model.lazy="noteDescription" rows="5"></textarea>
             <button class="btn btn-primary" onclick="editDescription()"><i class="bi bi-pen"></i></button>
-            <div class="fs-5 note-text text-break">{{ nl2br($noteDescription) }}</div>
+            <div class="fs-5 note-text text-break">{{ $noteDescription }}</div>
 
             @if(!empty(current($note->images))) {{--        Get first object element and check is it empty        --}}
                 @if($note->images->count() === 1)

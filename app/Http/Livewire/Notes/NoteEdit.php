@@ -43,6 +43,7 @@ class NoteEdit extends Component
     public function render(): Factory|View|Application
     {
         $this->authorize('update', $this->note);
+        $this->noteDescription = nl2br($this->noteDescription);
         $this->dispatchBrowserEvent('contentChanged');
 
         return view('livewire.notes.note-edit');
