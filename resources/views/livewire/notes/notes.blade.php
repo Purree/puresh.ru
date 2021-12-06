@@ -3,11 +3,6 @@
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
 
-    {{ $paginator = $notes->onEachSide(1) }}
-    @if($paginator->lastPage() < $pageNumber)
-        <script>location.href='{{ route('notes') }}'</script>
-    @endif
-
     @foreach($notes as $note)
         @can('view', $note)
             <livewire:notes.note :note="$note" :wire:key="$note->id"/>

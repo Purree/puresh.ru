@@ -17,11 +17,14 @@ class Notes extends Component
     use WithPagination;
 
     protected object $notes;
+    protected object $paginator;
 
     protected $listeners = ['setDeletedId'];
 
     public array $deletedNote = [];
     public string $pageNumber = '1';
+
+
 
     public function mount() {
         $this->pageNumber = $_GET['page'] ?? '1';
@@ -38,7 +41,15 @@ class Notes extends Component
                 ->paginate(10);
         }
 
-        return view('livewire.notes.notes', ['notes' => $this->notes]);
+
+        $this->paginator = $this->notes->onEachSide(1);
+        $lastPageNumber = $this->paginator->lastPage();
+
+        if($lastPageNumber < $this->pageNumber) {
+            \Redirect::route('notes', ['page' => $lastPageNumber]);
+        }
+
+        return view('livewire.notes.notes', ['notes' => $this->notes, 'paginator' => $this->paginator]);
     }
 
     public function paginationView(): string
