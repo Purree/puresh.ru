@@ -44,7 +44,7 @@
                                     <li><a class="dropdown-item" href="{{ route('profile.settings') }}">
                                             Настройки аккаунта
                                         </a></li>
-                                    <li><form method="POST" class="dropdown-item" action="{{ route('logout') }}">
+                                    <li><form method="POST" class="dropdown-item dropdown-active" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit" class="btn btn-without-styles">
                                             Выйти из аккаунта

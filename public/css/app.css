@@ -11020,3 +11020,7 @@ body, .table, .form-select, .input-group-text, .btn-outline-dark, .btn-outline-d
   padding: 0;
   margin: 0;
 }
+
+.btn-without-styles:hover {
+  color: var(--text);
+}

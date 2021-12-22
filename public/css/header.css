@@ -116,3 +116,7 @@
         display: inline;
     }
 }
+
+.dropdown-active:active {
+    background: var(--nav_background);
+}
