@@ -1,7 +1,9 @@
 <div>
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/photo-modal.css') }}">
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
+    <script src="{{ asset('js/photoModal.js') }}"></script>
 
     @foreach($notes as $note)
         @can('view', $note)
@@ -12,6 +14,13 @@
 
     {{-- Invisible button what trigger modal --}}
     <button data-bs-toggle="modal" data-bs-target="#deleteConfirm" id="modalTrigger" data-bs-scroll="false" class="d-none"></button>
+    <!-- Image modal -->
+    <div class="image-modal">
+        <span class="modal-close-button">&times;</span>
+        <div class="spinner-border modal-image-spinner" role="status"></div>
+        <img class="modal-image d-none">
+        <div class="modal-caption"></div>
+    </div>
     <!-- Modal -->
     <div wire:ignore.self class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -23,7 +32,7 @@
                 <div class="modal-footer">
                     <div>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" wire:click="deleteNote({{$deletedNote['id'] ?? 0}})">Да</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" wire:click="deleteNote({{ $deletedNote['id'] ?? 0 }})">Да</button>
                     </div>
                 </div>
             </div>

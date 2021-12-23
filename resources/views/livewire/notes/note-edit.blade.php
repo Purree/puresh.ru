@@ -1,8 +1,17 @@
 <div>
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/photo-modal.css') }}">
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
     <script src="{{ asset('js/notes/replaceTabsInTextarea.js') }}"></script>
+    <script src="{{ asset('js/photoModal.js') }}"></script>
+
+    <!-- Image modal -->
+    <div class="image-modal">
+        <span class="modal-close-button">&times;</span>
+        <img class="modal-image">
+        <div class="modal-caption"></div>
+    </div>
 
     <div class="noteContainer mb-5">
 
@@ -50,7 +59,7 @@
                 @if($note->images->count() === 1)
                     <div class="d-flex justify-content-center mt-2 imgLoading imageContainer">
                         <div class="d-none spinner-border" role="status"></div>
-                        <img class="h-100 ml-auto mr-auto"
+                        <img class="note-image h-100 ml-auto mr-auto"
                              src="{{ $note->images->first()->note_image_path }}">
                     </div>
                 @else
@@ -70,7 +79,7 @@
                                     <div class="spinner-border position-absolute bottom-50 end-50 d-none"
                                          role="status"></div>
                                         <div class="position-absolute end-0">УДАЛИТЬ</div>
-                                        <img src="{{ $image->note_image_path }}" class="d-block h-100 ml-auto mr-auto"
+                                        <img src="{{ $image->note_image_path }}" class="note-image d-block h-100 ml-auto mr-auto"
                                              alt="Note image" loading="lazy" style="margin-left: auto; margin-right: auto">
                                 </div>
                             @endforeach

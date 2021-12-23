@@ -1,10 +1,4 @@
 <div class="noteContainer mb-5 {{ $note->is_completed ? 'doneNote' : '' }}">
-    <a href="#" data-toggle='collapse'
-       data-target="#filters,#view_filters,#hide_filters">
-        <span id='view_filters' class='collapse in'>View Filters</span>
-        <span id='hide_filters' class='collapse out'>Hide Filters</span>
-    </a>
-
     <div class="noteInformation">
         <div class="fw-bold fs-3 text-truncate">
             {{ $note->title }}
@@ -42,7 +36,7 @@
         @if($note->images->count() === 1)
             <div class="d-flex justify-content-center mt-2 imgLoading imageContainer" wire:ignore>
                 <div class="d-none spinner-border" role="status"></div>
-                <img class="h-100 ml-auto mr-auto"
+                <img class="note-image h-100 ml-auto mr-auto"
                      src="{{ $note->images->first()->note_image_path }}">
             </div>
         @else
@@ -57,7 +51,7 @@
                     @foreach($note->images as $image)
                         <div class="carousel-item {{ $loop->first ? 'active' : '' }} imgLoading w-100 imageContainer">
                             <div class="spinner-border position-absolute bottom-50 end-50 d-none" role="status"></div>
-                            <img src="{{ $image->note_image_path }}" class="d-block h-100 ml-auto mr-auto" alt="Note image" loading="lazy" style="margin-left: auto; margin-right: auto">
+                            <img src="{{ $image->note_image_path }}" class="note-image d-block h-100 ml-auto mr-auto" loading="lazy" style="margin-left: auto; margin-right: auto">
                         </div>
                     @endforeach
                 </div>
