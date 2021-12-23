@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://puresh.ru'),
+    'url' => env('APP_URL', 'https://puresh.ru'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -106,7 +106,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'ru_RU',
 
     /*
     |--------------------------------------------------------------------------

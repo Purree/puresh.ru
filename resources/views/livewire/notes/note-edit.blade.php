@@ -59,8 +59,19 @@
                 @if($note->images->count() === 1)
                     <div class="d-flex justify-content-center mt-2 imgLoading imageContainer">
                         <div class="d-none spinner-border" role="status"></div>
-                        <img class="note-image h-100 ml-auto mr-auto"
-                             src="{{ $note->images->first()->note_image_path }}">
+                        <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+                            <div class="h-100 position-relative">
+                                <div class="position-absolute" style="right: 10px; top: 10px; z-index: 10">
+                                    <button type="button" class="btn btn-outline-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+
+                                <img class="note-image d-block h-100 w-100"
+                             data-id="{{ $note->images->first()->id }}"
+                             src="{{ $note->images->first()->note_image_path }}"/>
+                            </div>
+                        </div>
                     </div>
                 @else
                     <div id="noteImagesCarousel{{ $note->id }}" class="carousel slide" data-bs-interval="false">
@@ -78,9 +89,20 @@
                                     class="carousel-item {{ $loop->first ? 'active' : '' }} imgLoading w-100 imageContainer">
                                     <div class="spinner-border position-absolute bottom-50 end-50 d-none"
                                          role="status"></div>
-                                        <div class="position-absolute end-0">УДАЛИТЬ</div>
-                                        <img src="{{ $image->note_image_path }}" class="note-image d-block h-100 ml-auto mr-auto"
-                                             alt="Note image" loading="lazy" style="margin-left: auto; margin-right: auto">
+                                    <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+                                        <div class="h-100 position-relative">
+                                            <div class="position-absolute" style="right: 10px; top: 10px; z-index: 10">
+                                                <button type="button" class="btn btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+
+                                            <img src="{{ $image->note_image_path }}"
+                                                 data-id="{{ $image->id }}"
+                                                 class="note-image d-block h-100 w-100"
+                                                 loading="lazy" style="margin-left: auto; margin-right: auto">
+                                        </div>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -99,6 +121,9 @@
                     </div>
                 @endif
             @endif
+            <div class="d-flex justify-content-center mt-3">
+                <button class="btn btn-outline-success">Добавить фотографию</button>
+            </div>
         </div>
         @if(Gate::allows('forceDelete', $this->note))
 
