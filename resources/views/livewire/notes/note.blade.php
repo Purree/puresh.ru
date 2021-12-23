@@ -1,19 +1,23 @@
 <div class="noteContainer mb-5 {{ $note->is_completed ? 'doneNote' : '' }}">
+    <a href="#" data-toggle='collapse'
+       data-target="#filters,#view_filters,#hide_filters">
+        <span id='view_filters' class='collapse in'>View Filters</span>
+        <span id='hide_filters' class='collapse out'>Hide Filters</span>
+    </a>
+
     <div class="noteInformation">
         <div class="fw-bold fs-3 text-truncate">
             {{ $note->title }}
         </div>
         <div class="noteControl">
-            <div class="text-nowrap">
-                <div>Добавлено {{ date('Yг. mм. dд.  H:i:s', $note->created_at) }}</div>
-                @if($note->completed_at)
-                    <div>Выполнено {{ date('Yг. mм. dд.  H:i:s', $note->completed_at) }}</div>
-                @endif
-            </div>
             <div wire:loading class="spinner-border" role="status"></div>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <a href="{{ route('notes.edit', $id = $note->id) }}" type="button" class="btn btn-secondary d-flex align-items-center">
                     <i class="bi bi-pen"></i></a>
+
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#note{{ $note->id }}Dates" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="bi bi-info-circle"></i>
+                </button>
 
                 <button data-id="{{ $note->id }}" type="button" wire:click="emitUpDeletedId({{$note->id}})"
                         class="btn btn-danger">
@@ -26,6 +30,13 @@
         </div>
     </div>
     <div class="mb-3">
+        <div class="text-nowrap collapse card card-body position-absolute end-0" id="note{{ $note->id }}Dates">
+            <div>Добавлено {{ date('Yг. mм. dд.  H:i:s', $note->created_at) }}</div>
+            @if($note->completed_at)
+                <div>{{ $note->is_completed ? 'Выполнено' : 'Было выполнено' }} {{ date('Yг. mм. dд.  H:i:s', $note->completed_at) }}</div>
+            @endif
+        </div>
+
         <div class="fs-5 note-text">{{ $note->text }}</div>
         @if(!empty(current($note->images))) {{--        Get first object element and check is it empty        --}}
         @if($note->images->count() === 1)

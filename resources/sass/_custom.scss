@@ -86,10 +86,10 @@
   background: #f3f4f6 !important;
 }
 
-.card {
-  border-radius: 0.475rem;
-  border: 0;
-}
+//.card {
+//  border-radius: 0.475rem;
+//  border: 0;
+//}
 
 .card-footer {
   padding: 0.75rem 1.25rem;
@@ -112,6 +112,7 @@
 // Declaring variables
 :root {
     --nav_background: rgb(234, 231, 229);
+    --card_color: #fff;
     --done_background: #9fbeb2;
     --nav_text: rgba(39, 41, 45, 1);
     --nav_toggler_border: rgb(0, 0, 0);
@@ -125,6 +126,7 @@
 
 :root[data-theme='dark'] {
     --nav_background: rgb(39, 41, 45);
+    --card_color: #272727;
     --done_background: #232a23;
     --nav_text: rgba(255, 255, 255, .55);
     --nav_toggler_border: rgba(255, 255, 255, .1);
@@ -145,8 +147,12 @@ body, .table, .form-select, .input-group-text, .btn-outline-dark, .btn-outline-d
     color: var(--text);
 }
 
-.card-body, .card, .card-footer, .modal-content, .dropdown .btn-secondary {
+.modal-content, .dropdown .btn-secondary {
     background: var(--nav_background);
+}
+
+.card-body, .card, .card-footer {
+    background: var(--card_color);
 }
 
 .modal-header, .modal-footer, .input-group-text, .btn-outline-secondary, .form-control {
