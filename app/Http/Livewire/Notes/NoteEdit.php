@@ -129,5 +129,3 @@ class NoteEdit extends Component
         return true;
     }
 }
-
-// TODO: Fix \n spaces that doesn't work on note save

@@ -4,6 +4,7 @@
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
     <script src="{{ asset('js/notes/replaceTabsInTextarea.js') }}"></script>
+    <script src="{{ asset('js/notes/noteUpload.js') }}"></script>
     <script src="{{ asset('js/photoModal.js') }}"></script>
 
     <!-- Image modal -->
@@ -11,6 +12,28 @@
         <span class="modal-close-button">&times;</span>
         <img class="modal-image">
         <div class="modal-caption"></div>
+    </div>
+
+    <!-- Add photos modal -->
+    <div class="modal fade" id="addNewPhotoModal" tabindex="-1" aria-labelledby="addNewPhotoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewPhotoModalLabel">Добавить фото</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center flex-column">
+                        <img class="selectedPhotoPreview d-none h-100 w-100 mb-3" src="#" alt="Selected image" />
+                        <input class="selectPhoto" type="file" accept="image/jpeg,image/png,image/jpg">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="noteContainer mb-5">
@@ -120,7 +143,9 @@
                 @endif
             @endif
             <div class="d-flex justify-content-center mt-3">
-                <button class="btn btn-outline-success">Добавить фотографию</button>
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addNewPhotoModal">
+                    Добавить фотографию
+                </button>
             </div>
         </div>
         @if(Gate::allows('forceDelete', $this->note))
