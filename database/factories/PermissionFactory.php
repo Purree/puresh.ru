@@ -16,8 +16,6 @@ class PermissionFactory extends Factory
      */
     protected $model = Permission::class;
 
-    private array $userPermissions = [];
-
     /**
      * Generate array with permissions what user will have
      *
@@ -29,7 +27,6 @@ class PermissionFactory extends Factory
         foreach (Permission::getAll() as $permission) {
             $userPermissions[$permission] = random_int(0, 1);
         }
-        $this->userPermissions = $userPermissions;
         return $userPermissions;
     }
 
@@ -41,7 +38,7 @@ class PermissionFactory extends Factory
      */
     public function definition(): array
     {
-        $permissions = $this->userPermissions ?? $this->generateAndUpdateUserPermissionsArray();
+        $permissions = $this->generateAndUpdateUserPermissionsArray();
         return array_merge([
             'user_id' => User::factory(),
         ], $permissions);

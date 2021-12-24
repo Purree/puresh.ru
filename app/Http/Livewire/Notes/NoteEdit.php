@@ -24,6 +24,8 @@ class NoteEdit extends Component
         'noteDescription' => 'required|string|max:2000',
     ];
 
+    protected $listeners = ['refreshNoteImages' => '$refresh', 'refreshUsers' => '$refresh'];
+
     public string $previous;
     public object $note;
     public string $email = '';
@@ -40,13 +42,20 @@ class NoteEdit extends Component
         $this->noteDescription = $this->note->text;
     }
 
+    public function getNoteImagesProperty()
+    {
+        return $this->note->images;
+    }
+
     public function render(): Factory|View|Application
     {
         $this->authorize('update', $this->note);
         $this->noteDescription = nl2br($this->noteDescription);
         $this->dispatchBrowserEvent('contentChanged');
 
-        return view('livewire.notes.note-edit');
+        return view('livewire.notes.note-edit', [
+            'noteImages' => $this->noteImages,
+        ]);
     }
 
     public function goBack()
@@ -59,6 +68,7 @@ class NoteEdit extends Component
         if(Gate::allows('forceDelete', $this->note)){
             $this->note->user()->detach($id);
             session()->flash('message', "Пользователь успешно удалён");
+            $this->emit('refreshUsers');
         } else {
             $this->addError('permissions', 'У вас нет нужных прав доступа');
         }
@@ -84,6 +94,7 @@ class NoteEdit extends Component
 
         $this->note->user()->attach($userId);
         session()->flash('message', "Если пользователь с email $this->email существует, он будет добавлен");
+        $this->emit('refreshUsers');
         return 1;
     }
 
@@ -97,8 +108,25 @@ class NoteEdit extends Component
             $this->note->save();
             session()->flash('updated', "Заметка успешно обновлена");
         } else {
-            $this->addError('permissions', 'У вас нет нужных прав доступа');
+            $this->addError('permissions', 'You haven\'t permissions');
         }
+    }
+
+    public function cancelUpdate() {
+        $this->mount($this->note->id);
+    }
+
+    public function deleteImage($imageId)
+    {
+        $image = $this->note->images()->where('id', $imageId)->first();
+        $imageDeletionResult = $image->deleteImage($image);
+        if(is_array($imageDeletionResult) && array_key_exists('error', $imageDeletionResult)){
+            return $this->addError($imageDeletionResult['error'][0], $imageDeletionResult['error'][1]);
+        }
+
+        $this->emit('refreshNoteImages');
+        session()->flash('updated', "Фотография успешно удалена.");
+        return true;
     }
 }
 
