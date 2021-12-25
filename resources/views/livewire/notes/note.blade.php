@@ -37,7 +37,8 @@
             <div class="d-flex justify-content-center mt-2 imgLoading imageContainer" wire:ignore>
                 <div class="d-none spinner-border" role="status"></div>
                 <img class="note-image h-100 ml-auto mr-auto"
-                     src="{{ \App\Http\Livewire\Notes\NoteEdit::getCorrectPath($note->images->first()->note_image_path) }}">
+                     src="{{ \App\Http\Livewire\Notes\NoteEdit::getCorrectPath($note->images->first()->note_image_path) }}"
+                     style="max-width: 100%">
             </div>
         @else
             <div id="noteImagesCarousel{{ $note->id }}" class="carousel slide" data-bs-interval="false">
@@ -51,7 +52,7 @@
                     @foreach($note->images as $image)
                         <div class="carousel-item {{ $loop->first ? 'active' : '' }} imgLoading w-100 imageContainer">
                             <div class="spinner-border position-absolute bottom-50 end-50 d-none" role="status"></div>
-                            <img src="{{ \App\Http\Livewire\Notes\NoteEdit::getCorrectPath($image->note_image_path) }}" class="note-image d-block h-100 ml-auto mr-auto" loading="lazy" style="margin-left: auto; margin-right: auto">
+                            <img src="{{ \App\Http\Livewire\Notes\NoteEdit::getCorrectPath($image->note_image_path) }}" class="note-image d-block h-100 me-auto ms-auto" loading="lazy" style="max-width: 90%">
                         </div>
                     @endforeach
                 </div>

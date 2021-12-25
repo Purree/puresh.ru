@@ -26,7 +26,7 @@
                 <div class="modal-body">
                     @error('uploadedImage') <span class="d-flex justify-content-center alert-danger mb-3 previewError">{{ $message }}</span> @enderror
                     <div class="d-flex justify-content-center align-items-center flex-column">
-                        <img wire:ignore class="selectedPhotoPreview d-none h-100 w-100 mb-3" src="#" alt="Selected image" />
+                        <img wire:ignore class="selectedPhotoPreview d-none h-100 w-100 mb-3" style="max-height: 70vh" src="#" alt="Selected image" />
                         <input class="selectPhoto" wire:model="uploadedImage" wire:key="photoModal" type="file" accept="image/jpeg,image/png,image/jpg">
                     </div>
                 </div>
