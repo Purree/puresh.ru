@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const PREVIEW = document.querySelector('.selectedPhotoPreview')
     const SELECTOR = document.querySelector('.selectPhoto')
 
     SELECTOR.onchange = () => {
         const [file] = SELECTOR.files
+        const PREVIEW = document.querySelector('.selectedPhotoPreview')
         if (file) {
             PREVIEW.classList.remove('d-none')
             PREVIEW.src = URL.createObjectURL(file)

@@ -1,4 +1,4 @@
-<div>
+<div key="note-edit">
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
     <link rel="stylesheet" href="{{ asset('css/photo-modal.css') }}">
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
@@ -24,7 +24,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @error('uploadedImage') <span class="alert-danger">{{ $message }}</span> @enderror
+                    @error('uploadedImage') <span class="d-flex justify-content-center alert-danger mb-3 previewError">{{ $message }}</span> @enderror
                     <div class="d-flex justify-content-center align-items-center flex-column">
                         <img wire:ignore class="selectedPhotoPreview d-none h-100 w-100 mb-3" src="#" alt="Selected image" />
                         <input class="selectPhoto" wire:model="uploadedImage" wire:key="photoModal" type="file" accept="image/jpeg,image/png,image/jpg">
