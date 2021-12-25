@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
             onImageLoad(element, image, imageContainer)
         } else {
             element.querySelector('.spinner-border').classList.remove('d-none')
-            image.classList.add('d-none')
+            // image.classList.add('d-none')
             imageContainer?.classList.add('d-none')
             image.onload = () => {
                 onImageLoad(element, image, imageContainer)
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 onImageLoad = (element, image, ...anotherAttributes) => {
     element.querySelector('.spinner-border').classList.add('d-none')
-    image.classList.remove('d-none')
+    // image.classList.remove('d-none')
     anotherAttributes?.forEach((attribute) => {
         attribute?.classList.remove('d-none')
     })
