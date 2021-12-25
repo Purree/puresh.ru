@@ -5,17 +5,18 @@
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
     <script src="{{ asset('js/notes/replaceTabsInTextarea.js') }}"></script>
     <script src="{{ asset('js/notes/noteUpload.js') }}"></script>
-    <script src="{{ asset('js/photoModal.js') }}"></script>
 
     <!-- Image modal -->
     <div class="image-modal">
         <span class="modal-close-button">&times;</span>
+        <div class="spinner-border position-absolute bottom-50 end-50 modal-image-spinner"
+             role="status"></div>
         <img class="modal-image">
         <div class="modal-caption"></div>
     </div>
 
     <!-- Add photos modal -->
-    <div class="modal fade" id="addNewPhotoModal" tabindex="-1" aria-labelledby="addNewPhotoModalLabel" aria-hidden="true">
+    <form wire:ignore.self wire:submit.prevent="uploadImage" class="modal fade" id="addNewPhotoModal" tabindex="-1" aria-labelledby="addNewPhotoModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -23,21 +24,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    @error('uploadedImage') <span class="alert-danger">{{ $message }}</span> @enderror
                     <div class="d-flex justify-content-center align-items-center flex-column">
-                        <img class="selectedPhotoPreview d-none h-100 w-100 mb-3" src="#" alt="Selected image" />
-                        <input class="selectPhoto" type="file" accept="image/jpeg,image/png,image/jpg">
+                        <img wire:ignore class="selectedPhotoPreview d-none h-100 w-100 mb-3" src="#" alt="Selected image" />
+                        <input class="selectPhoto" wire:model="uploadedImage" wire:key="photoModal" type="file" accept="image/jpeg,image/png,image/jpg">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <div class="noteContainer mb-5">
-
         @error('noteTitle')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -79,6 +80,7 @@
             <div class="fs-5 note-text text-break">{{ $noteDescription }}</div>
 
             @if(!empty(current($noteImages))) {{--        Get first object element and check is it empty        --}}
+            <script src="{{ asset('js/photoModal.js') }}"></script>
                 @if($noteImages->count() === 1)
                     <div class="d-flex justify-content-center mt-2 imgLoading imageContainer">
                         <div class="d-none spinner-border" role="status"></div>
@@ -91,7 +93,7 @@
                                 </div>
 
                                 <img class="note-image d-block h-100 w-100"
-                                    src="{{ $noteImages->first()->note_image_path }}"/>
+                                    src="{{ self::getCorrectPath($noteImages->first()->note_image_path) }}"/>
                             </div>
                         </div>
                     </div>
@@ -119,7 +121,7 @@
                                                 </button>
                                             </div>
 
-                                            <img src="{{ $image->note_image_path }}"
+                                            <img src="{{ self::getCorrectPath($image->note_image_path) }}"
                                                  class="note-image d-block h-100 w-100 ms-auto me-auto"
                                                  loading="lazy">
                                         </div>

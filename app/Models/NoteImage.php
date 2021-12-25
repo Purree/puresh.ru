@@ -26,7 +26,7 @@ class NoteImage extends Model
         return $this->belongsToMany(Note::class);
     }
 
-    public function deleteImage(NoteImage $noteImage)
+    public function deleteImage(NoteImage $noteImage): array|bool|null
     {
         $note = Note::where('id', $noteImage->note_id)->first();
 
@@ -34,11 +34,11 @@ class NoteImage extends Model
             return ['error' => ['permissions', 'You haven\'t permissions']];
         }
 
-        if(!Storage::disk($this->profilePhotoDisk())->has($noteImage->note_image_path)){
+        if(!Storage::disk(self::profilePhotoDisk())->has($noteImage->note_image_path)){
             return $noteImage->delete();
         }
 
-        Storage::disk($this->profilePhotoDisk())->delete($noteImage->note_image_path);
+        Storage::disk(self::profilePhotoDisk())->delete($noteImage->note_image_path);
         return $noteImage->delete();
     }
 
@@ -47,7 +47,7 @@ class NoteImage extends Model
      *
      * @return string
      */
-    protected function profilePhotoDisk()
+    public static function profilePhotoDisk(): string
     {
         return !empty(config('filesystems.disks')['s3']['key']) ? 's3' : 'public';
     }

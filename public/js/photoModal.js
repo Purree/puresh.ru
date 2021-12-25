@@ -1,5 +1,9 @@
 /* https://www.w3schools.com/howto/howto_css_modal_images.asp */
-document.addEventListener("DOMContentLoaded", () => {
+
+document.addEventListener('contentChanged', photosModalHandler)
+document.addEventListener("DOMContentLoaded", photosModalHandler)
+
+function photosModalHandler() {
 
     const MODAL = document.querySelector(".image-modal");
 
@@ -41,4 +45,4 @@ document.addEventListener("DOMContentLoaded", () => {
         SPINNER.classList.add('d-none')
         MODAL_IMAGE.classList.remove('d-none')
     }
-});
+}

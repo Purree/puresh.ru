@@ -3,16 +3,23 @@
 namespace App\Http\Livewire\Notes;
 
 use App\Models\Note;
+use App\Models\NoteImage;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\MessageBag;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class NoteEdit extends Component
 {
+    use WithFileUploads;
     use AuthorizesRequests;
 
     protected array $emailRules = [
@@ -31,6 +38,7 @@ class NoteEdit extends Component
     public string $email = '';
     public string $noteTitle;
     public string $noteDescription;
+    public $uploadedImage;
 
     public function mount($id): void
     {
@@ -58,7 +66,7 @@ class NoteEdit extends Component
         ]);
     }
 
-    public function goBack()
+    public function goBack(): Redirector|Application|RedirectResponse
     {
         return redirect($this->previous);
     }
@@ -98,7 +106,8 @@ class NoteEdit extends Component
         return 1;
     }
 
-    public function saveTextChanges() {
+    public function saveTextChanges(): void
+    {
         $this->validate();
         $this->dispatchBrowserEvent('contentChanged');
 
@@ -112,11 +121,12 @@ class NoteEdit extends Component
         }
     }
 
-    public function cancelUpdate() {
+    public function cancelUpdate(): void
+    {
         $this->mount($this->note->id);
     }
 
-    public function deleteImage($imageId)
+    public function deleteImage($imageId): bool|MessageBag
     {
         $image = $this->note->images()->where('id', $imageId)->first();
         $imageDeletionResult = $image->deleteImage($image);
@@ -127,5 +137,40 @@ class NoteEdit extends Component
         $this->emit('refreshNoteImages');
         session()->flash('updated', "Фотография успешно удалена.");
         return true;
+    }
+
+    public function uploadImage(): bool|MessageBag
+    {
+        $this->validate([
+            'uploadedImage' => 'required|file|mimes:png,jpg,jpeg|max:1024'
+        ]);
+
+        if(!Gate::allows('update', $this->note)) {
+            return $this->addError('permissions', 'You haven\'t permissions');
+        }
+
+        if($this->note->images()->count() >= 10) {
+            return $this->addError('uploadedImage', 'У этой заметки максимальное количество фотографий');
+        }
+
+        $fileName = $this->uploadedImage->storePubliclyAs('note-images', uniqid('', true) . '.png', NoteImage::profilePhotoDisk());
+        $this->note->images()->create([
+            'note_id' => $this->note->id,
+            'note_image_path' => $fileName
+        ]);
+
+        $this->emit('refreshNoteImages');
+        $this->dispatchBrowserEvent('imageUploaded');
+        session()->flash('updated', "Фотография успешно добавлена.");
+        return true;
+    }
+
+    public static function getCorrectPath($fileName): string
+    {
+        if (Storage::disk(NoteImage::profilePhotoDisk())->has($fileName)) {
+            return Storage::url($fileName);
+        }
+
+        return $fileName;
     }
 }

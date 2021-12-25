@@ -12,3 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 })
+
+document.addEventListener('imageUploaded', () => {
+    document.querySelector('button[data-bs-dismiss="modal"]').click()
+})
