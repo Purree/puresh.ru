@@ -3,11 +3,40 @@
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
 
-    @foreach($notes as $note)
+    @if(!empty(current($notes)))
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-outline-success mb-3 w-100">Добавить новую заметку</button>
+        </div>
+    @endif
+
+    @forelse($notes as $note)
         @can('view', $note)
             <livewire:notes.note :note="$note" :wire:key="$note->id"/>
         @endcan
-    @endforeach
+
+        @empty
+
+        <div class="row h-100 justify-content-center my-5 mt-5">
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-body border-bottom rounded-top">
+                        <div class="mx-3 my-3">
+                            <h3 class="h3 my-4">
+                                У вас пока нет заметок
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mx-3 my-3">
+                            <div class="text">
+                                Но вы можете <a href="#" wire:click="createNewNote">создать</a> новую заметку
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforelse
 
 
     {{-- Invisible button what trigger modal --}}

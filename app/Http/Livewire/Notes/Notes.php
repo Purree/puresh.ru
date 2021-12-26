@@ -57,6 +57,18 @@ class Notes extends Component
         return 'pagination::tailwind';
     }
 
+    public function createNewNote() {
+        $note = new Note();
+        $note->user_id = Auth::id();
+        $note->title = 'Заголовок заметки';
+        $note->text = 'Текст заметки';
+        $note->is_completed = false;
+        $note->save();
+
+        $this->redirect(route('notes.edit', $id = $note->id));
+        return false;
+    }
+
     /**
      * Sets the deletedNote to the note of the applicant for deletion,
      * which will be stored there until the user confirms the action
@@ -79,3 +91,4 @@ class Notes extends Component
         $note->delete();
     }
 }
+

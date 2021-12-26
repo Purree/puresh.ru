@@ -23,7 +23,7 @@ class CreateNotesTable extends Migration
             $table->string('title');
             $table->text('text');
             $table->boolean('is_completed');
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->useCurrent();
             $table->timestamp('completed_at')->nullable();
         });
     }

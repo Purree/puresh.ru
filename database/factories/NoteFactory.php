@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Note;
-use App\Models\NoteCollaborators;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
