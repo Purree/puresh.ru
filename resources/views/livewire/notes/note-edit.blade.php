@@ -1,21 +1,13 @@
 <div key="note-edit">
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/photo-modal.css') }}">
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
     <script src="{{ asset('js/notes/replaceTabsInTextarea.js') }}"></script>
     <script src="{{ asset('js/notes/noteUpload.js') }}"></script>
 
-    <!-- Image modal -->
-    <div class="image-modal">
-        <span class="modal-close-button">&times;</span>
-        <div class="spinner-border position-absolute bottom-50 end-50 modal-image-spinner"
-             role="status"></div>
-        <img class="modal-image">
-        <div class="modal-caption"></div>
-    </div>
+    <x-photo-modal/>
 
-    <!-- Add photos modal -->
+    <!-- Upload photos modal -->
     <form wire:ignore.self wire:submit.prevent="uploadImage" class="modal fade" id="addNewPhotoModal" tabindex="-1" aria-labelledby="addNewPhotoModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -25,7 +17,7 @@
                 </div>
                 <div class="modal-body">
                     @error('uploadedImage') <span class="d-flex justify-content-center alert-danger mb-3 previewError">{{ $message }}</span> @enderror
-                    <div class="d-flex justify-content-center align-items-center flex-column">
+                    <div class="d-flex justify-content-center align-items-center flex-column flex-wrap">
                         <img wire:ignore class="selectedPhotoPreview d-none h-100 w-100 mb-3" style="max-height: 70vh" src="#" alt="Selected image" />
                         <input class="selectPhoto" wire:model="uploadedImage" wire:key="photoModal" type="file" accept="image/jpeg,image/png,image/jpg">
                     </div>
@@ -80,7 +72,6 @@
             <div class="fs-5 note-text text-break">{{ $noteDescription }}</div>
 
             @if(!empty(current($noteImages))) {{--        Get first object element and check is it empty        --}}
-            <script src="{{ asset('js/photoModal.js') }}"></script>
                 @if($noteImages->count() === 1)
                     <div class="d-flex justify-content-center mt-2 imgLoading imageContainer">
                         <div class="d-none spinner-border" role="status"></div>
@@ -188,7 +179,7 @@
                             <div class="d-flex align-items-center m-2">
                                 <button class="btn btn-danger me-2" wire:click="deleteUser({{ $user->id }})"><i
                                         class="bi bi-dash-circle m"></i></button>
-                                <div>{{ $user->email }}</div>
+                                <div class="text-break">{{ $user->email }}</div>
                             </div>
                         @endforeach
                     @endif

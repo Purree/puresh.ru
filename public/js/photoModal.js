@@ -14,6 +14,8 @@ function photosModalHandler() {
 
     IMAGES.forEach(image => {
         image.onclick = function () {
+            wheelzoom(MODAL_IMAGE);
+
             document.body.classList.add('overflow-hidden')
             MODAL.style.display = "block";
             MODAL_IMAGE.src = this.src;
@@ -34,6 +36,7 @@ function photosModalHandler() {
 
     MODAL_CLOSE_BUTTON.onclick = MODAL.onclick = (event) => {
         if (event.target !== MODAL_IMAGE) {
+            MODAL_IMAGE.dispatchEvent(new CustomEvent('wheelzoom.destroy'));
             MODAL.style.display = "none";
             SPINNER.classList.remove('d-none')
             MODAL_IMAGE.classList.add('d-none')

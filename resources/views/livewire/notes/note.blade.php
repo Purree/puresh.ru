@@ -25,9 +25,9 @@
     </div>
     <div class="mb-3">
         <div class="text-nowrap collapse card card-body position-absolute end-0" id="note{{ $note->id }}Dates">
-            <div>Добавлено {{ date('Yг. mм. dд.  H:i:s', $note->created_at) }}</div>
+            <div>Добавлено <wbr> {{ date('Yг. mм. dд.  H:i:s', $note->created_at) }}</div>
             @if($note->completed_at)
-                <div>{{ $note->is_completed ? 'Выполнено' : 'Было выполнено' }} {{ date('Yг. mм. dд.  H:i:s', $note->completed_at) }}</div>
+                <div>{{ $note->is_completed ? 'Выполнено' : 'Было выполнено' }} <wbr> {{ date('Yг. mм. dд.  H:i:s', $note->completed_at) }}</div>
             @endif
         </div>
 
