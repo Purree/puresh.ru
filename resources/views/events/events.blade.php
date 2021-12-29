@@ -6,7 +6,15 @@
                 <div class="card-body border-bottom rounded-top">
                     <div className="pt-5 pb-5">
                         @foreach($events as $event)
-                            <p class="h1 mb-5 text-center">{{ $event->title }}</p>
+                            <div class="mb-5 d-flex align-items-center justify-content-center">
+                                <p class="h1">{{ $event->title }}</p>
+                                @can('manage_data', App\Models\Permission::class)
+                                    <div class="btn-group ms-3">
+                                        <button type="button" class="btn btn-secondary"><i class="bi bi-pen"></i></button>
+                                        <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                @endcan
+                            </div>
                             <div id="timer" data-id="{{ $event->id }}" data-happen-at="{{ $event->happen_at }}"
                                  class="d-flex mb-3">
                                 @foreach($separators as $separator)
