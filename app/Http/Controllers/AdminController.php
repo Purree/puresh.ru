@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\CheckIsPaginatorPageExists;
 use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
@@ -13,10 +14,14 @@ class AdminController extends Controller
      *
      * @return View
      */
-    public function showAllUsers(): View
+    use CheckIsPaginatorPageExists;
+
+    public function showAllUsers()
     {
         $users = User::with('permissions')->paginate(15);
         $allPermissions = Permission::getAll();
+        $this->updatePageNumber();
+        $this->validatePageNumber($users, 'admin.main');
 
         return view('admin.users', [
             'users' => $users,

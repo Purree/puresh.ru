@@ -5,7 +5,7 @@
 
     @if(!empty(current($notes)))
         <div class="d-flex justify-content-center">
-            <button class="btn btn-outline-success mb-3 w-100">Добавить новую заметку</button>
+            <button class="btn btn-outline-success mb-3 w-100" wire:click="createNewNote">Добавить новую заметку</button>
         </div>
     @endif
 

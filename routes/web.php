@@ -46,7 +46,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     });
 
     Route::middleware('can:see_events, App\Models\Permission')->group(function() {
-        Route::get('/events', [EventsController::class, 'showEvents'])
+        Route::get('/events', App\Http\Livewire\Events\Events::class)
             ->name('events');
     });
 });

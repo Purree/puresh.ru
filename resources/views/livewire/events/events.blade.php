@@ -10,7 +10,7 @@
                             @can('manage_data', App\Models\Permission::class)
                                 <div class="btn-group ms-3">
                                     <button type="button" class="btn btn-secondary"><i class="bi bi-pen"></i></button>
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                    <button type="button" class="btn btn-danger" wire:click="deleteEvent({{ $event->id }})"><i class="bi bi-trash"></i></button>
                                 </div>
                             @endcan
                         </div>

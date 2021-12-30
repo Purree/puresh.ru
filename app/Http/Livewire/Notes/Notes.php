@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Notes;
 
+use App\Http\Controllers\Traits\CheckIsPaginatorPageExists;
 use App\Models\Note;
 use App\Models\Permission;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -15,6 +16,7 @@ class Notes extends Component
 {
     use AuthorizesRequests;
     use WithPagination;
+    use CheckIsPaginatorPageExists;
 
     protected object $notes;
     protected object $paginator;
@@ -27,7 +29,7 @@ class Notes extends Component
 
 
     public function mount() {
-        $this->pageNumber = $_GET['page'] ?? '1';
+        $this->updatePageNumber();
     }
 
     public function render()
@@ -43,11 +45,7 @@ class Notes extends Component
 
 
         $this->paginator = $this->notes->onEachSide(1);
-        $lastPageNumber = $this->paginator->lastPage();
-
-        if($lastPageNumber < $this->pageNumber) {
-            \Redirect::route('notes', ['page' => $lastPageNumber]);
-        }
+        $this->validatePageNumber($this->paginator, 'notes');
 
         return view('livewire.notes.notes', ['notes' => $this->notes, 'paginator' => $this->paginator]);
     }
