@@ -166,3 +166,6 @@ function activateTimers() {
 
 document.addEventListener('DOMContentLoaded', activateTimers)
 document.addEventListener('activateInactiveTimers', activateTimers)
+document.addEventListener('updateEventStatus', event => {
+    document.querySelector(`div[data-id="${event.detail.id}"]`).classList.add('unused')
+})
