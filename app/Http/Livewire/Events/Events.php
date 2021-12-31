@@ -15,18 +15,30 @@ class Events extends Component
     use WithPagination;
     use CheckIsPaginatorPageExists;
 
+    protected $listeners = ['deleteEvent'];
+    protected object $paginator;
+    protected string $paginationTheme = 'bootstrap';
+
+
     public function render()
     {
         Event::validateAllDates();
 
         $events = Event::paginate(10);
+        $this->paginator = $events->onEachSide(1);
         $this->updatePageNumber();
-        $this->validatePageNumber($events, 'events');
+        $this->validatePageNumber($this->paginator, 'events');
 
         return view('livewire.events.events', [
             'events' => $events,
-            'separators' => ['days', 'hours', 'minutes', 'seconds']
+            'separators' => ['days', 'hours', 'minutes', 'seconds'],
+            'paginator' => $this->paginator
         ]);
+    }
+
+    public function paginationView(): string
+    {
+        return 'pagination::tailwind';
     }
 
     public function deleteEvent($id) {
@@ -35,5 +47,7 @@ class Events extends Component
         $this->authorize('manage_data', Permission::class);
 
         $event->delete();
+
+        $this->dispatchBrowserEvent('activateInactiveTimers');
     }
 }
