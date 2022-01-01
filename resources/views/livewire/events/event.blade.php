@@ -79,7 +79,7 @@
                 <input placeholder="Is event recurrent" wire:model.defer="is_event_recurrent"
                        class="form-check-input @error('is_event_recurrent') is-invalid @enderror" id="eventRecurrent"
                        type="checkbox"
-                       {{ (bool) $is_event_recurrent ? 'checked' : '' }} name="is_event_recurrent" required>
+                       {{ (bool) $is_event_recurrent ? 'checked' : '' }} name="is_event_recurrent">
 
                 <div class="form-group repetition">
                     <label for="eventRepetition">Время, через которое будет повторяться событие (в секундах)</label>

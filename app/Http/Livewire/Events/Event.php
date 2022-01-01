@@ -27,7 +27,7 @@ class Event extends Component
     public string $title;
     public string $happen_at;
     public bool $is_event_recurrent;
-    public int|null $repetition_in_seconds;
+    public int|null $repetition_in_seconds = null;
 
     public function render(): Factory|View|Application
     {
@@ -62,7 +62,6 @@ class Event extends Component
         $this->authorize('manage_data', Permission::class);
 
         $this->validate($this->eventEditRules);
-
         $this->event->title = $this->title;
         $this->event->happen_at = $this->happen_at;
         $this->event->is_event_recurrent = $this->is_event_recurrent;

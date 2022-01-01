@@ -4,20 +4,21 @@ function activateTimers() {
 
         let timer = unused.querySelector('#timer')
         const eventHappenAt = timer.dataset.happenAt
-        const dateNow = new Date();
+        const dateNow = () => {
+            return new Date()
+        };
         let dateFuture = new Date(eventHappenAt);
 
-        if (dateFuture <= dateNow) {
-            dateFuture = dateNow
+        if (dateFuture <= dateNow()) {
+            dateFuture = dateNow()
         }
 
         const SECONDS_LIMIT = 60;
         const MINUTES_LIMIT = SECONDS_LIMIT;
         const HOURS_LIMIT = 24;
-        const DAYS_LIMIT =
-            Math.ceil(
-                getLeftTime(dateNow, dateFuture)['days'] / 365
-            ) * 365;
+        const DAYS_LIMIT = new Date(new Date().getFullYear(), 1, 29).getMonth() === 1 ? 366 : 365;
+        // If year is leap limit is 366 else 365
+
 
         const LIMITS = {
             'seconds': SECONDS_LIMIT,
@@ -44,10 +45,10 @@ function activateTimers() {
         };
 
         let passed = {
-            'seconds': LIMITS['seconds'] - getLeftTime(dateNow, dateFuture)['seconds'],
-            'minutes': LIMITS['minutes'] - getLeftTime(dateNow, dateFuture)['minutes'],
-            'hours': LIMITS['hours'] - getLeftTime(dateNow, dateFuture)['hours'],
-            'days': LIMITS['days'] - getLeftTime(dateNow, dateFuture)['days'],
+            'seconds': LIMITS['seconds'] - getLeftTime(dateNow(), dateFuture)['seconds'],
+            'minutes': LIMITS['minutes'] - getLeftTime(dateNow(), dateFuture)['minutes'],
+            'hours': LIMITS['hours'] - getLeftTime(dateNow(), dateFuture)['hours'],
+            'days': LIMITS['days'] - getLeftTime(dateNow(), dateFuture)['days'],
         };
         let timeLeft = {
             'seconds': LIMITS['seconds'],
@@ -60,16 +61,6 @@ function activateTimers() {
         startTimer();
 
         function onTimesUp() {
-            if (passed['minutes'] === LIMITS['minutes']) {
-                passed['minutes'] = 0
-            }
-            if (passed['hours'] === LIMITS['hours']) {
-                passed['hours'] = 0
-            }
-            if (passed['days'] === LIMITS['days']) {
-                passed['days'] = 0
-            }
-
             passed['seconds'] = 0
             timeLeft['seconds'] = LIMITS['seconds']
             insertTime();
@@ -84,12 +75,12 @@ function activateTimers() {
             insertTime("minutes");
             insertTime("hours");
             insertTime("days");
-            return Object.values(getLeftTime(dateNow, dateFuture)).every(el => el === 0);
+            return Object.values(getLeftTime(dateNow(), dateFuture)).every(el => el === 0);
         }
 
         function insertTime(type = "seconds") {
             timer.querySelector(`.base-timer[data-type ='${type}'] #base-timer-label`).innerHTML = getLeftTime(
-                dateNow, dateFuture
+                dateNow(), dateFuture
             )[type];
         }
 
@@ -98,10 +89,9 @@ function activateTimers() {
 
             timerInterval = setInterval(() => {
                 passed['seconds'] = passed['seconds'] += 1;
-                dateNow.setSeconds(dateNow.getSeconds() + 1);
                 insertEverythingAndReturnIsItsLastDay();
                 updateCircles('seconds', 'minutes', 'hours', 'days')
-                if (getLeftTime(dateNow, dateFuture)['seconds'] === 0) {
+                if (getLeftTime(dateNow(), dateFuture)['seconds'] === 0) {
                     onTimesUp();
                 }
             }, 1000);
@@ -130,6 +120,7 @@ function activateTimers() {
 
         function setRemainingPathColor(timeLeft, separator = 'seconds') {
             const {alert, warning, info} = COLOR_CODES(separator);
+
             if (timeLeft > warning.threshold) {
                 updateElementColor(alert.color, info.color, separator)
             } else if (timeLeft <= alert.threshold) {
@@ -152,13 +143,14 @@ function activateTimers() {
             const circleDasharray = `${(
                 calculateTimeFraction(separator) * FULL_DASH_ARRAY
             ).toFixed(0)} ${FULL_DASH_ARRAY}`;
+
             timer
                 .querySelector(`#base-timer-path-remaining.${separator}`)
                 .setAttribute("stroke-dasharray", circleDasharray);
         }
 
         function calculateTimeFraction(separator = 'seconds') {
-            const rawTimeFraction = (timeLeft[separator] / LIMITS[separator]);
+            const rawTimeFraction = (timeLeft[separator] / (LIMITS[separator]));
             return rawTimeFraction - (1 / LIMITS[separator]) * (1 - rawTimeFraction);
         }
     })
