@@ -59,6 +59,7 @@ function activateTimers() {
         let timerInterval = null;
 
         startTimer();
+        initInterval();
 
         function onTimesUp() {
             passed['seconds'] = 0
@@ -66,11 +67,22 @@ function activateTimers() {
             insertTime();
             setRemainingPathColor(null);
             clearInterval(timerInterval);
-            if (insertEverythingAndReturnIsItsLastDay()) return 'stop';
-            startTimer();
+            if (insertEverythingAndReturnIsTimerEnds()) return 'stop';
+            initInterval();
         }
 
-        function insertEverythingAndReturnIsItsLastDay() {
+        function insertEverythingAndReturnIsTimerEnds() {
+            // If user blur tab and current time less than event time
+            if (getLeftTime(dateNow(), dateFuture)['days'] < 0) {
+                timer.querySelectorAll(`.base-timer #base-timer-label`).forEach((timer) => {
+                    timer.innerHTML = '0'
+                })
+                timer.querySelectorAll('.base-timer-path-remaining path').forEach((timer) => {
+                    timer.setAttribute("stroke-dasharray", '-1');
+                })
+                return true
+            }
+
             insertTime("seconds");
             insertTime("minutes");
             insertTime("hours");
@@ -84,19 +96,24 @@ function activateTimers() {
             )[type];
         }
 
-        function startTimer() {
-            if (insertEverythingAndReturnIsItsLastDay()) return 'stop';
-
+        function initInterval() {
             timerInterval = setInterval(() => {
-                passed['seconds'] = passed['seconds'] += 1;
-                insertEverythingAndReturnIsItsLastDay();
-                updateCircles('seconds', 'minutes', 'hours', 'days')
-                if (getLeftTime(dateNow(), dateFuture)['seconds'] === 0) {
-                    onTimesUp();
-                }
+                startTimer()
             }, 1000);
         }
 
+        function startTimer() {
+            if (insertEverythingAndReturnIsTimerEnds()) return 'stop';
+            passed['seconds'] = passed['seconds'] += 1;
+            insertEverythingAndReturnIsTimerEnds();
+            updateCircles('seconds', 'minutes', 'hours', 'days')
+            if (getLeftTime(dateNow(), dateFuture)['seconds'] === 0) {
+                if(onTimesUp() === 'stop') {
+                    setRemainingPathColor(null);
+                    unused.dispatchEvent(new Event('timerStop', {'bubbles': true}))
+                }
+            }
+        }
 
         function updateCircles(...separators) {
             separators.forEach(el => {
