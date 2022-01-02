@@ -35,26 +35,20 @@ function activateTimers() {
                 },
                 warning: {
                     color: "orange",
-                    threshold: LIMITS[separator] / 2
+                    threshold: LIMITS[separator] / 1.5
                 },
                 alert: {
                     color: "red",
-                    threshold: LIMITS[separator] / 4
+                    threshold: LIMITS[separator] / 7
                 }
             }
         };
 
         let passed = {
-            'seconds': LIMITS['seconds'] - getLeftTime(dateNow(), dateFuture)['seconds'],
-            'minutes': LIMITS['minutes'] - getLeftTime(dateNow(), dateFuture)['minutes'],
-            'hours': LIMITS['hours'] - getLeftTime(dateNow(), dateFuture)['hours'],
-            'days': LIMITS['days'] - getLeftTime(dateNow(), dateFuture)['days'],
-        };
-        let timeLeft = {
-            'seconds': LIMITS['seconds'],
-            'minutes': LIMITS['minutes'],
-            'hours': LIMITS['hours'],
-            'days': LIMITS['days']
+            'seconds': LIMITS['seconds'] - getLeftTime()['seconds'],
+            'minutes': LIMITS['minutes'] - getLeftTime()['minutes'],
+            'hours': LIMITS['hours'] - getLeftTime()['hours'],
+            'days': LIMITS['days'] - getLeftTime()['days'],
         };
         let timerInterval = null;
 
@@ -63,9 +57,8 @@ function activateTimers() {
 
         function onTimesUp() {
             passed['seconds'] = 0
-            timeLeft['seconds'] = LIMITS['seconds']
             insertTime();
-            setRemainingPathColor(null);
+            setRemainingPathColor();
             clearInterval(timerInterval);
             if (insertEverythingAndReturnIsTimerEnds()) return 'stop';
             initInterval();
@@ -73,7 +66,7 @@ function activateTimers() {
 
         function insertEverythingAndReturnIsTimerEnds() {
             // If user blur tab and current time less than event time
-            if (getLeftTime(dateNow(), dateFuture)['days'] < 0) {
+            if (getLeftTime()['days'] < 0) {
                 return true
             }
 
@@ -85,9 +78,8 @@ function activateTimers() {
         }
 
         function insertTime(type = "seconds") {
-            timer.querySelector(`.base-timer[data-type ='${type}'] #base-timer-label`).innerHTML = getLeftTime(
-                dateNow(), dateFuture
-            )[type];
+            timer.querySelector(`.base-timer[data-type ='${type}'] #base-timer-label`).innerHTML =
+                getLeftTime()[type];
         }
 
         function initInterval() {
@@ -101,7 +93,7 @@ function activateTimers() {
             insertEverythingAndReturnIsTimerEnds();
             updateCircles('seconds', 'minutes', 'hours', 'days')
 
-            if (getLeftTime(dateNow(), dateFuture)['seconds'] === 0) {
+            if (getLeftTime()['seconds'] === 0) {
                 if(onTimesUp() === 'stop') {
                     stopTimer()
                 }
@@ -121,19 +113,18 @@ function activateTimers() {
             })
             /**/
 
-            setRemainingPathColor(null);
+            setRemainingPathColor();
             unused.dispatchEvent(new Event('timerStop', {'bubbles': true}))
         }
 
         function updateCircles(...separators) {
             separators.forEach(el => {
                 setCircleDasharray(el);
-                timeLeft[el] = LIMITS[el] - passed[el];
-                setRemainingPathColor(timeLeft[el], el);
+                setRemainingPathColor(getLeftTime()[el], el);
             })
         }
 
-        function getLeftTime(startTime, endTime) {
+        function getLeftTime(startTime = dateNow(), endTime = dateFuture) {
             let seconds = Math.floor((endTime - (startTime)) / 1000);
             let minutes = Math.floor(seconds / 60);
             let hours = Math.floor(minutes / 60);
@@ -145,12 +136,12 @@ function activateTimers() {
             return {days: days, hours: hours, minutes: minutes, seconds: seconds};
         }
 
-        function setRemainingPathColor(timeLeft, separator = 'seconds') {
+        function setRemainingPathColor(timeLeft = 0, separator = 'seconds') {
             const {alert, warning, info} = COLOR_CODES(separator);
 
             if (timeLeft > warning.threshold) {
                 updateElementColor(alert.color, info.color, separator)
-            } else if (timeLeft <= alert.threshold || timeLeft === null) {
+            } else if (timeLeft <= alert.threshold) {
                 updateElementColor(warning.color, alert.color, separator)
             } else if (timeLeft <= warning.threshold) {
                 updateElementColor(info.color, warning.color, separator)
@@ -171,7 +162,7 @@ function activateTimers() {
                 calculateTimeFraction(separator) * FULL_DASH_ARRAY
             ).toFixed(0)}`;
 
-            if (circleDasharray <= 0 && getLeftTime(dateNow(), dateFuture)[separator] === 0) {
+            if (circleDasharray <= 0 && getLeftTime()[separator] === 0) {
                 circleDasharray = -1
             }
 
@@ -181,7 +172,7 @@ function activateTimers() {
         }
 
         function calculateTimeFraction(separator = 'seconds') {
-            const rawTimeFraction = (timeLeft[separator] / (LIMITS[separator]));
+            const rawTimeFraction = (getLeftTime()[separator] / (LIMITS[separator]));
             return rawTimeFraction - (1 / LIMITS[separator]) * (1 - rawTimeFraction);
         }
     })

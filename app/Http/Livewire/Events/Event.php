@@ -19,6 +19,7 @@ class Event extends Component
         'is_event_recurrent' => 'required|boolean',
         'repetition_in_seconds' => 'integer|nullable',
     ];
+    protected $listeners = ['successfullyFinishEventEditing' => 'stopEventEditing'];
 
     public object $event;
     public array $separators;
@@ -58,16 +59,5 @@ class Event extends Component
         $this->dispatchBrowserEvent('activateInactiveTimers');
     }
 
-    public function saveChanges() {
-        $this->authorize('manage_data', Permission::class);
 
-        $this->validate($this->eventEditRules);
-        $this->event->title = $this->title;
-        $this->event->happen_at = $this->happen_at;
-        $this->event->is_event_recurrent = $this->is_event_recurrent;
-        $this->event->repetition_in_seconds = $this->repetition_in_seconds ?? null;
-        $this->event->save();
-
-        $this->stopEventEditing();
-    }
 }

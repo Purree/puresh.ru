@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Exceptions\InvalidDateException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use JetBrains\PhpStorm\ArrayShape;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -50,7 +51,11 @@ class Event extends Model
             throw new InvalidDateException('This date is less than the current.');
         }
 
-        $this->attributes['happen_at'] = $value;
+        if (date('Y', strtotime($value)) > date('Y', strtotime('19 jun 2037'))) {
+            throw new InvalidDateException('This date is bigger when unix can store.');
+        }
+
+        $this->attributes['happen_at'] = Carbon::parse($value);
     }
 
     /**

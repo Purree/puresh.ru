@@ -15,7 +15,7 @@ class Events extends Component
     use WithPagination;
     use CheckIsPaginatorPageExists;
 
-    protected $listeners = ['deleteEvent'];
+    protected $listeners = ['deleteEvent', 'successfullyFinishEventEditing' => 'reloadTimers', 'refresh' => '$refresh'];
     protected object $paginator;
     protected string $paginationTheme = 'bootstrap';
 
@@ -48,6 +48,20 @@ class Events extends Component
 
         $event->delete();
 
+        $this->dispatchBrowserEvent('activateInactiveTimers');
+    }
+
+    public function createNewEventButtonPressed() {
+        $this->authorize('manage_data', Permission::class);
+
+        $event = new Event();
+        $event->happen_at = '2222-12-32 23:59:59';
+        $event->is_event_recurrent = 1;
+        $event->save();
+    }
+
+    public function reloadTimers() {
+        $this->emitSelf('refresh');
         $this->dispatchBrowserEvent('activateInactiveTimers');
     }
 }
