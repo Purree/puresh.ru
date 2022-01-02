@@ -74,12 +74,6 @@ function activateTimers() {
         function insertEverythingAndReturnIsTimerEnds() {
             // If user blur tab and current time less than event time
             if (getLeftTime(dateNow(), dateFuture)['days'] < 0) {
-                timer.querySelectorAll(`.base-timer #base-timer-label`).forEach((timer) => {
-                    timer.innerHTML = '0'
-                })
-                timer.querySelectorAll('.base-timer-path-remaining path').forEach((timer) => {
-                    timer.setAttribute("stroke-dasharray", '-1');
-                })
                 return true
             }
 
@@ -103,16 +97,32 @@ function activateTimers() {
         }
 
         function startTimer() {
-            if (insertEverythingAndReturnIsTimerEnds()) return 'stop';
             passed['seconds'] = passed['seconds'] += 1;
             insertEverythingAndReturnIsTimerEnds();
             updateCircles('seconds', 'minutes', 'hours', 'days')
+
             if (getLeftTime(dateNow(), dateFuture)['seconds'] === 0) {
                 if(onTimesUp() === 'stop') {
-                    setRemainingPathColor(null);
-                    unused.dispatchEvent(new Event('timerStop', {'bubbles': true}))
+                    stopTimer()
                 }
             }
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval)
+
+            /* If tab was blurred */
+            timer.querySelectorAll(`.base-timer #base-timer-label`).forEach((timer) => {
+                timer.innerHTML = '0'
+            })
+
+            timer.querySelectorAll('#base-timer-path-remaining').forEach((timer) => {
+                timer.setAttribute("stroke-dasharray", '-1');
+            })
+            /**/
+
+            setRemainingPathColor(null);
+            unused.dispatchEvent(new Event('timerStop', {'bubbles': true}))
         }
 
         function updateCircles(...separators) {
@@ -140,7 +150,7 @@ function activateTimers() {
 
             if (timeLeft > warning.threshold) {
                 updateElementColor(alert.color, info.color, separator)
-            } else if (timeLeft <= alert.threshold) {
+            } else if (timeLeft <= alert.threshold || timeLeft === null) {
                 updateElementColor(warning.color, alert.color, separator)
             } else if (timeLeft <= warning.threshold) {
                 updateElementColor(info.color, warning.color, separator)
@@ -157,13 +167,17 @@ function activateTimers() {
         }
 
         function setCircleDasharray(separator = 'seconds') {
-            const circleDasharray = `${(
+            let circleDasharray = `${(
                 calculateTimeFraction(separator) * FULL_DASH_ARRAY
-            ).toFixed(0)} ${FULL_DASH_ARRAY}`;
+            ).toFixed(0)}`;
+
+            if (circleDasharray <= 0 && getLeftTime(dateNow(), dateFuture)[separator] === 0) {
+                circleDasharray = -1
+            }
 
             timer
                 .querySelector(`#base-timer-path-remaining.${separator}`)
-                .setAttribute("stroke-dasharray", circleDasharray);
+                .setAttribute("stroke-dasharray", `${circleDasharray} ${FULL_DASH_ARRAY}`);
         }
 
         function calculateTimeFraction(separator = 'seconds') {
