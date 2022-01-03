@@ -47,7 +47,7 @@
                                     <li><form method="POST" class="dropdown-item dropdown-active" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit" class="btn btn-without-styles">
-                                            Выйти из аккаунта
+                                            {{ __('Logout') }}
                                         </button>
                                     </form></li>
                                 </ul>
