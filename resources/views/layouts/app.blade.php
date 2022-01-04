@@ -38,6 +38,7 @@
         @endcan
 
     </x-header>
+    <x-check-browser-support></x-check-browser-support>
 
     <main class="container my-5">
         {{ $slot }}
