@@ -4,8 +4,61 @@
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
 
     @if(!empty(current($notes)))
-        <div class="d-flex justify-content-center">
-            <button class="btn btn-outline-success mb-3 w-100" wire:click="createNewNote">Добавить новую заметку</button>
+        <div class="d-flex justify-content-between mb-3">
+            <button class="btn btn-outline-success w-100 me-1" wire:click="createNewNote">Добавить новую заметку</button>
+            <button class="btn btn-outline-primary w-100 ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#noteFilters" aria-expanded="false">
+                Изменить фильтры
+            </button>
+        </div>
+        <div class="collapse mb-3" id="noteFilters">
+            <div class="card card-body">
+                <div class="text-center h3">
+                    Выберите нужные вам фильтры
+                </div>
+                <div>
+                    <div class="h4 text-center">Порядок показа заметок</div>
+                    <div class="mt-3 d-flex flex-column align-items-center">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="notesOrderFilter" id="inIdOrderFilter" value="filter1" checked>
+                            <label class="form-check-label" for="inIdOrderFilter">
+                                В порядке добавления
+                            </label>
+                        </div>
+
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="notesOrderFilter" id="userNotesFilter" value="filter2">
+                                <label class="form-check-label" for="userNotesFilter">
+                                    Сначала мои заметки
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="filter4" id="showUserNotesFilter" checked>
+                                <label class="form-check-label" for="showUserNotesFilter">
+                                    Показывать мои заметки
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="notesOrderFilter" id="memberNotesFilter" value="filter3">
+                                <label class="form-check-label" for="memberNotesFilter">
+                                    Сначала заметки, где я участник
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="filter5" id="showMemberNotesFilter" checked>
+                                <label class="form-check-label" for="showMemberNotesFilter">
+                                    Показывать заметки, где я участник
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-success mt-3">Применить фильтры</button>
+            </div>
         </div>
     @endif
 
