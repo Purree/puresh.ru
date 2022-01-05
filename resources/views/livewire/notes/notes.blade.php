@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
+    <script src="{{ asset('js/notes/onFilterChange.js') }}"></script>
 
     @if(!empty(current($notes)))
         <div class="d-flex justify-content-between mb-3">
@@ -19,11 +20,21 @@
                     <div class="h4 text-center">Порядок показа заметок</div>
                     <div class="mt-3 d-flex flex-column align-items-center">
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="notesOrderFilter" id="inIdOrderFilter" value="filter1" checked>
-                            <label class="form-check-label" for="inIdOrderFilter">
-                                В порядке добавления
-                            </label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="notesOrderFilter" id="inIdOrderFilter" value="filter1" checked>
+                                <label class="form-check-label" for="inIdOrderFilter">
+                                    В порядке добавления
+                                </label>
+                            </div>
+                            @can('manage_data', App\Models\Permission::class)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input noteFilterCheckbox" type="checkbox" value="filter6" id="showAllUsers" checked>
+                                    <label class="form-check-label" for="showAllUsers">
+                                        Показать чужие заметки
+                                    </label>
+                                </div>
+                            @endcan
                         </div>
 
                         <div>
@@ -34,7 +45,7 @@
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="filter4" id="showUserNotesFilter" checked>
+                                <input class="form-check-input noteFilterCheckbox" type="checkbox" value="filter4" id="showUserNotesFilter" checked>
                                 <label class="form-check-label" for="showUserNotesFilter">
                                     Показывать мои заметки
                                 </label>
@@ -49,7 +60,7 @@
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="filter5" id="showMemberNotesFilter" checked>
+                                <input class="form-check-input noteFilterCheckbox" type="checkbox" value="filter5" id="showMemberNotesFilter" checked>
                                 <label class="form-check-label" for="showMemberNotesFilter">
                                     Показывать заметки, где я участник
                                 </label>
