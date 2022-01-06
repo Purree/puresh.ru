@@ -12,7 +12,7 @@
             </button>
         </div>
         <div class="collapse mb-3" id="noteFilters">
-            <div class="card card-body">
+            <form class="card card-body">
                 <div class="text-center h3">
                     Выберите нужные вам фильтры
                 </div>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <button class="btn btn-outline-success mt-3">Применить фильтры</button>
-            </div>
+            </form>
         </div>
     @endif
 

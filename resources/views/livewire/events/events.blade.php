@@ -1,5 +1,6 @@
 <div class="row h-100 justify-content-center my-5 mt-5">
     <link rel="stylesheet" href="{{ asset('css/events/timer.css') }}">
+    <script src="{{ asset('js/events/resizeTimersOnPhones.js') }}"></script>
     @can('manage_data', App\Models\Permission::class)
         <div class="d-flex justify-content-center flex-column">
             <button type="button" class="btn btn-outline-success mb-3 w-100" data-bs-toggle="collapse"
