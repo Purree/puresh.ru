@@ -31,7 +31,7 @@
             @endif
         </div>
 
-        <div class="fs-5 note-text">{{ $note->text }}</div>
+        <div class="fs-5 note-text text-break">{{ $note->text }}</div>
         @if(!empty(current($note->images))) {{--        Get first object element and check is it empty        --}}
         @if($note->images->count() === 1)
             <div class="d-flex justify-content-center mt-2 imgLoading imageContainer" wire:ignore>
