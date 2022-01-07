@@ -18,6 +18,10 @@ function resizeTimers(basicTimerClasses, timerRadius, timerParameters, rollback 
         })
 
         rollback = true
+
+        document.querySelector('.events-container').dispatchEvent(new Event('computerLayout'))
+    } else {
+        document.querySelector('.events-container').dispatchEvent(new Event('phoneLayout'))
     }
 
     document.querySelectorAll('#timer').forEach(timer => {

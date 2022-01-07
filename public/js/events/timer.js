@@ -26,7 +26,16 @@ function activateTimers() {
             'hours': HOURS_LIMIT,
             'days': DAYS_LIMIT
         };
-        const FULL_DASH_ARRAY = 283;
+        let FULL_DASH_ARRAY = 283;
+        const COMPUTER_DASH_ARRAY = 283;
+        const PHONE_DASH_ARRAY = 190;
+
+        document.querySelector('.events-container').addEventListener('phoneLayout', () => {
+            FULL_DASH_ARRAY = PHONE_DASH_ARRAY
+        })
+        document.querySelector('.events-container').addEventListener('computerLayout', () => {
+            FULL_DASH_ARRAY = COMPUTER_DASH_ARRAY
+        })
 
         const COLOR_CODES = (separator = 'seconds') => {
             return {
