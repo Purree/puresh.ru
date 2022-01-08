@@ -19,6 +19,9 @@ class Events extends Component
     protected object $paginator;
     protected string $paginationTheme = 'bootstrap';
 
+    public function updatedPaginators() {
+        $this->reloadTimers();
+    }
 
     public function render()
     {
@@ -34,11 +37,6 @@ class Events extends Component
             'separators' => ['days', 'hours', 'minutes', 'seconds'],
             'paginator' => $this->paginator
         ]);
-    }
-
-    public function paginationView(): string
-    {
-        return 'pagination::tailwind';
     }
 
     public function deleteEvent($id) {

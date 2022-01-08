@@ -46,5 +46,4 @@
     @else
         <livewire:events.event-edit :wire:key="$event->id" :event="$event"/>
     @endif
-    <hr class="mt-5 mb-5">
 </div>

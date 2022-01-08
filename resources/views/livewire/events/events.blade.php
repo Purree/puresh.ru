@@ -20,14 +20,17 @@
                 <div class="pt-5 pb-5">
                     @foreach($events as $event)
                         <livewire:events.event :event="$event" :separators="$separators" :wire:key="$event->id"/>
+                        @if (!$loop->last)
+                            <hr class="mt-5">
+                        @endif
                     @endforeach
                 </div>
                 <script src="{{ asset('js/events/timer.js') }}"></script>
                 <script src="{{ asset('js/events/resizeTimersOnPhones.js') }}"></script>
-                <div class="flex flex-row mt-2" wire:ignore>
-                    {{ $paginator->links() }}
-                </div>
             </div>
         </div>
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+        {{ $paginator->links() }}
     </div>
 </div>

@@ -126,7 +126,7 @@
         </div>
     </div>
     <!-- Pagination -->
-    <div wire:ignore>
+    <div class="d-flex justify-content-center">
         {{ $paginator->links() }}
     </div>
 

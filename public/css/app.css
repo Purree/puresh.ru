@@ -11025,3 +11025,13 @@ body, .table, .form-select, .input-group-text, .btn-outline-dark, .btn-outline-d
 .btn-without-styles:hover {
   color: var(--text);
 }
+
+.page-link {
+  background-color: var(--card_color) !important;
+  border-color: var(--nav_background) !important;
+}
+
+.page-item.active .page-link {
+  background-color: var(--bs-blue) !important;
+  border-color: var(--bs-blue) !important;
+}

@@ -20,6 +20,7 @@ class Notes extends Component
 
     protected object $notes;
     protected object $paginator;
+    protected string $paginationTheme = 'bootstrap';
 
     protected $listeners = ['setDeletedId'];
 
@@ -48,11 +49,6 @@ class Notes extends Component
         $this->validatePageNumber($this->paginator, 'notes');
 
         return view('livewire.notes.notes', ['notes' => $this->notes, 'paginator' => $this->paginator]);
-    }
-
-    public function paginationView(): string
-    {
-        return 'pagination::tailwind';
     }
 
     public function createNewNote() {
