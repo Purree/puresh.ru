@@ -25,7 +25,6 @@ class Notes extends Component
     protected $listeners = ['setDeletedId'];
 
     public array $deletedNote = [];
-    public string $pageNumber = '1';
 
 
 

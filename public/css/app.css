@@ -10970,6 +10970,7 @@ textarea.form-control-lg {
 
 :root {
   --nav_background: rgb(234, 231, 229);
+  --border_color: rgb(234, 231, 229);
   --card_color: #fff;
   --done_background: #9fbeb2;
   --nav_text: rgba(39, 41, 45, 1);
@@ -10984,6 +10985,7 @@ textarea.form-control-lg {
 
 :root[data-theme=dark] {
   --nav_background: rgb(39, 41, 45);
+  --border_color: #181818;
   --card_color: #272727;
   --done_background: #232a23;
   --nav_text: rgba(255, 255, 255, .55);
@@ -11028,10 +11030,14 @@ body, .table, .form-select, .input-group-text, .btn-outline-dark, .btn-outline-d
 
 .page-link {
   background-color: var(--card_color) !important;
-  border-color: var(--nav_background) !important;
+  border-color: var(--border_color) !important;
 }
 
 .page-item.active .page-link {
   background-color: var(--bs-blue) !important;
   border-color: var(--bs-blue) !important;
+}
+
+.border-bottom {
+  border-color: var(--border_color) !important;
 }

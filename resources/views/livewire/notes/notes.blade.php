@@ -12,64 +12,7 @@
             </button>
         </div>
         <div class="collapse mb-3" id="noteFilters">
-            <form class="card card-body">
-                <div class="text-center h3">
-                    Выберите нужные вам фильтры
-                </div>
-                <div>
-                    <div class="h4 text-center">Порядок показа заметок</div>
-                    <div class="mt-3 d-flex flex-column align-items-center">
-
-                        <div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="notesOrderFilter" id="inIdOrderFilter" value="filter1" checked>
-                                <label class="form-check-label" for="inIdOrderFilter">
-                                    В порядке добавления
-                                </label>
-                            </div>
-                            @can('manage_data', App\Models\Permission::class)
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input noteFilterCheckbox" type="checkbox" value="filter6" id="showAllUsers" checked>
-                                    <label class="form-check-label" for="showAllUsers">
-                                        Показать чужие заметки
-                                    </label>
-                                </div>
-                            @endcan
-                        </div>
-
-                        <div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="notesOrderFilter" id="userNotesFilter" value="filter2">
-                                <label class="form-check-label" for="userNotesFilter">
-                                    Сначала мои заметки
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input noteFilterCheckbox" type="checkbox" value="filter4" id="showUserNotesFilter" checked>
-                                <label class="form-check-label" for="showUserNotesFilter">
-                                    Показывать мои заметки
-                                </label>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="notesOrderFilter" id="memberNotesFilter" value="filter3">
-                                <label class="form-check-label" for="memberNotesFilter">
-                                    Сначала заметки, где я участник
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input noteFilterCheckbox" type="checkbox" value="filter5" id="showMemberNotesFilter" checked>
-                                <label class="form-check-label" for="showMemberNotesFilter">
-                                    Показывать заметки, где я участник
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn btn-outline-success mt-3">Применить фильтры</button>
-            </form>
+            <livewire:notes.notes-filters :wire:key="'filters'"/>
         </div>
     @endif
 
