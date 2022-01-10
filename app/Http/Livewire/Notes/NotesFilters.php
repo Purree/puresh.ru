@@ -12,21 +12,31 @@ class NotesFilters extends Component
 {
     use AuthorizesRequests;
 
-    protected array $rules = [
-        'notesOrderFilter' => ['required', 'in:memberNotes,userNotes,inIdOrder'],
-        'filters' => ['required', 'array:showAllUsers,showMemberNotes,showUserNotes'],
-    ];
+    protected function rules()
+    {
+        return [
+            'notesOrderFilter' => ['required', "in:" . implode(',', $this->allOrderFilters)],
+            'filters' => ['required', 'array:' . implode(',', $this->allOptionalFilters)],
+        ];
+    }
+
+    protected array $allOrderFilters = ['memberNotes', 'userNotes', 'inIdOrder'];
+    protected array $allOptionalFilters = ['showAllUsers', 'showMemberNotes', 'showUserNotes'];
 
     public string $notesOrderFilter;
     public array $filters;
 
+
     public function render()
     {
-        $this->notesOrderFilter = 'inIdOrder';
-        $this->filters = ['showAllUsers' => 'true', 'showMemberNotes' => 'true', 'showUserNotes' => 'true'];
+        $this->notesOrderFilter = $this->allOrderFilters[2];
+
+//              ['showAllUsers' => 'true', 'showMemberNotes' => 'true', 'showUserNotes' => 'true'];
+        $this->filters = array_map(static fn($v) => 'true', array_flip($this->allOptionalFilters));
 
         return view('livewire.notes.notes-filters');
     }
+
 
     public function changeNoteFilters()
     {
@@ -37,28 +47,36 @@ class NotesFilters extends Component
 
         if (!array_filter($this->filters)) {
             session()->flash('error', "Вы не выбрали ни одного фильтра");
+
             return false;
         }
 
         $this->getNotes();
     }
 
-    private function getNotes() {
+
+    private function getNotes()
+    {
         $notes = Note::with('user', 'images');
         if (!array_key_exists('showAllUsers', $this->filters) || $this->filters['showAllUsers'] === false) {
-            if($this->filters['showUserNotes']) {
+            if ($this->filters['showUserNotes']) {
                 $notes = $notes->where('user_id', Auth::id());
             }
 
-            if($this->filters['showMemberNotes']) {
-                $notes = $notes->whereRelation('user', 'user_id', '=', Auth::id());
+            if ($this->filters['showMemberNotes']) {
+                $notes = $notes->orWhereRelation('user', 'user_id', '=', Auth::id());
             }
         }
 
         if ($this->notesOrderFilter === 'userNotes') {
-            $notes->orderBy("id");
         }
 
         dd($this->notesOrderFilter, $this->filters);
-    } // TODO: Мake order by selected by user method
+    } // TODO: Make order by selected by user method
+
+
+    private function removeMutuallyExclusiveFilters()
+    {
+    }
+
 }
