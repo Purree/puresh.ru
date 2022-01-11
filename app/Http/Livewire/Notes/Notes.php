@@ -7,6 +7,7 @@ use App\Models\Note;
 use App\Models\Permission;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
@@ -18,14 +19,14 @@ class Notes extends Component
     use WithPagination;
     use CheckIsPaginatorPageExists;
 
-    protected object $notes;
+    protected object|array $notes;
     protected object $paginator;
     protected string $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['setDeletedId'];
+    protected $listeners = ['setDeletedId', 'changeFilters' => 'getNotes'];
 
     public array $deletedNote = [];
-
+    public bool $filtered = false;
 
 
     public function mount() {
@@ -34,20 +35,25 @@ class Notes extends Component
 
     public function render()
     {
-        if(Gate::allows('manage_data', Permission::class)){
-            $this->notes = Note::with('user', 'images')->paginate(10);
-        } else {
-            $this->notes = Note::with('user', 'images')
-                ->where('user_id', Auth::id())
-                ->orWhereRelation('user', 'user_id', '=', Auth::id())
-                ->paginate(10);
+        if (!$this->filtered) {
+            if (Gate::allows('manage_data', Permission::class)) {
+                $this->notes = Note::with('user', 'images')->paginate(10);
+            } else {
+                $this->notes = Note::with('user', 'images')
+                    ->where('user_id', Auth::id())
+                    ->orWhereRelation('user', 'user_id', '=', Auth::id())
+                    ->paginate(10);
+            }
         }
 
 
         $this->paginator = $this->notes->onEachSide(1);
         $this->validatePageNumber($this->paginator, 'notes');
 
+        $this->filtered = false;
+
         return view('livewire.notes.notes', ['notes' => $this->notes, 'paginator' => $this->paginator]);
+
     }
 
     public function createNewNote() {
@@ -82,6 +88,37 @@ class Notes extends Component
         $this->authorize('delete', $note);
 
         $note->delete();
+    }
+
+    public function getNotes($value)
+    {
+        $notes = Note::with('user', 'images');
+
+        [$filters, $notesOrderFilter] = $value;
+
+        if (!array_key_exists('showAllUsers', $filters) || $filters['showAllUsers'] === false) {
+            if ($filters['showUserNotes']) {
+                $notes = $notes->where('user_id', Auth::id());
+            }
+
+            if ($filters['showMemberNotes']) {
+                $notes = $notes->orWhereRelation('user', 'user_id', '=', Auth::id());
+            }
+        }
+
+        // Firstly return notes where owner is Auth user, after return all another
+        if ($notesOrderFilter === 'userNotes') {
+            $notes = $notes->orderBy(DB::raw('ABS(user_id-' . Auth::id() . ')'));
+        }
+
+        // Firstly return notes where collaborator is Auth user, after return all another
+        if ($notesOrderFilter === 'memberNotes') {
+            $notes = $notes->join('note_user', 'notes.id', '=', 'note_user.note_id')
+                ->orderBy(DB::raw('ABS(note_user.user_id-' . Auth::id() . ')'));
+        }
+
+        $this->notes = $notes->paginate(10);
+        $this->filtered = true;
     }
 }
 
