@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Notes;
 
-use App\Http\Controllers\Traits\CheckIsPaginatorPageExists;
 use App\Models\Note;
 use App\Models\Permission;
+use App\Traits\Controller\CheckIsPaginatorPageExists;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +23,15 @@ class Notes extends Component
     protected object $paginator;
     protected string $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['setDeletedId', 'changeFilters' => 'getNotes'];
+    protected $listeners = ['setDeletedId', 'changeFilters' => 'updateNotes'];
+
+    public string $filters = '';
+    public string $orderFilter = '';
+
+    protected $queryString = [
+        'filters' => ['except' => ''],
+        'orderFilter' => ['except' => '']
+    ];
 
     public array $deletedNote = [];
     public bool $filtered = false;
@@ -90,18 +98,29 @@ class Notes extends Component
         $note->delete();
     }
 
-    public function getNotes($value)
+    public function updateNotes($dirtyFilters)
     {
         $notes = Note::with('user', 'images');
 
-        [$filters, $notesOrderFilter] = $value;
+        [$filters, $notesOrderFilter] = $dirtyFilters;
+
+        $tempFilters = [];
+        foreach ($filters as $key => $value) {
+            if ($value !== false) {
+                $tempFilters[] = $key;
+            }
+        }
+        $this->filters = implode(',', $tempFilters);
+        unset($tempFilters);
+
+        $this->orderFilter = $notesOrderFilter;
 
         if (!array_key_exists('showAllUsers', $filters) || $filters['showAllUsers'] === false) {
-            if ($filters['showUserNotes']) {
+            if (isset($filters['showUserNotes']) && $filters['showUserNotes']) {
                 $notes = $notes->where('user_id', Auth::id());
             }
 
-            if ($filters['showMemberNotes']) {
+            if (isset($filters['showMemberNotes']) && $filters['showMemberNotes']) {
                 $notes = $notes->orWhereRelation('user', 'user_id', '=', Auth::id());
             }
         }

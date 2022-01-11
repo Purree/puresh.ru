@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Traits;
+namespace App\Traits\Controller;
 
 use Illuminate\Http\Exceptions\HttpResponseException;
 

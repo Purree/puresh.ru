@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Events;
 
-use App\Http\Controllers\Traits\CheckIsPaginatorPageExists;
 use App\Models\Event;
 use App\Models\Permission;
+use App\Traits\Controller\CheckIsPaginatorPageExists;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;

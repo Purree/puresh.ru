@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Traits\CheckIsPaginatorPageExists;
 use App\Models\Permission;
 use App\Models\User;
+use App\Traits\Controller\CheckIsPaginatorPageExists;
 use Illuminate\Contracts\View\View;
 
 class AdminController extends Controller
