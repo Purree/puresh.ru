@@ -13,22 +13,15 @@ use Livewire\Component;
 
 class NotesFilters extends Component
 {
-    use NotesFiltersTrait;
+    public string $notesOrderFilter;
+    public array $filters;
 
-    protected $listeners = ['test'=>'test'];
-
+    public function changeNoteFilters() {
+        $this->emitUp('changeFilters', $this->filters, $this->notesOrderFilter);
+    }
 
     public function render()
     {
-        if (isset($_GET['filters'], $_GET['orderFilter'])) {
-            $this->changeNoteFilters($_GET['filters'], $_GET['orderFilter']);
-        } else {
-            $this->notesOrderFilter = $this->allOrderFilters[2];
-
-    //      ['showAllUsers' => 'true', 'showMemberNotes' => 'true', 'showUserNotes' => 'true'];
-            $this->filters = NotesFiltersService::associateFilters($this->allOptionalFilters);
-        }
-
         return view('livewire.notes.notes-filters');
     }
 } // TODO: Work with get params

@@ -12,7 +12,7 @@
             </button>
         </div>
         <div class="collapse mb-3" id="noteFilters">
-            <livewire:notes.notes-filters :wire:key="'filters'"/>
+            <livewire:notes.notes-filters :wire:key="'filters'" :notesOrderFilter="$notesOrderFilter" :filters="$filters"/>
         </div>
     @endif
 

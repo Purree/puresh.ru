@@ -4,7 +4,9 @@ namespace App\Http\Livewire\Notes;
 
 use App\Models\Note;
 use App\Models\Permission;
+use App\Services\Livewire\NotesFiltersService;
 use App\Traits\Controller\CheckIsPaginatorPageExists;
+use App\Traits\Livewire\NotesFiltersTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,27 +17,27 @@ use Livewire\WithPagination;
 
 class Notes extends Component
 {
+    use NotesFiltersTrait;
     use AuthorizesRequests;
     use WithPagination;
     use CheckIsPaginatorPageExists;
 
-    protected object|array $notes;
+    protected \Illuminate\Contracts\Pagination\LengthAwarePaginator $notes;
     protected object $paginator;
     protected string $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['setDeletedId', 'changeFilters' => 'updateNotes'];
+    protected $listeners = ['setDeletedId', 'changeFilters' => 'changeNoteFilters', 'refreshNotes' => '$refresh'];
 
-    public string $filters = '';
+    public string $filtersString = '';
     public string $orderFilter = '';
 
     protected $queryString = [
-        'filters' => ['except' => ''],
-        'orderFilter' => ['except' => '']
+        'orderFilter' => ['except' => ''],
+        'filtersString',
     ];
 
     public array $deletedNote = [];
     public bool $filtered = false;
-
 
     public function mount() {
         $this->updatePageNumber();
@@ -43,6 +45,23 @@ class Notes extends Component
 
     public function render()
     {
+        if (isset($_GET['filtersString'], $_GET['orderFilter'])) {
+            $this->changeNoteFilters($_GET['filtersString'], $_GET['orderFilter']);
+        }
+
+        if (!isset($this->notesOrderFilter)) {
+            $this->notesOrderFilter = $this->allOrderFilters[2];
+
+            $this->filtered = false;
+        }
+
+        if (!isset($this->filters)) {
+            // ['showAllUsers' => 'true', 'showMemberNotes' => 'true', 'showUserNotes' => 'true'];
+            $this->filters = NotesFiltersService::associateFilters($this->allOptionalFilters);
+
+            $this->filtered = false;
+        }
+
         if (!$this->filtered) {
             if (Gate::allows('manage_data', Permission::class)) {
                 $this->notes = Note::with('user', 'images')->paginate(10);
@@ -54,14 +73,10 @@ class Notes extends Component
             }
         }
 
-
         $this->paginator = $this->notes->onEachSide(1);
         $this->validatePageNumber($this->paginator, 'notes');
 
-        $this->filtered = false;
-
         return view('livewire.notes.notes', ['notes' => $this->notes, 'paginator' => $this->paginator]);
-
     }
 
     public function createNewNote() {
@@ -97,47 +112,5 @@ class Notes extends Component
 
         $note->delete();
     }
-
-    public function updateNotes($dirtyFilters)
-    {
-        $notes = Note::with('user', 'images');
-
-        [$filters, $notesOrderFilter] = $dirtyFilters;
-
-        $tempFilters = [];
-        foreach ($filters as $key => $value) {
-            if ($value !== false) {
-                $tempFilters[] = $key;
-            }
-        }
-        $this->filters = implode(',', $tempFilters);
-        unset($tempFilters);
-
-        $this->orderFilter = $notesOrderFilter;
-
-        if (!array_key_exists('showAllUsers', $filters) || $filters['showAllUsers'] === false) {
-            if (isset($filters['showUserNotes']) && $filters['showUserNotes']) {
-                $notes = $notes->where('user_id', Auth::id());
-            }
-
-            if (isset($filters['showMemberNotes']) && $filters['showMemberNotes']) {
-                $notes = $notes->orWhereRelation('user', 'user_id', '=', Auth::id());
-            }
-        }
-
-        // Firstly return notes where owner is Auth user, after return all another
-        if ($notesOrderFilter === 'userNotes') {
-            $notes = $notes->orderBy(DB::raw('ABS(user_id-' . Auth::id() . ')'));
-        }
-
-        // Firstly return notes where collaborator is Auth user, after return all another
-        if ($notesOrderFilter === 'memberNotes') {
-            $notes = $notes->join('note_user', 'notes.id', '=', 'note_user.note_id')
-                ->orderBy(DB::raw('ABS(note_user.user_id-' . Auth::id() . ')'));
-        }
-
-        $this->notes = $notes->paginate(10);
-        $this->filtered = true;
-    }
-}
+} // TODO: REFACTOR!!
 
