@@ -111,6 +111,8 @@ class Notes extends Component
         $this->authorize('delete', $note);
 
         $note->delete();
+
+        $this->emit('refreshNotes');
     }
 } // TODO: REFACTOR!!
 

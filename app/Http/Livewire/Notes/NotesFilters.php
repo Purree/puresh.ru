@@ -18,6 +18,7 @@ class NotesFilters extends Component
 
     public function changeNoteFilters() {
         $this->emitUp('changeFilters', $this->filters, $this->notesOrderFilter);
+        $this->emitUp('refreshNotes');
     }
 
     public function render()
