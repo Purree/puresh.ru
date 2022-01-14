@@ -35,21 +35,29 @@ trait NotesFiltersTrait
             } else {
                 $this->filters = $filters;
             }
-
             $this->notesOrderFilter = $orderFilter;
+
+            if (array_key_exists($orderFilter, $this->filterRelation)) {
+                $this->filters[$this->filterRelation[$orderFilter]] = 'true';
+            }
         }
 
         $this->validate();
-        $isFiltersValidatedSuccessful = NotesFiltersService::validateFilters($this->filters, $this->notesOrderFilter, $this->filterRelation);
-        if(!$isFiltersValidatedSuccessful){
-            throw new \Error('Incorrect filters');
+        $filtersValidation = NotesFiltersService::validateFilters(
+            $this->filters,
+            $this->notesOrderFilter,
+            $this->filterRelation
+        );
+        if (array_key_exists('error', $filtersValidation)) {
+            session()->flash('error', $filtersValidation['error']);
+            throw new \Error($filtersValidation['error']);
         }
 
-        $this->validateFiltersAndUpdateNotes([$this->filters, $this->notesOrderFilter]);
+        $this->validateFiltersAndSelectNotes([$this->filters, $this->notesOrderFilter]);
     }
 
 
-    public function validateFiltersAndUpdateNotes($dirtyFilters)
+    public function validateFiltersAndSelectNotes($dirtyFilters)
     {
         [$filters, $notesOrderFilter] = $dirtyFilters;
 
@@ -64,11 +72,12 @@ trait NotesFiltersTrait
 
         $this->orderFilter = $notesOrderFilter;
 
-        $this->updateNotesByFilters($filters, $notesOrderFilter);
+        $this->selectNotesByFilters($filters, $notesOrderFilter);
     }
 
 
-    public function updateNotesByFilters($filters, $notesOrderFilter) {
+    public function selectNotesByFilters($filters, $notesOrderFilter)
+    {
         $notes = Note::with('user', 'images');
 
         if (!array_key_exists('showAllUsers', $filters) || $filters['showAllUsers'] === false) {

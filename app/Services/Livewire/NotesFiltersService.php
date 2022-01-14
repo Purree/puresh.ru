@@ -11,16 +11,14 @@ class NotesFiltersService
         return array_map(static fn($v) => 'true', array_flip($filters));
     }
 
-    public static function validateFilters($filters, $notesOrderFilter, $filterRelation): bool
+    public static function validateFilters($filters, $notesOrderFilter, $filterRelation): array
     {
         if (array_key_exists('showAllUsers', $filters) && !\Gate::allows('manage_data', Permission::class)) {
             unset($filters['showAllUsers']);
         }
 
         if (!array_filter($filters)) {
-            session()->flash('error', "Вы не выбрали ни одного фильтра");
-
-            return false;
+            return ['error' => 'Вы не выбрали ни одного фильтра'];
         }
 
         foreach ($filterRelation as $key => $value) {
@@ -29,6 +27,6 @@ class NotesFiltersService
             }
         }
 
-        return true;
+        return ['success'];
     }
 }

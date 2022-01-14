@@ -1,4 +1,6 @@
 <div>
+    <script src="{{ asset('js/notes/onFilterChange.js') }}"></script>
+
     <form class="card card-body" wire:submit.prevent="changeNoteFilters">
         <div class="text-center h3">
             Выберите нужные вам фильтры

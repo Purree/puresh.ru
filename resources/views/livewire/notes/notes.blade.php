@@ -2,7 +2,6 @@
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
-    <script src="{{ asset('js/notes/onFilterChange.js') }}"></script>
 
     @if(!empty(current($notes)))
         <div class="d-flex justify-content-between mb-3">

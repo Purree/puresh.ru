@@ -33,7 +33,7 @@ class Notes extends Component
 
     protected $queryString = [
         'orderFilter' => ['except' => ''],
-        'filtersString',
+        'filtersString' => ['except' => ''],
     ];
 
     public array $deletedNote = [];
