@@ -197,5 +197,3 @@
         document.querySelector('#descriptionEdit').classList.remove('d-none')
     }
 </script>
-
-{{-- TODO: Photos --}}

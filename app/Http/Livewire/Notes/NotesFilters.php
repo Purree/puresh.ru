@@ -25,4 +25,4 @@ class NotesFilters extends Component
     {
         return view('livewire.notes.notes-filters');
     }
-} // TODO: Work with get params
+}

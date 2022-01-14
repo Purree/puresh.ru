@@ -96,5 +96,3 @@
         })
     </script>
 </div>
-
-{{-- TODO: Rewrite modal trigger method --}}
