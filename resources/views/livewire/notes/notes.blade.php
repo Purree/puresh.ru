@@ -3,7 +3,7 @@
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
 
-    @if(!empty(current($notes)))
+    @if($filtersString || !empty(current($notes)))
         <div class="d-flex justify-content-between mb-3">
             <button class="btn btn-outline-success w-100 me-1" wire:click="createNewNote">Добавить новую заметку</button>
             <button class="btn btn-outline-primary w-100 ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#noteFilters" aria-expanded="false">
@@ -20,7 +20,7 @@
             <livewire:notes.note :note="$note" :wire:key="$note->id"/>
         @endcan
 
-        @empty
+    @empty
 
         <div class="row h-100 justify-content-center my-5 mt-5">
             <div class="col-md-12">
@@ -28,17 +28,21 @@
                     <div class="card-body border-bottom rounded-top">
                         <div class="mx-3 my-3">
                             <h3 class="h3 my-4">
-                                У вас пока нет заметок
+                                У вас пока нет
+                                заметок{{ $filtersString ? ', возможно, это связано с применёнными фильтрами, попробуйте поискать заметки без фильтров' : '' }}
                             </h3>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="mx-3 my-3">
-                            <div class="text">
-                                Но вы можете <a href="#" wire:click="createNewNote">создать</a> новую заметку
+                    @if (!$filtersString)
+                        <div class="card-body">
+                            <div class="mx-3 my-3">
+                                <div class="text">
+                                    Но вы можете <a href="#" wire:click="createNewNote">создать</a> новую
+                                    заметку
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
