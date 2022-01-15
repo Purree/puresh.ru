@@ -14,6 +14,10 @@ class NotesFilters extends Component
         $this->emitUp('refreshNotes');
     }
 
+    public function searchWithoutFilters() {
+        $this->emitUp('clearFilters');
+    }
+
     public function render()
     {
         return view('livewire.notes.notes-filters');

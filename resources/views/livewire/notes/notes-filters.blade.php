@@ -73,6 +73,9 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-outline-success mt-3 apply-filters">Применить фильтры</button>
+        <div class="d-flex flex-row mt-3">
+            <button class="btn btn-outline-success apply-filters w-100 me-1">Применить фильтры</button>
+            <button wire:click.prevent="searchWithoutFilters" class="btn btn-outline-danger w-100 ms-1">Поиск без фильтров</button>
+        </div>
     </form>
 </div>

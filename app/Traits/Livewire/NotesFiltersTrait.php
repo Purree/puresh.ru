@@ -104,4 +104,14 @@ trait NotesFiltersTrait
         $this->notes = $notes->paginate(10);
         $this->filtered = true;
     }
+
+    public function clearFilters()
+    {
+        $this->filters = [];
+        $this->filtersString = '';
+        $this->notesOrderFilter = '';
+        $this->orderFilter = '';
+        $this->filtered = false;
+        $this->emitSelf('refreshNotes');
+    }
 } // TODO: REFACTOR!!

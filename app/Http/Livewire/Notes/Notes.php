@@ -9,7 +9,6 @@ use App\Traits\Controller\CheckIsPaginatorPageExists;
 use App\Traits\Livewire\NotesFiltersTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
@@ -26,7 +25,12 @@ class Notes extends Component
     protected object $paginator;
     protected string $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['setDeletedId', 'changeFilters' => 'changeNoteFilters', 'refreshNotes' => '$refresh'];
+    protected $listeners = [
+        'setDeletedId',
+        'changeFilters' => 'changeNoteFilters',
+        'refreshNotes' => '$refresh',
+        'clearFilters' => 'clearFilters',
+    ];
 
     public string $filtersString = '';
     public string $orderFilter = '';
