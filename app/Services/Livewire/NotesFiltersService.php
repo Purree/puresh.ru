@@ -11,7 +11,7 @@ class NotesFiltersService
         return array_map(static fn($v) => 'true', array_flip($filters));
     }
 
-    public static function validateFilters($filters, $notesOrderFilter, $filterRelation): array
+    public static function validateFilters(&$filters, $notesOrderFilter, $filterRelation): array
     {
         if (array_key_exists('showAllUsers', $filters) && !\Gate::allows('manage_data', Permission::class)) {
             unset($filters['showAllUsers']);

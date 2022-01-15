@@ -2,13 +2,6 @@
 
 namespace App\Http\Livewire\Notes;
 
-use App\Models\Note;
-use App\Models\Permission;
-use App\Services\Livewire\NotesFiltersService;
-use App\Traits\Livewire\NotesFiltersTrait;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class NotesFilters extends Component

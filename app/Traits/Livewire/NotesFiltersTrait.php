@@ -42,6 +42,12 @@ trait NotesFiltersTrait
             }
         }
 
+        $this->validateFiltersAndSelectNotes();
+    }
+
+
+    public function validateFiltersAndSelectNotes()
+    {
         $this->validate();
         $filtersValidation = NotesFiltersService::validateFilters(
             $this->filters,
@@ -53,14 +59,8 @@ trait NotesFiltersTrait
             throw new \Error($filtersValidation['error']);
         }
 
-        $this->validateFiltersAndSelectNotes([$this->filters, $this->notesOrderFilter]);
-    }
-
-
-    public function validateFiltersAndSelectNotes($dirtyFilters)
-    {
-        [$filters, $notesOrderFilter] = $dirtyFilters;
-
+        $filters = $this->filters;
+        $notesOrderFilter = $this->notesOrderFilter;
         $tempFilters = [];
         foreach ($filters as $key => $value) {
             if ($value !== false) {
