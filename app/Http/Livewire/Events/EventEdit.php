@@ -54,4 +54,8 @@ class EventEdit extends Component
 
         $this->emitUp('successfullyFinishEventEditing');
     }
+
+    public function stopEventEditing() {
+        $this->emit('stopEventEditing');
+    }
 }

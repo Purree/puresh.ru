@@ -19,7 +19,7 @@ class Event extends Component
         'is_event_recurrent' => 'required|boolean',
         'repetition_in_seconds' => 'integer|nullable',
     ];
-    protected $listeners = ['successfullyFinishEventEditing' => 'stopEventEditing'];
+    protected $listeners = ['successfullyFinishEventEditing' => 'stopEventEditing', 'stopEventEditing' => 'stopEventEditing'];
 
     public object $event;
     public array $separators;
