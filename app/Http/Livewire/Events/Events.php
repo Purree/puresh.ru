@@ -23,13 +23,17 @@ class Events extends Component
         $this->reloadTimers();
     }
 
+    public function mount() {
+        $this->updatePageNumber();
+    }
+
     public function render()
     {
         Event::validateAllDates();
 
         $events = Event::paginate(10);
         $this->paginator = $events->onEachSide(1);
-        $this->updatePageNumber();
+
         $this->validatePageNumber($this->paginator, 'events');
 
         return view('livewire.events.events', [
@@ -47,6 +51,8 @@ class Events extends Component
         $event->delete();
 
         $this->dispatchBrowserEvent('activateInactiveTimers');
+
+        $this->emit('refresh');
     }
 
     public function createNewEventButtonPressed() {
