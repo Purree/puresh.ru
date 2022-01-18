@@ -110,6 +110,7 @@ class NoteEdit extends Component
     {
         $this->validate();
         $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatchBrowserEvent('changesSaved');
 
         if(Gate::allows('update', $this->note)){
             $this->note->title = trim($this->noteTitle);

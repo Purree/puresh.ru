@@ -1,5 +1,6 @@
 <div key="note-edit">
     <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
+    <script src="{{ asset('js/notes/preventTabClosingOnNoteEditing.js') }}"></script>
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
     <script src="{{ asset('js/notes/replaceTabsInTextarea.js') }}"></script>
