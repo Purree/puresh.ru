@@ -4,6 +4,8 @@
             display: none;
         }
     </style>
+    <script src="{{ asset('js/events/preventAccidentalClosure.js') }}"></script>
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -46,8 +48,8 @@
         </div>
 
         <div class="mt-3">
-            <button class="btn btn-danger" wire:click="stopEventEditing()">Отмена</button>
-            <button class="btn btn-success" type="submit">Готово</button>
+            <button class="btn btn-danger stopEventEditing">Отмена</button>
+            <button class="btn btn-success submitEvent" type="submit">Готово</button>
             <div wire:loading>
                 <div class="spinner-border" role="status"></div>
             </div>

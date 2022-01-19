@@ -13,6 +13,8 @@ class EventEdit extends Component
 
     public object $event;
 
+    protected $listeners = ['stopEventEditing' => 'stopEventEditing'];
+
     protected array $eventEditRules = [
         'title' => 'required|max:255',
         'happen_at' => 'required|date|after:now|before:19 jun 2037',
