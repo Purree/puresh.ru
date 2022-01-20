@@ -5,6 +5,7 @@ namespace App\Models;
 use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -68,9 +69,9 @@ class User extends Authenticatable
     /**
      * Get user permissions.
      */
-    public function permissions(): HasOne
+    public function permissions(): BelongsToMany
     {
-        return $this->hasOne(Permission::class);
+        return $this->belongsToMany(Permission::class);
     }
 
 

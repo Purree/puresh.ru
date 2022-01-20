@@ -13,17 +13,19 @@
         <div class="form-group">
             <label for="name">Name </label>
             @error('name')<label class="text-danger"><p>{{ $message }}</p></label> @enderror
-            <input type="text" class="form-control" id="name" placeholder="User name" value="{{ $user->name }}" name="name" required>
+            <input type="text" class="form-control" id="name" placeholder="User name" value="{{ $user->name }}"
+                   name="name" required>
         </div>
         <div class="form-group mt-4 mb-4">
             <label for="email">Email</label>
             @error('email') <label class="text-danger"><p>{{ $message }}</p></label> @enderror
-            <input type="email" class="form-control" id="email" placeholder="Email" value="{{ $user->email }}" name="email" required>
+            <input type="email" class="form-control" id="email" placeholder="Email" value="{{ $user->email }}"
+                   name="email" required>
         </div>
         @foreach($permissions as $permission)
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="{{ $permission }}" name="{{ $permission }}"
-                       placeholder="{{ $permission }}" {{ $user->permissions->$permission ? 'checked' : '' }}>
+                       placeholder="{{ $permission }}" {{ \App\Policies\PermissionPolicy::isUserHasPermission($user, $permission) ? 'checked' : '' }}>
                 <label class="form-check-label" for="{{ $permission }}">{{ $permission }}</label>
             </div>
         @endforeach

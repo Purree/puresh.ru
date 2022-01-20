@@ -20,6 +20,7 @@ class AdminController extends Controller
     {
         $users = User::with('permissions')->paginate(15);
         $allPermissions = Permission::getAll();
+
         $this->updatePageNumber();
         $this->validatePageNumber($users, 'admin.main');
 

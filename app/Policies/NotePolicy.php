@@ -3,9 +3,11 @@
 namespace App\Policies;
 
 use App\Models\Note;
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Gate;
 
 class NotePolicy
 {
@@ -19,7 +21,7 @@ class NotePolicy
      */
     public function before(User $user)
     {
-        if ($user->permissions->is_admin) {
+        if (Gate::allows('manage_data', Permission::class)) {
             return true;
         }
     }
@@ -32,7 +34,7 @@ class NotePolicy
      */
     public function viewAny(User $user): Response|bool
     {
-        return $user->permissions->notes;
+        return Gate::allows('see_notes', Permission::class);
     }
 
     /**

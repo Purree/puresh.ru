@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Permission;
 use App\Models\User;
+use App\Policies\PermissionPolicy;
 use Livewire\Component;
 
 class EditUser extends Component
@@ -11,6 +13,7 @@ class EditUser extends Component
         'name' => 'required|max:255',
         'email' => 'required|email'
     ];
+    protected array $allPermissions;
 
     public object $user;
     public array $permissions;
@@ -49,6 +52,8 @@ class EditUser extends Component
 
     public function editUser($submit)
     {
+        $this->allPermissions = Permission::getAll();
+
         $this->parseData($submit);
         $this->user->name = $this->name;
         $this->user->email = $this->email;
@@ -62,7 +67,19 @@ class EditUser extends Component
         }
 
         foreach ($this->givenPermissions as $permission => $value) {
-            $this->user->permissions->$permission = $value;
+            if (!in_array($permission, $this->allPermissions, true)) {
+                continue;
+            }
+
+            // If set permission
+            if ($value && !PermissionPolicy::isUserHasPermission($this->user, $permission)) {
+                $this->user->permissions()->attach(array_search($permission, $this->allPermissions, true) + 1);
+            }
+
+            // If delete permission
+            if (!$value && PermissionPolicy::isUserHasPermission($this->user, $permission)) {
+                $this->user->permissions()->detach(array_search($permission, $this->allPermissions, true) + 1);
+            }
         }
 
         $this->user->push();

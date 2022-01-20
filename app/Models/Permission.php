@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Self_;
 
 class Permission extends Model
 {
@@ -27,37 +29,21 @@ class Permission extends Model
      */
     protected $guarded = ['id'];
 
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'is_admin' => 'boolean',
-        'notes' => 'boolean',
-    ];
-
-    private const INVISIBLE_COLS = ['user_id', 'id'];
-
     /**
      * Get the user who owns the permissions
      *
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function user(): BelongsTo
+    public function users(): BelongsToMany
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsToMany('App\User');
     }
 
     /**
-     * Get names of all columns (except user_id)
+     * Get names of all permissions
      */
     public static function getAll(): array
     {
-        // Get all column names
-        $columnList = Schema::getColumnListing('permissions');
-        // Delete user_id from columns
-        return array_diff($columnList, self::INVISIBLE_COLS);
+        return self::all('name')->pluck('name')->toArray();
     }
 }
