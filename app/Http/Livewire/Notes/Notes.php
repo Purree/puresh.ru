@@ -77,6 +77,10 @@ class Notes extends Component
             }
         }
 
+        if (!isset($this->notes) && $this->filtered) {
+            $this->changeNoteFilters($this->filters, $this->notesOrderFilter);
+        }
+
         $this->paginator = $this->notes->onEachSide(1);
         $this->validatePageNumber($this->paginator, 'notes');
 
