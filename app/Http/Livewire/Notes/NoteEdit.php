@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\MessageBag;
 use Livewire\Component;
@@ -43,8 +44,9 @@ class NoteEdit extends Component
     public function mount($id): void
     {
         $this->note = Note::findOrFail($id);
-
-        $this->previous = url()->previous() !== url()->current() ? url()->previous() : route('notes');
+        if (!isset($this->previous)) {
+            $this->previous = url()->previous() !== url()->current() ? url()->previous() : route('notes');
+        }
 
         $this->noteTitle = $this->note->title;
         $this->noteDescription = $this->note->text;

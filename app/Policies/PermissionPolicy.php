@@ -18,8 +18,7 @@ class PermissionPolicy
     /**
      * Perform pre-authorization checks.
      *
-     * @param User $user
-     * @param string $ability
+     * @param  User  $user
      * @return void|bool
      */
     public function before(User $user)
