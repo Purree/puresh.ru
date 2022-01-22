@@ -36,6 +36,11 @@
                 <a class="nav-link {{ Route::is('events') ? 'active fw-bold' : '' }}" href="{{ route('events') }}">События</a>
             </li>
         @endcan
+        @can('see_randomizer', App\Models\Permission::class)
+            <li class="nav-item">
+                <a class="nav-link {{ Route::is('randomizer') ? 'active fw-bold' : '' }}" href="{{ route('randomizer') }}">Рандомизатор</a>
+            </li>
+        @endcan
 
     </x-header>
     <x-check-browser-support></x-check-browser-support>

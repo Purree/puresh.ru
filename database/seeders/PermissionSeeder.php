@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
 {
-    protected array $permissions = ['is_admin', 'notes', 'events'];
+    protected array $permissions = ['is_admin', 'notes', 'events', 'randomize'];
 
     /**
      * Run the database seeds.

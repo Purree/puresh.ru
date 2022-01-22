@@ -49,6 +49,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
         Route::get('/events', App\Http\Livewire\Events\Events::class)
             ->name('events');
     });
+
+    Route::middleware('can:see_randomizer, App\Models\Permission')->group(function() {
+        Route::view('/random', 'random.randomizer')
+            ->name('randomizer');
+    });
 });
 
 

@@ -42,4 +42,9 @@ class PermissionPolicy
     {
         return self::isUserHasPermission($user, 'events');
     }
+
+    public function see_randomizer(User $user): bool
+    {
+        return self::isUserHasPermission($user, 'randomize');
+    }
 }
