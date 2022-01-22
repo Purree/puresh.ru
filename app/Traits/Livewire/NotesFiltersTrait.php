@@ -97,8 +97,18 @@ trait NotesFiltersTrait
 
         // Firstly return notes where collaborator is Auth user, after return all another
         if ($notesOrderFilter === 'memberNotes') {
-            $notes = $notes->join('note_user', 'notes.id', '=', 'note_user.note_id')
-                ->orderBy(DB::raw('ABS(note_user.user_id-' . Auth::id() . ')'));
+            $noteIds = [];
+            foreach ($notes->get()->reverse() as $note) {
+                if (in_array(1, $note->user->pluck('id')->toArray(), true)) {
+                    array_unshift($noteIds, $note->id);
+                } else {
+                    $noteIds[] = $note->id;
+                }
+            }
+            $notes = $notes->whereIn('id', $noteIds);
+            // DEPRECATED:
+//            $notes = $notes->join('note_user', 'notes.id', '=', 'note_user.note_id')
+//                ->orderBy(DB::raw('ABS(note_user.user_id-' . Auth::id() . ')'));
         }
 
         $this->notes = $notes->paginate(10);
