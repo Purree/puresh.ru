@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     randomTo
                 );
     }
-    randomInteger(1, 5);
 })
 
 function randomFormValidation (randomFrom, randomTo, randomFromElement, randomToElement, changeButtonTimeouts, generateButton, generateButtonText) {
