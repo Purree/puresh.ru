@@ -37,14 +37,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     randomizedChances[randomizedIndex] = 1
             }
 
-            // Todo: Print result into interface, limit max and min input limits
+            // Todo: Make calculation async, limit max and min input limits
             if (parseInt(chances[String(randomizedIndex)][0]) === randomizedChances[randomizedIndex]) {
-                console.log(randomizedChances, chances[String(randomizedIndex)])
+                const resultOutput = document.querySelector('.random-selecting-result')
+                resultOutput.innerText = chances[String(randomizedIndex)][1]
+
+                resultOutput.style = "transform: rotate(360deg); transition-duration: 0.2s;"
+                setTimeout(() => {
+                    resultOutput.style = ""
+                }, 200)
                 break
             }
 
             previousIndex = randomizedIndex
-            console.log(randomizedChances, randomizedIndex)
         }
     }
 
@@ -67,8 +72,6 @@ function generateChancesObject() {
         const inputWord = input.parentNode.parentNode.parentNode.querySelector('.random-word').value
         const inputId = input.parentNode.parentNode.parentNode.querySelector('.selecting-random-id').innerText
         chances[String(iteration)] = [input.value, inputWord, inputId]
-        // input.value
-        // console.log(input.parentNode.parentNode.parentNode)
     })
     return chances
 }

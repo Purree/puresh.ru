@@ -28,6 +28,8 @@
             </form>
         </div>
     </div>
+
+    {{-- Select random varaint --}}
     <form class="card-body rounded mt-3">
         <div>
             <div class="selected-randomizer-container">
@@ -78,6 +80,9 @@
             <div class="d-flex flex-column">
                 <button class="btn btn-outline-light mt-2 add-new-variant-button">Добавить новый вариант</button>
                 <button class="btn btn-outline-light mt-2 select-random-button">Выбрать</button>
+                <div class="random-selecting-result text-center h3">
+
+                </div>
             </div>
         </div>
     </form>
