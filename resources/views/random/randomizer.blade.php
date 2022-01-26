@@ -53,7 +53,7 @@
                             </a>
                         </label>
                         <div class="d-flex">
-                            <input class="form-control random-chance" type="number" minlength="1" id="selectRandomElementNumber">
+                            <input class="form-control random-chance" type="number" min="1" max="10" id="selectRandomElementNumber" value="1">
                         </div>
                     </div>
                 </div>
@@ -70,8 +70,7 @@
 
                     <div class="w-50 text-center">
                         <label class="d-flex chance-container">
-                            <input class="form-control random-chance" type="number" minlength="1">
-
+                            <input class="form-control random-chance" type="number" min="1" max="10" value="1">
                         </label>
                     </div>
                 </div>
@@ -80,7 +79,7 @@
             <div class="d-flex flex-column">
                 <button class="btn btn-outline-light mt-2 add-new-variant-button">Добавить новый вариант</button>
                 <button class="btn btn-outline-light mt-2 select-random-button">Выбрать</button>
-                <div class="random-selecting-result text-center h3">
+                <div class="random-selecting-result text-center h3 text-break">
 
                 </div>
             </div>

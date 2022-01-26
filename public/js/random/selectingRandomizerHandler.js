@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     randomizedChances[randomizedIndex] = 1
             }
 
-            // Todo: Make calculation async, limit max and min input limits
+            // Todo: Make calculation async
             if (parseInt(chances[String(randomizedIndex)][0]) === randomizedChances[randomizedIndex]) {
                 const resultOutput = document.querySelector('.random-selecting-result')
                 resultOutput.innerText = chances[String(randomizedIndex)][1]
@@ -71,7 +71,13 @@ function generateChancesObject() {
     document.querySelectorAll('.random-chance').forEach((input, iteration) => {
         const inputWord = input.parentNode.parentNode.parentNode.querySelector('.random-word').value
         const inputId = input.parentNode.parentNode.parentNode.querySelector('.selecting-random-id').innerText
-        chances[String(iteration)] = [input.value, inputWord, inputId]
+        let inputValue = input.value
+
+        if (!inputValue) {
+            inputValue = 1
+        }
+
+        chances[String(iteration)] = [inputValue, inputWord, inputId]
     })
     return chances
 }
