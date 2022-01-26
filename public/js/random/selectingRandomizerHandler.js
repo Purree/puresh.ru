@@ -19,42 +19,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('.select-random-button').onclick = (event) => {
         event.preventDefault()
+
         const chances = generateChancesObject()
+        const resultOutput = document.querySelector('.random-selecting-result')
 
-        const randomizedChances = {}
-        let previousIndex
-
-        while (true) {
-            const randomizedIndex = randomInteger(0, Object.keys(chances).length-1)
-            let valueOfCurrentRandomizedChance = randomizedChances[randomizedIndex]
-
-            if (!valueOfCurrentRandomizedChance) {
-                randomizedChances[randomizedIndex] = 1
-            } else {
-                if (previousIndex === randomizedIndex)
-                    randomizedChances[randomizedIndex] += 1
-                else
-                    randomizedChances[randomizedIndex] = 1
+        for (const [, chanceValue] of Object.entries(chances)) {
+            if (parseInt(chanceValue[0]) > 10) {
+                resultOutput.innerText = 'Значение шанса должно быть меньше 10'
+                return;
             }
-
-            // Todo: Make calculation async
-            if (parseInt(chances[String(randomizedIndex)][0]) === randomizedChances[randomizedIndex]) {
-                const resultOutput = document.querySelector('.random-selecting-result')
-                resultOutput.innerText = chances[String(randomizedIndex)][1]
-
-                resultOutput.style = "transform: rotate(360deg); transition-duration: 0.2s;"
-                setTimeout(() => {
-                    resultOutput.style = ""
-                }, 200)
-                break
-            }
-
-            previousIndex = randomizedIndex
         }
+
+        resultOutput.innerText = selectRandomVariant(chances)
+
+            resultOutput.style = "transform: rotate(360deg); transition-duration: 0.2s;"
+        setTimeout(() => {
+            resultOutput.style = ""
+        }, 200)
+
     }
 
     updateDeleteButtons()
 })
+
+function selectRandomVariant(chances) {
+    const randomizedChances = {}
+    let previousIndex
+
+    while (true) {
+        const randomizedIndex = randomInteger(0, Object.keys(chances).length-1)
+        let valueOfCurrentRandomizedChance = randomizedChances[randomizedIndex]
+
+        if (!valueOfCurrentRandomizedChance) {
+            randomizedChances[randomizedIndex] = 1
+        } else {
+            if (previousIndex === randomizedIndex)
+                randomizedChances[randomizedIndex] += 1
+            else
+                randomizedChances[randomizedIndex] = 1
+        }
+
+        if (parseInt(chances[String(randomizedIndex)][0]) === randomizedChances[randomizedIndex]) {
+            return chances[String(randomizedIndex)][1]
+        }
+
+        previousIndex = randomizedIndex
+    }
+}
 
 function updateDeleteButtons() {
     document.querySelectorAll('.delete-variant-button').forEach((button) => {
