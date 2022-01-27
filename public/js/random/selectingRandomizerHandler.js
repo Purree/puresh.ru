@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputsCount++
         selectingBlockExample.querySelector('.selecting-random-id').innerText = inputsCount
         if (!selectingBlockExample.querySelector('.delete-variant-button'))
-            selectingBlockExample.querySelector('.chance-container').innerHTML += "<button class=\"btn btn-light delete-variant-button\"><i class=\"bi bi-backspace\"></i></button>";
+            selectingBlockExample.querySelector('.chance-container').innerHTML += "<button class=\"btn btn-dynamic delete-variant-button\"><i class=\"bi bi-backspace\"></i></button>";
 
         container.appendChild(selectingBlockExample)
         updateDeleteButtons()

@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="d-flex flex-column mb-1">
-                    <button class="btn btn-outline-light generate-random-number-button">Сгенерировать</button>
+                    <button class="btn btn-outline-dynamic generate-random-number-button">Сгенерировать</button>
                 </div>
                 <div class="text-center h2 random-result"></div>
             </form>
@@ -77,8 +77,8 @@
 
             </div>
             <div class="d-flex flex-column">
-                <button class="btn btn-outline-light mt-2 add-new-variant-button">Добавить новый вариант</button>
-                <button class="btn btn-outline-light mt-2 select-random-button">Выбрать</button>
+                <button class="btn btn-outline-dynamic mt-2 add-new-variant-button">Добавить новый вариант</button>
+                <button class="btn btn-outline-dynamic mt-2 select-random-button">Выбрать</button>
                 <div class="random-selecting-result text-center h3 text-break">
 
                 </div>
