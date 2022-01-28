@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.appendChild(selectingBlockExample)
         updateDeleteButtons()
+        updateChanceInputsOnChange()
     }
 
     document.querySelector('.select-random-button').onclick = (event) => {
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateDeleteButtons()
+    updateChanceInputsOnChange()
 })
 
 function selectRandomVariant(chances) {
@@ -91,4 +93,22 @@ function generateChancesObject() {
         chances[String(iteration)] = [inputValue, inputWord, inputId]
     })
     return chances
+}
+
+function updateChanceInputsOnChange() {
+    document.querySelectorAll('.random-chance').forEach((input) => {
+        input.onchange = () => {
+            let inputValue = String(Math.floor(parseInt(input.value)))
+
+            if (inputValue > 10) {
+                inputValue = 10
+            }
+
+            if (inputValue < 1) {
+                inputValue = 1
+            }
+
+            input.value = inputValue
+        }
+    })
 }
