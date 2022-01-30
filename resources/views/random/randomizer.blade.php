@@ -76,10 +76,10 @@
                 </div>
 
             </div>
-            <div class="d-flex flex-column">
-                <button class="btn btn-outline-dynamic mt-2 add-new-variant-button">Добавить новый вариант</button>
-                <button class="btn btn-outline-dynamic mt-2 select-random-button">Выбрать</button>
-                <div class="random-selecting-result text-center h3 text-break">
+            <div class="d-flex flex-column align-items-center">
+                <button class="btn btn-outline-dynamic mt-2 add-new-variant-button w-100">Добавить новый вариант</button>
+                <button class="btn btn-outline-dynamic mt-2 select-random-button w-100">Выбрать</button>
+                <div class="random-selecting-result h3 text-break">
 
                 </div>
             </div>
