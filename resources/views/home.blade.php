@@ -41,7 +41,7 @@
 
         <div class="informationSection" data-id="2">
             <h2 id="technologies" class="anchor text-center mb-4 mt-4 fw-bold">
-                Технологии, которые я знаю
+                Технологии, с которыми я работал
             </h2>
             <div class="row justify-content-around align-items-center">
                 <div class="col-30 tech_img">
