@@ -18,7 +18,7 @@ class AdminController extends Controller
 
     public function showAllUsers()
     {
-        $users = User::with('permissions')->paginate(15);
+        $users = User::with('permissions', 'notes')->paginate(15);
         $allPermissions = Permission::getAll();
 
         $this->updatePageNumber();
@@ -33,7 +33,7 @@ class AdminController extends Controller
     public function editUser()
     {
         $userId = request()->userId;
-        if(is_null($userId)){
+        if (is_null($userId)) {
             return redirect()->route('admin.main');
         }
 

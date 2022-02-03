@@ -30,7 +30,7 @@
                         </thead>
                         <tbody>
                         @foreach($users as $user)
-                            <tr>
+                            <tr class="table-dark">
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
@@ -44,6 +44,12 @@
                                 <td><a href="{{ route('admin.editUser', ['userId'=>$user->id]) }}" class="btn btn-warning">Редактировать</a></td>
                                 <td><livewire:admin.delete-user :user="$user" :page="request()->fullUrl()"/></td>  {{-- Удаление --}}
                             </tr>
+                            @foreach($user->notes as $note)
+                                <tr>
+                                    <td>{{ $note->id }}</td>
+                                    <td colspan="10">{{ $note->title }}</td>
+                                </tr>
+                            @endforeach
                         @endforeach
                         </tbody>
                     </table>
