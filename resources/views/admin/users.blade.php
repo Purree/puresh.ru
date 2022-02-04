@@ -14,7 +14,7 @@
                     <table id="example2" class="table table-bordered dataTable dtr-inline" role="grid"
                            aria-describedby="example2_info">
                         <thead>
-                        <tr role="row">
+                        <tr role="row" class="table-dark">
                             <th>ID</th>
                             <th>Ник</th>
                             <th>Почта</th>
@@ -45,7 +45,7 @@
                                 <td><livewire:admin.delete-user :user="$user" :page="request()->fullUrl()"/></td>  {{-- Удаление --}}
                             </tr>
                             @foreach($user->notes as $note)
-                                <tr>
+                                <tr class="bg-primary">
                                     <td>{{ $note->id }}</td>
                                     <td colspan="10">{{ $note->title }}</td>
                                 </tr>
