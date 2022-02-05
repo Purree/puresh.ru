@@ -33,9 +33,20 @@
             <input type="checkbox" class="form-check-input" id="deletePhoto" name="deletePhoto">
             <label class="form-check-label" for="deletePhoto">Delete user photo</label>
         </div>
-        <button type="submit" class="btn btn-primary mt-2">
-            Submit
-            <span class="spinner-border spinner-border-sm" role="status" wire:loading></span>
-        </button>
+
+        <div>
+            @if ($user->is_banned)
+                <button wire:click.prevent="unban" class="btn btn-success">Разбанить</button>
+            @else
+                <button wire:click.prevent="ban" class="btn btn-danger">Забанить</button>
+            @endif
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary mt-2">
+                Submit
+                <span class="spinner-border spinner-border-sm" role="status" wire:loading></span>
+            </button>
+        </div>
     </form>
 </div>

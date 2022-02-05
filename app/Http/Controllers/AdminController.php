@@ -41,7 +41,7 @@ class AdminController extends Controller
 
         return view('admin.editUser', [
             'user' => User::with('permissions')->findOrFail($userId),
-            'permissions' => $allPermissions
+            'permissions' => $allPermissions,
         ]);
     }
 }

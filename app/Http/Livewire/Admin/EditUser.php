@@ -86,4 +86,16 @@ class EditUser extends Component
 
         return redirect($this->page)->with('message',"Пользователь #{$this->user->id} ({$this->user->name}) успешно отредактирован.");
     }
+
+    public function ban()
+    {
+        $this->user->is_banned = true;
+        $this->user->save();
+    }
+
+    public function unban()
+    {
+        $this->user->is_banned = false;
+        $this->user->save();
+    }
 }
