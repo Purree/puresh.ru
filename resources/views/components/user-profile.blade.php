@@ -46,6 +46,9 @@
                         @else
                             Пока у вас нет прав ¯\_(ツ)_/¯
                         @endcan
+                        @if (Auth::user()->is_banned)
+                            <p class="text-danger">А ещё вы забанены</p>
+                        @endif
                     </div>
                 </div>
             </div>

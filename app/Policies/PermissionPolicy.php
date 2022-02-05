@@ -23,6 +23,10 @@ class PermissionPolicy
      */
     public function before(User $user)
     {
+        if ($user->is_banned) {
+            return false;
+        }
+
         if (self::isUserHasPermission($user, 'is_admin')) {
             return true;
         }
