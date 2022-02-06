@@ -54,9 +54,10 @@ trait NotesFiltersTrait
             $this->notesOrderFilter,
             $this->filterRelation
         );
-        if (array_key_exists('error', $filtersValidation)) {
-            session()->flash('error', $filtersValidation['error']);
-            throw new \Error($filtersValidation['error']);
+
+        if (!$filtersValidation->success) {
+            session()->flash('error', $filtersValidation->errorMessage);
+            throw new \Error($filtersValidation->errorMessage);
         }
 
         $filters = $this->filters;

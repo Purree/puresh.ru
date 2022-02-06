@@ -6,7 +6,7 @@ class FunctionResult
 {
     public bool $success;
     public mixed $returnValue;
-    public string $errorMessage;
+    public string|array $errorMessage;
 
     /**
         The constructor is private so that methods are only called statically
@@ -22,7 +22,7 @@ class FunctionResult
         $result->returnValue = $returnValue;
         return $result;
     }
-    public static function error(string $errorMessage): FunctionResult
+    public static function error(string|array $errorMessage): FunctionResult
     {
         $result = new self();
         $result->success = false;

@@ -75,7 +75,7 @@ class NoteEdit extends Component
 
     public function deleteUser($id): void
     {
-        if(Gate::allows('forceDelete', $this->note)){
+        if (Gate::allows('forceDelete', $this->note)) {
             $this->note->user()->detach($id);
             session()->flash('message', "Пользователь успешно удалён");
             $this->emit('refreshUsers');
@@ -89,15 +89,16 @@ class NoteEdit extends Component
         $this->validate($this->emailRules);
 
         $userId = User::where('email', $this->email)->first();
-        if(!$userId) {
-            // The user does not exist, this is a stub so that it is not clear to the requestor that there is no such user
+        if (!$userId) {
+            // The user does not exist,
+            // this is a stub so that it is not clear to the requestor that there is no such user
             session()->flash('message', "Если пользователь с email $this->email существует, он будет добавлен");
             return 0;
         }
 
         $userId = $userId->id;
 
-        if($userId === $this->note->user_id || $this->note->user->contains($userId)) {
+        if ($userId === $this->note->user_id || $this->note->user->contains($userId)) {
             $this->addError('alreadyExist', 'Этот пользователь уже имеет доступ к этой заметке');
             return 0;
         }
@@ -114,7 +115,7 @@ class NoteEdit extends Component
         $this->dispatchBrowserEvent('contentChanged');
         $this->dispatchBrowserEvent('changesSaved');
 
-        if(Gate::allows('update', $this->note)){
+        if (Gate::allows('update', $this->note)) {
             $this->note->title = trim($this->noteTitle);
             $this->note->text = $this->noteDescription;
             $this->note->save();
@@ -133,8 +134,9 @@ class NoteEdit extends Component
     {
         $image = $this->note->images()->where('id', $imageId)->first();
         $imageDeletionResult = $image->deleteImage($image);
-        if(is_array($imageDeletionResult) && array_key_exists('error', $imageDeletionResult)){
-            return $this->addError($imageDeletionResult['error'][0], $imageDeletionResult['error'][1]);
+
+        if (!$imageDeletionResult->success) {
+            return $this->addError($imageDeletionResult->errorMessage[0], $imageDeletionResult->errorMessage[1]);
         }
 
         $this->emit('refreshNoteImages');
@@ -148,15 +150,17 @@ class NoteEdit extends Component
             'uploadedImage' => 'required|file|mimes:png,jpg,jpeg|max:1024'
         ]);
 
-        if(!Gate::allows('update', $this->note)) {
+        if (!Gate::allows('update', $this->note)) {
             return $this->addError('permissions', 'You haven\'t permissions');
         }
 
-        if($this->note->images()->count() >= 10) {
+        if ($this->note->images()->count() >= 10) {
             return $this->addError('uploadedImage', 'У этой заметки максимальное количество фотографий');
         }
 
-        $fileName = $this->uploadedImage->storePubliclyAs('note-images', uniqid('', true) . '.png', NoteImage::profilePhotoDisk());
+        $fileName = $this->uploadedImage
+            ->storePubliclyAs('note-images', uniqid('', true) . '.png', NoteImage::profilePhotoDisk());
+
         $this->note->images()->create([
             'note_id' => $this->note->id,
             'note_image_path' => $fileName

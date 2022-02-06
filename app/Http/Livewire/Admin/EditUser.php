@@ -41,7 +41,7 @@ class EditUser extends Component
         $this->email = $data['email'];
         $this->deletePhoto = isset($data['deletePhoto']);
         foreach ($this->permissions as $permission) {
-            if(array_key_exists($permission, $data)){
+            if (array_key_exists($permission, $data)) {
                  $this->givenPermissions[$permission] = true;
             } else {
                 $this->givenPermissions[$permission] = false;
@@ -57,13 +57,13 @@ class EditUser extends Component
         $this->parseData($submit);
         $this->user->name = $this->name;
         $this->user->email = $this->email;
-        if($this->deletePhoto) {
+        if ($this->deletePhoto) {
             $this->user->deleteProfilePhoto();
         }
 
         $userWithThisEmail = User::firstWhere('email', $this->email);
-        if($userWithThisEmail !== null && $userWithThisEmail->id !== $this->user->id){
-            return redirect($this->page)->with('error',"Пользователь с e-mail'ом $this->email уже существует.");
+        if ($userWithThisEmail !== null && $userWithThisEmail->id !== $this->user->id) {
+            return redirect($this->page)->with('error', "Пользователь с e-mail'ом $this->email уже существует.");
         }
 
         foreach ($this->givenPermissions as $permission => $value) {
@@ -84,7 +84,8 @@ class EditUser extends Component
 
         $this->user->push();
 
-        return redirect($this->page)->with('message',"Пользователь #{$this->user->id} ({$this->user->name}) успешно отредактирован.");
+        return redirect($this->page)
+            ->with('message', "Пользователь #{$this->user->id} ({$this->user->name}) успешно отредактирован.");
     }
 
     public function ban()
