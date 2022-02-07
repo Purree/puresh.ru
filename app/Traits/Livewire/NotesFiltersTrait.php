@@ -31,7 +31,7 @@ trait NotesFiltersTrait
     {
         if (isset($filters, $orderFilter)) {
             if (is_string($filters)) {
-                $this->filters = NotesFiltersService::associateFilters(explode( ',', $filters));
+                $this->filters = NotesFiltersService::associateFilters(explode(',', $filters));
             } else {
                 $this->filters = $filters;
             }
@@ -76,8 +76,7 @@ trait NotesFiltersTrait
         $this->selectNotesByFilters($filters, $notesOrderFilter);
     }
 
-
-    public function selectNotesByFilters($filters, $notesOrderFilter)
+    public function getFilteredNotes($filters)
     {
         $notes = Note::with('user', 'images');
 
@@ -91,9 +90,14 @@ trait NotesFiltersTrait
             }
         }
 
+        return $notes;
+    }
+
+    public function orderNotes($notes, $notesOrderFilter)
+    {
         // Firstly return notes where owner is Auth user, after return all another
         if ($notesOrderFilter === 'userNotes') {
-            $notes = $notes->orderBy(DB::raw('ABS(notes.user_id-' . Auth::id() . ')'));
+            $notes = $notes->orderBy(DB::raw('ABS(notes.user_id-'.Auth::id().')'));
         }
 
         // Firstly return notes where collaborator is Auth user, after return all another
@@ -107,11 +111,16 @@ trait NotesFiltersTrait
                 }
             }
 
-            $notes = ($notes->orderByRaw('FIELD(id, ' . implode(', ', $noteIds) . ')'));
-            // DEPRECATED:
-//            $notes = $notes->join('note_user', 'notes.id', '=', 'note_user.note_id')
-//                ->orderBy(DB::raw('ABS(note_user.user_id-' . Auth::id() . ')'));
+            $notes = ($notes->orderByRaw('FIELD(id, '.implode(', ', $noteIds).')'));
         }
+
+        return $notes;
+    }
+
+    public function selectNotesByFilters($filters, $notesOrderFilter)
+    {
+        $notes = $this->getFilteredNotes($filters);
+        $notes = $this->orderNotes($notes, $notesOrderFilter);
 
         $this->notes = $notes->paginate(10);
         $this->filtered = true;
