@@ -29,6 +29,18 @@ trait NotesFiltersTrait
 
     public function changeNoteFilters(array|string $filters = null, string $orderFilter = null)
     {
+        $this->setFilters($filters, $orderFilter);
+
+        $validatedFilters = $this->validateFilters();
+
+        $filteredNotes = $this->selectNotesByFilters(...$validatedFilters);
+
+        $this->notes = $filteredNotes->paginate(10);
+        $this->filtered = true;
+    }
+
+    public function setFilters(array|string $filters = null, string $orderFilter = null)
+    {
         if (isset($filters, $orderFilter)) {
             if (is_string($filters)) {
                 $this->filters = NotesFiltersService::associateFilters(explode(',', $filters));
@@ -41,12 +53,10 @@ trait NotesFiltersTrait
                 $this->filters[$this->filterRelation[$orderFilter]] = 'true';
             }
         }
-
-        $this->validateFiltersAndSelectNotes();
     }
 
 
-    public function validateFiltersAndSelectNotes()
+    public function validateFilters()
     {
         $this->validate();
         $filtersValidation = NotesFiltersService::validateFilters(
@@ -60,10 +70,10 @@ trait NotesFiltersTrait
             throw new \Error($filtersValidation->errorMessage);
         }
 
-        $filters = $this->filters;
-        $notesOrderFilter = $this->notesOrderFilter;
+        $filtersCached = $this->filters;
+        $orderFilterCached = $this->notesOrderFilter;
         $tempFilters = [];
-        foreach ($filters as $key => $value) {
+        foreach ($filtersCached as $key => $value) {
             if ($value !== false) {
                 $tempFilters[] = $key;
             }
@@ -71,9 +81,9 @@ trait NotesFiltersTrait
         $this->filtersString = implode(',', $tempFilters);
         unset($tempFilters);
 
-        $this->orderFilter = $notesOrderFilter;
+        $this->orderFilter = $orderFilterCached;
 
-        $this->selectNotesByFilters($filters, $notesOrderFilter);
+        return [$filtersCached, $orderFilterCached];
     }
 
     public function getFilteredNotes($filters)
@@ -120,10 +130,8 @@ trait NotesFiltersTrait
     public function selectNotesByFilters($filters, $notesOrderFilter)
     {
         $notes = $this->getFilteredNotes($filters);
-        $notes = $this->orderNotes($notes, $notesOrderFilter);
 
-        $this->notes = $notes->paginate(10);
-        $this->filtered = true;
+        return $this->orderNotes($notes, $notesOrderFilter);
     }
 
     public function clearFilters()
@@ -135,4 +143,4 @@ trait NotesFiltersTrait
         $this->filtered = false;
         $this->emitSelf('refreshNotes');
     }
-} // TODO: REFACTOR!!
+}
