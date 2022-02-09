@@ -21,7 +21,7 @@ class Notes extends Component
     use WithPagination;
     use CheckIsPaginatorPageExists;
 
-    protected \Illuminate\Contracts\Pagination\LengthAwarePaginator $notes;
+    protected object $notes;
     protected object $paginator;
     protected string $paginationTheme = 'bootstrap';
 
@@ -43,8 +43,21 @@ class Notes extends Component
     public array $deletedNote = [];
     public bool $filtered = false;
 
-    public function mount() {
+    public function mount()
+    {
         $this->updatePageNumber();
+    }
+
+    private function selectNotes()
+    {
+        if (Gate::allows('manage_data', Permission::class)) {
+            return Note::with('user', 'images')->paginate(10);
+        }
+
+        return Note::with('user', 'images')
+            ->where('user_id', Auth::id())
+            ->orWhereRelation('user', 'user_id', '=', Auth::id())
+            ->paginate(10);
     }
 
     public function render()
@@ -60,21 +73,13 @@ class Notes extends Component
         }
 
         if (!isset($this->filters)) {
-            // ['showAllUsers' => 'true', 'showMemberNotes' => 'true', 'showUserNotes' => 'true'];
             $this->filters = NotesFiltersService::associateFilters($this->allOptionalFilters);
 
             $this->filtered = false;
         }
 
         if (!$this->filtered) {
-            if (Gate::allows('manage_data', Permission::class)) {
-                $this->notes = Note::with('user', 'images')->paginate(10);
-            } else {
-                $this->notes = Note::with('user', 'images')
-                    ->where('user_id', Auth::id())
-                    ->orWhereRelation('user', 'user_id', '=', Auth::id())
-                    ->paginate(10);
-            }
+            $this->notes = $this->selectNotes();
         }
 
         if (!isset($this->notes) && $this->filtered) {
@@ -84,10 +89,12 @@ class Notes extends Component
         $this->paginator = $this->notes->onEachSide(1);
         $this->validatePageNumber($this->paginator, 'notes');
 
+
         return view('livewire.notes.notes', ['notes' => $this->notes, 'paginator' => $this->paginator]);
     }
 
-    public function createNewNote() {
+    public function createNewNote()
+    {
         $note = new Note();
         $note->user_id = Auth::id();
         $note->title = 'Заголовок заметки';
@@ -96,6 +103,7 @@ class Notes extends Component
         $note->save();
 
         $this->redirect(route('notes.edit', $id = $note->id));
+
         return false;
     }
 
@@ -122,5 +130,4 @@ class Notes extends Component
 
         $this->emit('refreshNotes');
     }
-} // TODO: REFACTOR!!
-
+}
