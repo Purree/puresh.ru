@@ -36,7 +36,7 @@
                 <div class="h3 mt-2 text-center">
                     Выбор псевдослучайного варианта из списка
                 </div>
-                <div class="d-flex align-items-baseline">
+                <div class="d-flex align-items-baseline mb-1">
                     <div class="text-center ms-2 me-2" style="min-width: 26px">
                         <label for="selectRandomElementId">ID</label>
                         <div class="selecting-random-id" id="selectRandomElementId">1</div>
@@ -59,7 +59,7 @@
                 </div>
 
     {{--            A unit that js copy and paste after "add new variant" button pressed--}}
-                <div class="d-flex align-items-baseline select-random-element-example">
+                <div class="d-flex align-items-baseline select-random-element-example mb-1">
                     <div class="text-center ms-2 me-2" style="min-width: 26px">
                         <div class="selecting-random-id">2</div>
                     </div>
