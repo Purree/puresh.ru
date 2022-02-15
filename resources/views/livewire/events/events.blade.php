@@ -17,14 +17,20 @@
     <div class="col-md-12">
         <div class="card shadow">
             <div class="card-body border-bottom rounded-top events-container">
-                <div class="pt-5 pb-5">
-                    @foreach($events as $event)
-                        <livewire:events.event :event="$event" :separators="$separators" :wire:key="$event->id"/>
-                        @if (!$loop->last)
-                            <hr class="mt-5">
-                        @endif
-                    @endforeach
-                </div>
+                @if($events->count() !== 0)
+                    <div class="pt-5 pb-5">
+                        @foreach($events as $event)
+                            <livewire:events.event :event="$event" :separators="$separators" :wire:key="$event->id"/>
+                            @if (!$loop->last)
+                                <hr class="mt-5">
+                            @endif
+                        @endforeach
+                    </div>
+                @else
+                    <p class="h3">
+                        Событий пока нет
+                    </p>
+                @endif
                 <script src="{{ asset('js/events/timer.js') }}"></script>
                 <script src="{{ asset('js/events/resizeTimersOnPhones.js') }}"></script>
             </div>
