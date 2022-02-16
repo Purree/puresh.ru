@@ -19,7 +19,7 @@
         <div id="timer" data-id="{{ $event->id }}" data-happen-at="{{ $event->happen_at }}"
              class="d-flex mb-3">
             @foreach($separators as $separator)
-                <div class="base-timer d-flex align-items-center" data-type="{{ $separator }}">
+                <div class="base-timer d-flex align-items-center mb-3" data-type="{{ $separator }}">
                     <svg class="base-timer__svg" viewBox="0 0 100 100"
                          xmlns="http://www.w3.org/2000/svg">
                         <g class="base-timer__circle">
