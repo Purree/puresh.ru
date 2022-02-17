@@ -19,7 +19,11 @@ class Event extends Component
         'is_event_recurrent' => 'required|boolean',
         'repetition_in_seconds' => 'integer|nullable',
     ];
-    protected $listeners = ['successfullyFinishEventEditing' => 'stopEventEditing', 'stopEventEditing' => 'stopEventEditing'];
+
+    protected $listeners = [
+        'successfullyFinishEventEditing' => 'stopEventEditing',
+        'stopEventEditing' => 'stopEventEditing'
+    ];
 
     public object $event;
     public array $separators;
@@ -40,17 +44,20 @@ class Event extends Component
         return view('livewire.events.event');
     }
 
-    public function deleteEvent($id) {
+    public function deleteEvent($id)
+    {
         $this->emitUp('deleteEvent', $id);
     }
 
-    public function editEvent() {
+    public function editEvent()
+    {
         $this->authorize('manage_data', Permission::class);
 
         $this->isEventBeingEdited = true;
     }
 
-    public function stopEventEditing() {
+    public function stopEventEditing()
+    {
         $this->authorize('manage_data', Permission::class);
 
         $this->isEventBeingEdited = false;
@@ -58,6 +65,4 @@ class Event extends Component
         $this->dispatchBrowserEvent('updateEventStatus', ['id' => $this->event->id]);
         $this->dispatchBrowserEvent('activateInactiveTimers');
     }
-
-
 }
