@@ -4,9 +4,6 @@
             display: none;
         }
     </style>
-    @can('manage_data', App\Models\Permission::class)
-        <script src="{{ asset('js/events/preventAccidentalClosure.js') }}"></script>
-    @endcan
 
     @if ($errors->any())
         <div class="alert alert-danger">
