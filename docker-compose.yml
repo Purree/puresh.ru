@@ -17,8 +17,9 @@ services:
     db:
         image: mysql:8.0
         container_name: db
-        restart: always
+        restart: unless-stopped
         environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_PASSWORD: ${DB_PASSWORD}
@@ -32,7 +33,7 @@ services:
     nginx:
         image: nginx:latest
         container_name: nginx
-        restart: always
+        restart: unless-stopped
         ports:
             - "80:80"
         volumes:
