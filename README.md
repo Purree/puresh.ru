@@ -7,4 +7,3 @@
 6. Run `php artisan key:generate`.
 7. *Skip this step if you do 3-rd step*
    1. Run `php artisan migrate`.
-8. Run `npm install`.

@@ -49,20 +49,6 @@ services:
         networks:
             - internal
 
-    nodejs:
-        container_name: node
-        image: node:14.18.1
-        user: node
-        working_dir: /home/node/app
-        environment:
-            - NODE_ENV=prod
-        volumes:
-            -   ./:/home/node/app
-        expose:
-            -   8081
-        command:
-            -   npm start
-
 networks:
     internal:
         driver: bridge
