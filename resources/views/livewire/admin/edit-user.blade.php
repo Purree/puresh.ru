@@ -1,4 +1,4 @@
-<div>
+<div class="card shadow">
     @if (session('message'))
         <div class="alert alert-success">
             {{ session('message') }}
@@ -9,7 +9,7 @@
             {{ session('error') }}
         </div>
     @endif
-    <form wire:submit.prevent="editUser(Object.fromEntries(new FormData($event.target)))">
+    <form class="card-body border-bottom rounded-top" wire:submit.prevent="editUser(Object.fromEntries(new FormData($event.target)))">
         <div class="form-group">
             <label for="name">Name </label>
             @error('name')<label class="text-danger"><p>{{ $message }}</p></label> @enderror
