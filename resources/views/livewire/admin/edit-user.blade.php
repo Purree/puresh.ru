@@ -11,13 +11,13 @@
     @endif
     <form class="card-body border-bottom rounded-top" wire:submit.prevent="editUser(Object.fromEntries(new FormData($event.target)))">
         <div class="form-group">
-            <label for="name">Name </label>
+            <label for="name">{{__('Name')}} </label>
             @error('name')<label class="text-danger"><p>{{ $message }}</p></label> @enderror
             <input type="text" class="form-control" id="name" placeholder="User name" value="{{ $user->name }}"
                    name="name" required>
         </div>
         <div class="form-group mt-4 mb-4">
-            <label for="email">Email</label>
+            <label for="email">{{__('Email')}}</label>
             @error('email') <label class="text-danger"><p>{{ $message }}</p></label> @enderror
             <input type="email" class="form-control" id="email" placeholder="Email" value="{{ $user->email }}"
                    name="email" required>
@@ -44,7 +44,7 @@
 
         <div>
             <button type="submit" class="btn btn-primary mt-2">
-                Submit
+                {{__('Save')}}
                 <span class="spinner-border spinner-border-sm" role="status" wire:loading></span>
             </button>
         </div>
