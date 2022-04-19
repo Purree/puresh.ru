@@ -46,8 +46,19 @@ services:
             - ./:/var/www
             - ./docker-compose/nginx/conf.d/:/etc/nginx/conf.d/
             - ./storage/app/public:/var/www/public/storage
+            - - ./docker-compose/certbot/letsencrypt:/etc/letsencrypt
         networks:
             - internal
+
+    certbot:
+        image: certbot/certbot
+        depends_on:
+            - nginx
+        container_name: certbot
+        volumes:
+            - ./docker-compose/certbot/letsencrypt:/etc/letsencrypt
+            - ./docker-compose/certbot/html:/var/www/html
+        command: certonly --webroot --webroot-path=/var/www/html --email kirill_malygin04@mail.ru --agree-tos --no-eff-email --staging -d puresh.ru
 
 networks:
     internal:
@@ -55,4 +66,4 @@ networks:
         ipam:
             driver: default
             config:
-                - subnet: 192.168.220.0/28
+                -   subnet: 192.168.220.0/28
