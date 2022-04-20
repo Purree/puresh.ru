@@ -7,3 +7,12 @@
 6. Run `php artisan key:generate`.
 7. *Skip this step if you do 3-rd step*
    1. Run `php artisan migrate`.
+
+# Certificates
+- Install cert.:
+1. Comment 443 server port in nginx.conf.
+2. Run nginx.
+3. `docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d puresh.ru`
+4. Uncomment server and stop nginx
+- Update cert.: <br/>
+`docker compose run --rm certbot renew`

@@ -16,3 +16,4 @@ yarn-error.log
 !/public/storage/
 /tmp
 /docker-compose/certbot/
+/docker-compose/logs/

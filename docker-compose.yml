@@ -42,23 +42,26 @@ services:
         restart: unless-stopped
         ports:
             - "80:80"
+            - "443:443"
         volumes:
-            - ./:/var/www
-            - ./docker-compose/nginx/conf.d/:/etc/nginx/conf.d/
-            - ./storage/app/public:/var/www/public/storage
-            - - ./docker-compose/certbot/letsencrypt:/etc/letsencrypt
+            - ./:/var/www:rw
+            - ./docker-compose/nginx/conf.d/:/etc/nginx/conf.d/:ro
+            - ./storage/app/public:/var/www/public/storage:rw
+            - ./docker-compose/certbot/www:/var/www/certbot/:ro
+            - ./docker-compose/certbot/conf/:/etc/nginx/ssl/:ro
+            - ./docker-compose/logs/nginx/:/var/log/nginx/:rw
         networks:
             - internal
 
     certbot:
         image: certbot/certbot
-        depends_on:
-            - nginx
         container_name: certbot
         volumes:
-            - ./docker-compose/certbot/letsencrypt:/etc/letsencrypt
-            - ./docker-compose/certbot/html:/var/www/html
-        command: certonly --webroot --webroot-path=/var/www/html --email kirill_malygin04@mail.ru --agree-tos --no-eff-email --staging -d puresh.ru
+            - ./docker-compose/certbot/www/:/var/www/certbot/:rw
+            - ./docker-compose/certbot/conf/:/etc/letsencrypt/:rw
+            - ./docker-compose/logs:/var/log/:rw
+        networks:
+            - internal
 
 networks:
     internal:
