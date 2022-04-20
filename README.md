@@ -16,3 +16,6 @@
 4. Uncomment server and stop nginx
 - Update cert.: <br/>
 `docker compose run --rm certbot renew`
+
+# Http start
+If you need to start server in http mode just uncomment #http config in nginx.conf and comment other configs.
