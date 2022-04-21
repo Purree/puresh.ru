@@ -44,10 +44,34 @@
                                 <td><a href="{{ route('admin.editUser', ['userId'=>$user->id]) }}" class="btn btn-warning">Редактировать</a></td>
                                 <td><livewire:admin.delete-user :user="$user" :page="request()->fullUrl()"/></td>  {{-- Удаление --}}
                             </tr>
+
+                            @if ($user->notes->isNotEmpty())
+                                <tr class="bg-primary text-center">
+                                    <td colspan="11">
+                                        Заметки
+                                    </td>
+                                </tr>
+                            @endif
+
                             @foreach($user->notes as $note)
                                 <tr class="bg-primary">
                                     <td>{{ $note->id }}</td>
                                     <td colspan="10">{{ $note->title }}</td>
+                                </tr>
+                            @endforeach
+
+                            @if ($user->notes->isNotEmpty())
+                                <tr class="bg-info text-center">
+                                    <td colspan="11">
+                                        Сессии
+                                    </td>
+                                </tr>
+                            @endif
+                            @foreach($user->sessions as $session)
+                                <tr class="bg-info">
+                                    <td colspan="5">{{ 'Последняя активность: ' . $session->formated_last_activity }}</td>
+                                    <td colspan="5">{{ 'Годен до: ' . $session->expires_at }}</td>
+                                    <td colspan="1">{{ $session->ip_address }}</td>
                                 </tr>
                             @endforeach
                         @endforeach

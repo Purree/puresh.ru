@@ -84,6 +84,14 @@ class User extends Authenticatable
         return $this->hasMany(Note::class);
     }
 
+    /**
+     * Get user sessions.
+     */
+    public function sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
+
 
     /**
      * Delete the user's profile photo.
