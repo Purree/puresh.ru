@@ -13,6 +13,7 @@ services:
         working_dir: /var/www/
         volumes:
             - ./:/var/www
+            - ./docker-compose/logs:/var/log/:rw
         networks:
             - internal
 
