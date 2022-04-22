@@ -33,7 +33,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_banned'
+        'is_banned',
     ];
 
     /**
@@ -100,7 +100,7 @@ class User extends Authenticatable
      */
     public function deleteProfilePhotoFromDirectory(): void
     {
-        if (!Features::managesProfilePhotos()) {
+        if ($this->profile_photo_path === null || !Features::managesProfilePhotos()) {
             return;
         }
 

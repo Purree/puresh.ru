@@ -56,7 +56,8 @@
                             @foreach($user->notes as $note)
                                 <tr class="bg-primary">
                                     <td>{{ $note->id }}</td>
-                                    <td colspan="10">{{ $note->title }}</td>
+                                    <td colspan="9">{{ $note->title }}</td>
+                                    <td><a href="{{ route('notes.edit', ['id'=>$note->id]) }}" class="btn btn-warning">Редактировать</a></td>
                                 </tr>
                             @endforeach
 
@@ -69,9 +70,10 @@
                             @endif
                             @foreach($user->sessions as $session)
                                 <tr class="bg-info">
-                                    <td colspan="5">{{ 'Последняя активность: ' . $session->formated_last_activity }}</td>
+                                    <td colspan="4">{{ 'Последняя активность: ' . $session->formated_last_activity }}</td>
                                     <td colspan="5">{{ 'Годен до: ' . $session->expires_at }}</td>
                                     <td colspan="1">{{ $session->ip_address }}</td>
+                                    <td><livewire:admin.delete-session :session="$session" :page="request()->fullUrl()"/></td>
                                 </tr>
                             @endforeach
                         @endforeach
