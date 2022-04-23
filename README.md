@@ -20,3 +20,7 @@
 
 # Http start
 If you need to start server in http mode just uncomment #http config in nginx.conf and comment other configs.
+
+# Queue start
+1. Run `docker-compose exec app bash`.
+2. Run `nohup php artisan queue:work --daemon > /tmp/nohup.log &`

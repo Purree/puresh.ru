@@ -34,3 +34,5 @@ run.ps1
 
 /docker-compose/certbot/
 /docker-compose/logs/
+
+nohup.out

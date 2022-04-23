@@ -17,3 +17,4 @@ yarn-error.log
 /tmp
 /docker-compose/certbot/
 /docker-compose/logs/
+nohup.out

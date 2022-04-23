@@ -14,6 +14,7 @@ services:
         volumes:
             - ./:/var/www
             - ./docker-compose/logs:/var/log/:rw
+            - ./docker-compose/logs/laravel:/var/www/storage/logs/:rw
         networks:
             - internal
 

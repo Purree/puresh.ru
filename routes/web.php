@@ -14,27 +14,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', static function () {
     return view('home');
 })->name('main');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/user', function () {
+    Route::get('/user', static function () {
         return view('user');
     })->name('user');
 
-    Route::get('/profile/show', function () {
+    Route::get('/profile/show', static function () {
         return redirect()->route('profile.settings');
     })->name('profile.show');
 
 
-    Route::name('admin.')->middleware(['can:manage_data,App\Models\Permission', 'password.confirm'])->group(function () {
-        Route::get('/admin', [AdminController::class, 'showAllUsers'])
-            ->name('main');
+    Route::name('admin.')->middleware(['can:manage_data,App\Models\Permission', 'password.confirm'])->group(
+        function () {
+            Route::get('/admin', [AdminController::class, 'showAllUsers'])
+                ->name('main');
 
-        Route::get('/admin/editUser', [AdminController::class, 'editUser'])
-            ->name('editUser');
-    });
+            Route::get('/admin/editUser', [AdminController::class, 'editUser'])
+                ->name('editUser');
+        }
+    );
 
     Route::middleware(['can:see_notes, App\Models\Permission', 'can:viewAny, App\Models\Note'])->group(function () {
         Route::get('/notes', App\Http\Livewire\Notes\Notes::class)
