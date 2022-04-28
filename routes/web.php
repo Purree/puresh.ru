@@ -18,6 +18,15 @@ Route::get('/', static function () {
     return view('home');
 })->name('main');
 
+Route::post('language/{locale}', static function ($locale) {
+    if (in_array($locale, config("app.available_locales"), true)) {
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+    }
+
+    return redirect()->back();
+})->name('localization');
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/user', static function () {
         return view('user');

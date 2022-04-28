@@ -17,7 +17,7 @@
                         <tr role="row" class="table-dark">
                             <th>ID</th>
                             <th>Ник</th>
-                            <th>Почта</th>
+                            <th>{{ __('Mail') }}</th>
                             <th>Дата верификации почты</th>
                             <th>Аватарка</th>
                             @foreach($permissions as $permission)

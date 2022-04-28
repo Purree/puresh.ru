@@ -49,7 +49,7 @@
                             </a>
                         @endif
 
-                        <a class="text-muted me-3" href="{{ route('register') }}">Зарегистрироваться</a>
+                        <a class="text-muted me-3" href="{{ route('register') }}">{{ __('Register') }}</a>
 
                         <x-jet-button>
                             {{ __('Log in') }}
