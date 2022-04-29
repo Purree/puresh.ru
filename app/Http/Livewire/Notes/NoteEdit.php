@@ -77,10 +77,10 @@ class NoteEdit extends Component
     {
         if (Gate::allows('forceDelete', $this->note)) {
             $this->note->user()->detach($id);
-            session()->flash('message', "Пользователь успешно удалён");
+            session()->flash('message', __("User deleted successfully"));
             $this->emit('refreshUsers');
         } else {
-            $this->addError('permissions', 'У вас нет нужных прав доступа');
+            $this->addError('permissions', __('You do not have the required access rights'));
         }
     }
 
@@ -92,20 +92,29 @@ class NoteEdit extends Component
         if (!$userId) {
             // The user does not exist,
             // this is a stub so that it is not clear to the requestor that there is no such user
-            session()->flash('message', "Если пользователь с email $this->email существует, он будет добавлен");
+            session()->flash(
+                'message',
+                __("If the user with email :mail exists, it will be added", ['mail' => $this->email])
+            );
+
             return 0;
         }
 
         $userId = $userId->id;
 
         if ($userId === $this->note->user_id || $this->note->user->contains($userId)) {
-            $this->addError('alreadyExist', 'Этот пользователь уже имеет доступ к этой заметке');
+            $this->addError('alreadyExist', __('This user already has access to this note'));
+
             return 0;
         }
 
         $this->note->user()->attach($userId);
-        session()->flash('message', "Если пользователь с email $this->email существует, он будет добавлен");
+        session()->flash(
+            'message',
+            __("If the user with email :mail exists, it will be added", ['mail' => $this->email])
+        );
         $this->emit('refreshUsers');
+
         return 1;
     }
 
@@ -119,9 +128,9 @@ class NoteEdit extends Component
             $this->note->title = trim($this->noteTitle);
             $this->note->text = $this->noteDescription;
             $this->note->save();
-            session()->flash('updated', "Заметка успешно обновлена");
+            session()->flash('updated', __("Note updated successfully"));
         } else {
-            $this->addError('permissions', 'You haven\'t permissions');
+            $this->addError('permissions', __("You haven't permissions"));
         }
     }
 
@@ -140,35 +149,37 @@ class NoteEdit extends Component
         }
 
         $this->emit('refreshNoteImages');
-        session()->flash('updated', "Фотография успешно удалена.");
+        session()->flash('updated', __("Photo deleted successfully."));
+
         return true;
     }
 
     public function uploadImage(): bool|MessageBag
     {
         $this->validate([
-            'uploadedImage' => 'required|file|mimes:png,jpg,jpeg|max:1024'
+            'uploadedImage' => 'required|file|mimes:png,jpg,jpeg|max:1024',
         ]);
 
         if (!Gate::allows('update', $this->note)) {
-            return $this->addError('permissions', 'You haven\'t permissions');
+            return $this->addError('permissions', __("You haven't permissions"));
         }
 
         if ($this->note->images()->count() >= 10) {
-            return $this->addError('uploadedImage', 'У этой заметки максимальное количество фотографий');
+            return $this->addError('uploadedImage', __('This note has the maximum number of photos.'));
         }
 
         $fileName = $this->uploadedImage
-            ->storePubliclyAs('note-images', uniqid('', true) . '.png', NoteImage::profilePhotoDisk());
+            ->storePubliclyAs('note-images', uniqid('', true).'.png', NoteImage::profilePhotoDisk());
 
         $this->note->images()->create([
             'note_id' => $this->note->id,
-            'note_image_path' => $fileName
+            'note_image_path' => $fileName,
         ]);
 
         $this->emit('refreshNoteImages');
         $this->dispatchBrowserEvent('imageUploaded');
-        session()->flash('updated', "Фотография успешно добавлена.");
+        session()->flash('updated', __("Photo added successfully."));
+
         return true;
     }
 

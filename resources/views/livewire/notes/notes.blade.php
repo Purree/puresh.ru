@@ -5,13 +5,16 @@
 
     @if($filtersString || !empty(current($notes)))
         <div class="d-flex justify-content-between mb-3">
-            <button class="btn btn-outline-success w-100 me-1" wire:click="createNewNote">Добавить новую заметку</button>
-            <button class="btn btn-outline-primary w-100 ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#noteFilters" aria-expanded="false">
-                Изменить фильтры
+            <button class="btn btn-outline-success w-100 me-1" wire:click="createNewNote">{{ __('Add new note') }}
+            </button>
+            <button class="btn btn-outline-primary w-100 ms-1" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#noteFilters" aria-expanded="false">
+                {{ __('Change filters') }}
             </button>
         </div>
         <div class="collapse mb-3" id="noteFilters">
-            <livewire:notes.notes-filters :wire:key="'filters'" :notesOrderFilter="$notesOrderFilter" :filters="$filters"/>
+            <livewire:notes.notes-filters :wire:key="'filters'" :notesOrderFilter="$notesOrderFilter"
+                                          :filters="$filters"/>
         </div>
     @endif
 
@@ -28,8 +31,7 @@
                     <div class="card-body border-bottom rounded-top">
                         <div class="mx-3 my-3">
                             <h3 class="h3 my-4">
-                                У вас пока нет
-                                заметок{{ $filtersString ? ', возможно, это связано с применёнными фильтрами, попробуйте поискать заметки без фильтров' : '' }}
+                                {{ __("You don't have any notes yet") }} {{ $filtersString ? ', ' . __('maybe this is due to the applied filters, try searching for notes without filters') : '' }}
                             </h3>
                         </div>
                     </div>
@@ -37,8 +39,8 @@
                         <div class="card-body">
                             <div class="mx-3 my-3">
                                 <div class="text">
-                                    Но вы можете <a href="#" wire:click="createNewNote">создать</a> новую
-                                    заметку
+                                    {{ __('But you can') }} <a href="#"
+                                                               wire:click="createNewNote">{{ mb_strtolower(__('Create')) }}</a> {{ __('new note') }}
                                 </div>
                             </div>
                         </div>
@@ -50,22 +52,27 @@
 
 
     {{-- Invisible button what trigger modal --}}
-    <button data-bs-toggle="modal" data-bs-target="#deleteConfirm" id="modalTrigger" data-bs-scroll="false" class="d-none"></button>
+    <button data-bs-toggle="modal" data-bs-target="#deleteConfirm" id="modalTrigger" data-bs-scroll="false"
+            class="d-none"></button>
 
     <x-photo-modal/>
 
     <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title overflow-hidden" id="exampleModalLabel">Вы уверены, что хотите удалить заметку {{ $deletedNote['title'] ?? '' }}?</h5>
+                    <h5 class="modal-title overflow-hidden"
+                        id="exampleModalLabel">{{ __('Are you sure you want to delete the :note?', ['note' => $deletedNote['title'] ?? '']) }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-footer">
                     <div>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" wire:click="deleteNote({{ $deletedNote['id'] ?? 0 }})">Да</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('No') }}</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                wire:click="deleteNote({{ $deletedNote['id'] ?? 0 }})">{{ __('Yes') }}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -83,7 +90,8 @@
         let scrollY = 0;
 
         document.addEventListener('hide.bs.modal', function () {
-            @this.deletedNote = []
+            @this.
+            deletedNote = []
         })
 
         document.addEventListener('show.bs.modal', function () {

@@ -72,7 +72,7 @@
     </div>
     @if(!empty(current($note->user))) {{--        Get first object element and check is it empty        --}}
     <div>
-        Совладельцы:
+        {{ __('Co-owners') }}:
         @foreach($note->user as $user)
             <span>{{ $user->email }}</span>
         @endforeach

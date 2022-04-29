@@ -11,7 +11,7 @@ class EditUser extends Component
 {
     protected array $rules = [
         'name' => 'required|max:255',
-        'email' => 'required|email'
+        'email' => 'required|email',
     ];
     protected array $allPermissions;
 
@@ -42,7 +42,7 @@ class EditUser extends Component
         $this->deletePhoto = isset($data['deletePhoto']);
         foreach ($this->permissions as $permission) {
             if (array_key_exists($permission, $data)) {
-                 $this->givenPermissions[$permission] = true;
+                $this->givenPermissions[$permission] = true;
             } else {
                 $this->givenPermissions[$permission] = false;
             }
@@ -63,7 +63,13 @@ class EditUser extends Component
 
         $userWithThisEmail = User::firstWhere('email', $this->email);
         if ($userWithThisEmail !== null && $userWithThisEmail->id !== $this->user->id) {
-            return redirect($this->page)->with('error', "Пользователь с e-mail'ом $this->email уже существует.");
+            return redirect($this->page)->with(
+                'error',
+                __(
+                    "User with e-mail address :mail already exists.",
+                    ['mail' => $this->email]
+                )
+            );
         }
 
         foreach ($this->givenPermissions as $permission => $value) {
@@ -85,7 +91,13 @@ class EditUser extends Component
         $this->user->push();
 
         return redirect($this->page)
-            ->with('message', "Пользователь #{$this->user->id} ({$this->user->name}) успешно отредактирован.");
+            ->with(
+                'message',
+                __(
+                    "User #:id (:name) edited successfully.",
+                    ['id' => $this->user->id, 'name' => $this->user->name]
+                )
+            );
     }
 
     public function ban()

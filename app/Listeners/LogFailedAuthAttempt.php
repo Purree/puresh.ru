@@ -31,7 +31,6 @@ class LogFailedAuthAttempt implements ShouldQueue
             'Failed auth attempt: '.(
                 $event->user?->getAuthIdentifier() ??
                 ('Login not existed, attempt: '.$event->credentials[Fortify::username()])).' '.
-            \Request::ip().' '.
             'credentials: '.$event->credentials['password']
         );
     }

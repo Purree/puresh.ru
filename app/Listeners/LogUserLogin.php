@@ -26,6 +26,6 @@ class LogUserLogin implements ShouldQueue
      */
     public function handle(Login $event)
     {
-        \Log::info('New Login: ' . $event->user->getAuthIdentifier() . ' ' . \Request::ip());
+        \Log::info('New Login: ' . $event->user->getAuthIdentifier());
     }
 }

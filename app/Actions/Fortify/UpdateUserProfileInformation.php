@@ -28,7 +28,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
         if (isset($input['photo'])) {
             if ($this->identify_apng($input['photo'])) {
-                back()->with('error', 'Использование apng запрещено');
+                back()->with('error', __('Apng is not allowed'));
             } else {
                 $user->updateProfilePhoto($input['photo']);
             }

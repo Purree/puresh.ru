@@ -22,23 +22,22 @@
         </li>
         @can('manage_data', App\Models\Permission::class)
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('admin.main') ? 'active fw-bold' : '' }}" href="{{ route('admin.main') }}">Админ
-                    панель</a>
+                <a class="nav-link {{ Route::is('admin.main') ? 'active fw-bold' : '' }}" href="{{ route('admin.main') }}">{{ __('Admin panel') }}</a>
             </li>
         @endcan
         @can('see_notes', App\Models\Permission::class)
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('notes') ? 'active fw-bold' : '' }}" href="{{ route('notes') }}">Заметки</a>
+                <a class="nav-link {{ Route::is('notes') ? 'active fw-bold' : '' }}" href="{{ route('notes') }}">{{ __('Notes') }}</a>
             </li>
         @endcan
         @can('see_events', App\Models\Permission::class)
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('events') ? 'active fw-bold' : '' }}" href="{{ route('events') }}">События</a>
+                <a class="nav-link {{ Route::is('events') ? 'active fw-bold' : '' }}" href="{{ route('events') }}">{{ __('Events') }}</a>
             </li>
         @endcan
         @can('see_randomizer', App\Models\Permission::class)
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('randomizer') ? 'active fw-bold' : '' }}" href="{{ route('randomizer') }}">Рандомизатор</a>
+                <a class="nav-link {{ Route::is('randomizer') ? 'active fw-bold' : '' }}" href="{{ route('randomizer') }}">{{ __('Randomizer') }}</a>
             </li>
         @endcan
 

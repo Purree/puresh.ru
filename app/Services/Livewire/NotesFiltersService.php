@@ -19,7 +19,7 @@ class NotesFiltersService
         }
 
         if (!array_filter($filters)) {
-            return FunctionResult::error('Вы не выбрали ни одного фильтра');
+            return FunctionResult::error(__('You have not selected any filters'));
         }
 
         foreach ($filterRelation as $key => $value) {

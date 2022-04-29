@@ -67,7 +67,6 @@ trait NotesFiltersTrait
 
         if (!$filtersValidation->success) {
             session()->flash('error', $filtersValidation->errorMessage);
-            throw new \Error($filtersValidation->errorMessage);
         }
 
         $filtersCached = $this->filters;

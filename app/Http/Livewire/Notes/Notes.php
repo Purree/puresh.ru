@@ -97,8 +97,8 @@ class Notes extends Component
     {
         $note = new Note();
         $note->user_id = Auth::id();
-        $note->title = 'Заголовок заметки';
-        $note->text = 'Текст заметки';
+        $note->title = __('Note title');
+        $note->text = __('Note text');
         $note->is_completed = false;
         $note->save();
 

@@ -39,6 +39,9 @@ class DeleteUser extends Component
         $test->delete($this->user);
 
         return redirect($this->page)
-            ->with('message', "Пользователь #{$this->user->id} ({$this->user->name}) успешно удалён.");
+            ->with('message', __(
+                "User #:id (:name) deleted successfully.",
+                ['id' => $this->user->id, 'name' => $this->user->name]
+            ));
     }
 }

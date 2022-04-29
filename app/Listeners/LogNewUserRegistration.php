@@ -26,6 +26,6 @@ class LogNewUserRegistration implements ShouldQueue
      */
     public function handle(Registered $event)
     {
-        \Log::info('New user: ' . $event->user->getAuthIdentifier() . ' ' . \Request::ip());
+        \Log::info('New user: ' . $event->user->getAuthIdentifier());
     }
 }

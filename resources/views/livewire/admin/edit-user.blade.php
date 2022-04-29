@@ -26,7 +26,7 @@
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="{{ $permission }}" name="{{ $permission }}"
                        placeholder="{{ $permission }}" {{ \App\Policies\PermissionPolicy::isUserHasPermission($user, $permission) ? 'checked' : '' }}>
-                <label class="form-check-label" for="{{ $permission }}">{{ $permission }}</label>
+                <label class="form-check-label" for="{{ $permission }}">{{ __(ucfirst($permission)) }}</label>
             </div>
         @endforeach
         <div class="form-check">
@@ -36,9 +36,9 @@
 
         <div>
             @if ($user->is_banned)
-                <button wire:click.prevent="unban" class="btn btn-success">Разбанить</button>
+                <button wire:click.prevent="unban" class="btn btn-success">{{ __('Unban') }}</button>
             @else
-                <button wire:click.prevent="ban" class="btn btn-danger">Забанить</button>
+                <button wire:click.prevent="ban" class="btn btn-danger">{{ __('Ban') }}</button>
             @endif
         </div>
 

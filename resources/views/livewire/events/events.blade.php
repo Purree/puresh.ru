@@ -4,7 +4,7 @@
         <div class="d-flex justify-content-center flex-column">
             <button type="button" class="btn btn-outline-success mb-3 w-100" data-bs-toggle="collapse"
                     data-bs-target="#newEventCollapse" aria-expanded="false" aria-controls="newEventCollapse">
-                Добавить новый эвент
+                {{ __('Add new event') }}
             </button>
 
             <div class="collapse mb-3" id="newEventCollapse">
@@ -28,7 +28,7 @@
                     </div>
                 @else
                     <p class="h3">
-                        Событий пока нет
+                        {{ __('No events yet') }}
                     </p>
                 @endif
                 <script src="{{ asset('js/events/timer.js') }}"></script>

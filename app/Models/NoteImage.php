@@ -32,7 +32,7 @@ class NoteImage extends Model
         $note = Note::where('id', $noteImage->note_id)->first();
 
         if (!Gate::allows('update', $note)) {
-            return FunctionResult::error(['permissions', 'You haven\'t permissions']);
+            return FunctionResult::error(['permissions', __("You haven't permissions")]);
         }
 
         if (!Storage::disk(self::profilePhotoDisk())->has($noteImage->note_image_path)) {

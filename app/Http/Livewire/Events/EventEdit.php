@@ -22,7 +22,7 @@ class EventEdit extends Component
         'repetition_in_seconds' => 'integer|nullable',
     ];
 
-    public string $title = 'Название события';
+    public string $title = 'Event name';
     public string $happen_at = '2039-01-02T12:19:00';
     public bool $is_event_recurrent = true;
     public int|null $repetition_in_seconds = null;
@@ -30,7 +30,7 @@ class EventEdit extends Component
 
     public function render()
     {
-        if($this->event?->happen_at ?? null) {
+        if ($this->event?->happen_at ?? null) {
             $this->title = $this->event?->title;
             $this->happen_at = str_replace(' ', 'T', $this->event?->happen_at);
             $this->is_event_recurrent = $this->event?->is_event_recurrent;
@@ -41,7 +41,8 @@ class EventEdit extends Component
         return view('livewire.events.event-edit');
     }
 
-    public function saveChanges() {
+    public function saveChanges()
+    {
         $this->authorize('manage_data', Permission::class);
 
         $this->validate($this->eventEditRules);
@@ -57,7 +58,8 @@ class EventEdit extends Component
         $this->emitUp('successfullyFinishEventEditing');
     }
 
-    public function stopEventEditing() {
+    public function stopEventEditing()
+    {
         $this->emit('stopEventEditing');
     }
 }

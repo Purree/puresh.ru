@@ -34,6 +34,6 @@ class DeleteSession extends Component
         $this->session->delete();
 
         return redirect($this->page)
-            ->with('message', "Сессия #{$this->session->id} успешно удалена.");
+            ->with('message', __("Session #:id deleted successfully.", ['id' => $this->session->id]));
     }
 }
