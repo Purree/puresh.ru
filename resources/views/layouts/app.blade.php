@@ -22,7 +22,7 @@
         </li>
         @can('manage_data', App\Models\Permission::class)
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('admin.main') ? 'active fw-bold' : '' }}" href="{{ route('admin.main') }}">{{ __('Admin panel') }}</a>
+                <a class="nav-link {{ Request()->route()->getPrefix() === '/admin' ? 'active fw-bold' : '' }}" href="{{ route('admin.main') }}">{{ __('Admin panel') }}</a>
             </li>
         @endcan
         @can('see_notes', App\Models\Permission::class)

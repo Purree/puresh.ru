@@ -37,15 +37,21 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('profile.show');
 
 
-    Route::name('admin.')->middleware(['can:manage_data,App\Models\Permission', 'password.confirm'])->group(
-        function () {
-            Route::get('/admin', [AdminController::class, 'showAllUsers'])
-                ->name('main');
+    Route::name('admin.')->prefix('admin')
+        ->middleware(['can:manage_data,App\Models\Permission', 'password.confirm'])->group(
+            function () {
+                Route::get('/', static function () {
+                    return redirect(route('admin.users'));
+                })->name('main');
 
-            Route::get('/admin/editUser', [AdminController::class, 'editUser'])
-                ->name('editUser');
-        }
-    );
+                Route::get('/users', [AdminController::class, 'showAllUsers'])->name('users');
+
+                Route::get('/IPs', [AdminController::class, 'showBlockedIPs'])->name('IPs');
+
+                Route::get('/editUser', [AdminController::class, 'editUser'])
+                    ->name('editUser');
+            }
+        );
 
     Route::middleware(['can:see_notes, App\Models\Permission', 'can:viewAny, App\Models\Note'])->group(function () {
         Route::get('/notes', App\Http\Livewire\Notes\Notes::class)

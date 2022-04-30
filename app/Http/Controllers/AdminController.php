@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\RestrictedIp;
 use App\Models\User;
 use App\Traits\Controller\CheckIsPaginatorPageExists;
 use Illuminate\Contracts\View\View;
@@ -22,7 +23,7 @@ class AdminController extends Controller
         $allPermissions = Permission::getAll();
 
         $this->updatePageNumber();
-        $this->validatePageNumber($users, 'admin.main');
+        $this->validatePageNumber($users, 'admin.users');
 
         return view('admin.users', [
             'users' => $users,
@@ -42,6 +43,18 @@ class AdminController extends Controller
         return view('admin.editUser', [
             'user' => User::with('permissions')->findOrFail($userId),
             'permissions' => $allPermissions,
+        ]);
+    }
+
+    public function showBlockedIPs()
+    {
+        $blockedIPs = RestrictedIp::paginate(30);
+
+        $this->updatePageNumber();
+        $this->validatePageNumber($blockedIPs, 'admin.IPs');
+
+        return view('admin.blockedIPs', [
+            'blockedIPs' => $blockedIPs
         ]);
     }
 }

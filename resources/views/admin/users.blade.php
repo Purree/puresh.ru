@@ -1,14 +1,10 @@
-<x-app-layout>
+<x-admin-panel>
         @if (session('message'))
             <div class="alert alert-success">
                 {{ session('message') }}
             </div>
         @endif
         <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            <div class="row">
-                <div class="col-sm-12 col-md-6"></div>
-                <div class="col-sm-12 col-md-6"></div>
-            </div>
             <div class="row">
                 <div class="col-sm-12 table-responsive">
                     <table id="example2" class="table table-bordered dataTable dtr-inline" role="grid"
@@ -83,4 +79,4 @@
                 {{ $users->onEachSide(1)->links() }}
             </div>
         </div>
-</x-app-layout>
+</x-admin-panel>

@@ -35,8 +35,8 @@ class DeleteUser extends Component
     {
         $this->validate();
 
-        $test = new DeleteUserService();
-        $test->delete($this->user);
+        $deleteUserService = new DeleteUserService();
+        $deleteUserService->delete($this->user);
 
         return redirect($this->page)
             ->with('message', __(
