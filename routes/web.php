@@ -18,6 +18,10 @@ Route::get('/', static function () {
     return view('home');
 })->name('main');
 
+Route::get('/old', static function () {
+    return view('old-home');
+})->name('main');
+
 Route::post('language/{locale}', static function ($locale) {
     if (in_array($locale, config("app.available_locales"), true)) {
         app()->setLocale($locale);
