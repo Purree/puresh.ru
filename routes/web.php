@@ -20,7 +20,7 @@ Route::get('/', static function () {
 
 Route::get('/old', static function () {
     return view('old-home');
-})->name('main');
+})->name('main-old');
 
 Route::post('language/{locale}', static function ($locale) {
     if (in_array($locale, config("app.available_locales"), true)) {

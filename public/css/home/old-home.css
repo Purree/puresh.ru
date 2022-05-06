@@ -1,0 +1,107 @@
+:root {
+    --vk_logo: url(../../pictures/main/vk_logo_dark.png);
+    --ds_logo: url(../../pictures/main/discord_logo_dark.png);
+    --gh_logo: url(../../pictures/main/GitHub-Mark-64px.png);
+    --contact_text_hover: rgba(0, 0, 0, .5);
+}
+
+:root[data-theme='dark'] {
+    --vk_logo: url(../../pictures/main/vk_logo_light.png);
+    --ds_logo: url(../../pictures/main/discord_logo_light.png);
+    --gh_logo: url(../../pictures/main/GitHub-Mark-Light-64px.png);
+    --contact_text_hover: rgba(255, 255, 255, .5);
+}
+
+*{
+    transition: color 0.15s, background var(--animation_speed);
+}
+
+.tech_img img {
+    max-height: 250px;
+    max-width: 250px;
+    transition: transform var(--text_animation_speed), opacity var(--text_animation_speed);
+}
+
+.tech_img {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+.contact_content:hover {
+    transition: color var(--text_animation_speed) !important;
+    color: var(--contact_text_hover);
+}
+
+.col-30 {
+    flex: 0 0 30%;
+}
+
+body {
+    transition: color 0.15s, background var(--animation_speed);
+    background: var(--body_background);
+    color: var(--text);
+    overflow: auto;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+.main {
+    transition: color var(--text_animation_speed), background var(--animation_speed);
+    background: var(--main_background);
+}
+
+.anchor {
+    padding-top: 65px;
+    margin-top: -65px;
+}
+
+.vkLogo {
+    background: var(--vk_logo) no-repeat;
+}
+
+.tgLogo {
+    background: url(../../pictures/main/TelegramLogo.png) no-repeat;
+}
+
+.dsLogo {
+    background: var(--ds_logo) no-repeat;
+}
+
+.mailLogo {
+    background: url(../../pictures/main/mailru_Logo.jpg) no-repeat;
+}
+
+.ghLogo {
+    background: var(--gh_logo) no-repeat;
+}
+
+
+
+.vkLogo, .tgLogo, .dsLogo, .mailLogo, .ghLogo {
+    background-size: contain;
+    min-width: 64px;
+    min-height: 64px;
+    margin: 32px;
+}
+
+
+@media (max-width: 991px) {
+    .tech_img img {
+        max-height: 125px;
+        max-width: 125px;
+    }
+}
+
+@media (max-width: 342px) {
+    .mailLogo, .dsLogo, .tgLogo, .vkLogo {
+        min-width: 48px;
+        min-height: 48px;
+        margin: 24px;
+    }
+    .fake_block {
+        display: none;
+    }
+}

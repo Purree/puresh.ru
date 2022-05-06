@@ -8,7 +8,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="module" src="{{ asset('js/mainPage/activeElementsHighlighting.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('css/home/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home/old-home.css') }}">
 </head>
 <body>
     <x-header>
