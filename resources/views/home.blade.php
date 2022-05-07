@@ -26,14 +26,14 @@
                 <li class="nav-item align-self-center">
                     <x-language_switcher></x-language_switcher>
                 </li>
-                <li class="nav-item align-self-center">
+                <li class="nav-item align-self-center me-2">
                     @guest
                         <a class="nav-link" data-value="auth" href="{{ route('login') }}"><i
                                 class="bi bi-person-circle"></i>
                             <div class="auth_text">{{ __('Login or register') }}</div>
                         </a>
                     @else
-                        <div class="dropdown">
+                        <div class="dropdown dropstart">
                             <button class="btn btn-secondary dropdown-toggle" type="button"
                                     id="profileDropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="rounded-circle" width="32" height="32"
