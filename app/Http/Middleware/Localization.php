@@ -23,7 +23,7 @@ class Localization
             App::setLocale(is_array($locale) ? $locale[0] : $locale);
         } else {
             $availableLanguages = config('app.available_locales');
-            $userLanguages = preg_split('/,|;/', $request->server('HTTP_ACCEPT_LANGUAGE'));
+            $userLanguages = preg_split('/[,;]/', $request->server('HTTP_ACCEPT_LANGUAGE'));
 
             foreach ($userLanguages as $language) {
                 if (in_array($language, $availableLanguages, true)) {
