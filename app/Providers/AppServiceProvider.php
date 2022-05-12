@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Cache\RateLimiter;
+use RateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
@@ -18,7 +18,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->afterResolving(EmailVerificationNotificationController::class, function ($controller) {
-            // use the name you set for your rate limiter below
             $controller->middleware('throttle:verification');
         });
     }
