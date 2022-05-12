@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiter;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +17,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->afterResolving(EmailVerificationNotificationController::class, function ($controller) {
+            // use the name you set for your rate limiter below
+            $controller->middleware('throttle:verification');
+        });
     }
 
     /**
@@ -26,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('components.language_switcher', static function ($view) {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));
+        });
+
+        RateLimiter::for('verification', static function (Request $request) {
+            return Limit::perMinute(1)->by($request->ip());
         });
     }
 }
