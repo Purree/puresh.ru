@@ -1,0 +1,15 @@
+canvas {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main_background);
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}

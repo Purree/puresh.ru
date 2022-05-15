@@ -7,7 +7,9 @@
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/home/canvas.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/home/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home/canvas.css') }}">
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
     <script src="{{ asset('js/theme.js') }}"></script>
@@ -65,7 +67,8 @@
 
 
 <main class="main" role="main">
-    <div class="vh-100 d-flex flex-column justify-content-center align-items-center">
+    <canvas></canvas>
+    <div class="vh-100 d-flex flex-column justify-content-center align-items-center content">
         <div class="main-information d-flex flex-column align-items-center">
             <div class="avatar" style='background-image: url("{{ asset('pictures/main/avatar.jpg') }}")'></div>
             <div class="name">{{ __('Kirill Malygin') }}</div>
