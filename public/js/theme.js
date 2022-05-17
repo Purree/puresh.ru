@@ -14,4 +14,5 @@ function changeTheme() {
         page.setAttribute('data-theme', 'dark');
     }
 
+    document.dispatchEvent(new CustomEvent("changeTheme", {"color": localStorage.getItem("theme")}))
 }

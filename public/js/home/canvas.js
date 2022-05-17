@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    let canvas, ctx, circ, nodes, mouse, SENSITIVITY, SIBLINGS_LIMIT, DENSITY, NODES_QTY, ANCHOR_LENGTH, MOUSE_RADIUS;
+    let canvas, canvasColor, ctx, circ, nodes, mouse, SENSITIVITY, SIBLINGS_LIMIT, DENSITY, NODES_QTY, ANCHOR_LENGTH, MOUSE_RADIUS, COLOR;
 
     // how close next node must be to activate connection (in px)
     // shorter distance == better connection (line width)
@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
     nodes = [];
 
     canvas = document.querySelector('canvas');
+    updateCanvasColor();
+
     resizeWindow();
     mouse = {
         x: canvas.width / 2, y: canvas.height / 2
@@ -28,6 +30,16 @@ document.addEventListener("DOMContentLoaded", function () {
     ctx = canvas.getContext('2d');
     if (!ctx) {
         alert("Ваш браузер не поддерживает canvas.");
+    }
+
+    function updateCanvasColor() {
+        canvasColor = window.getComputedStyle(document.querySelector("canvas"))["color"];
+    }
+
+    function getNodeColor(brightness) {
+        const canvasRBGValues = canvasColor.split("(")[1].split(")")[0].split(", ")
+
+        return `rgba(${canvasRBGValues[0]}, ${canvasRBGValues[1]}, ${canvasRBGValues[2]}, ${brightness})`
     }
 
     function Node(x, y)
@@ -45,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     Node.prototype.drawNode = function () {
-        const color = "rgba(255, 255, 255, " + this.brightness + ")";
+        const color = getNodeColor(this.brightness);
         ctx.beginPath();
         ctx.arc(this.x, this.y, 2 * this.radius + 2 * this.siblings.length / SIBLINGS_LIMIT, 0, circ);
         ctx.fillStyle = color;
@@ -54,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     Node.prototype.drawConnections = function () {
         for (const element of this.siblings) {
-            const color = "rgba(255, 255, 255, " + this.brightness + ")";
+            const color = getNodeColor(this.brightness);
             ctx.beginPath();
             ctx.moveTo(this.x, this.y);
             ctx.lineTo(element.x, element.y);
@@ -171,6 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         document.addEventListener('resize', resizeWindow, false);
         document.addEventListener('mousemove', mousemoveHandler, false);
+        document.addEventListener('changeTheme', updateCanvasColor, false);
     }
 
     function resizeWindow()
