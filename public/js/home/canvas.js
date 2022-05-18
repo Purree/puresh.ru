@@ -184,6 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener('resize', resizeWindow, false);
         document.addEventListener('mousemove', mousemoveHandler, false);
         document.addEventListener('changeTheme', updateCanvasColor, false);
+        document.addEventListener('touchmove', touchmoveHandler, false);
     }
 
     function resizeWindow()
@@ -196,6 +197,12 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
+    }
+
+    function touchmoveHandler(e)
+    {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
     }
 
     initHandlers();
