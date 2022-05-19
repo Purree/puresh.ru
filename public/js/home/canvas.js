@@ -109,8 +109,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.vy = Math.random() * 4 - 2;
             }
             wrappedElementsCoordinates.forEach((el) => {
-                /*TODO: Refactor _____________*/
-
                 // If node inside wrapped element
                 if ((this.x >= el.x && this.x <= (el.x + el.width)) && (this.y >= el.y && this.y <= (el.y + el.height))) {
                     const left = Math.abs(this.x-el.x)
@@ -120,22 +118,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // true - dot nearer vertical, false - horizontal
                     if (Math.abs(left - right) < Math.abs(top - bottom)) {
-                        // true - top, false - bottom
-                        if (top < bottom) {
-                            this.y = el.y
-                        } else {
-                            this.y = el.y + el.height
-                        }
+                        // true - nearer to top, false - bottom
+                        this.y = top < bottom ? el.y : el.y + el.height
                     } else {
-                        // true - left, false - right
-                        if (left < right) {
-                            this.x = el.x
-                        } else {
-                            this.x = el.x + el.width
-                        }
+                        // true - nearer to left, false - right
+                        this.x = left < right ? el.x : el.x + el.width
                     }
-                    /*_____________*/
-
                 }
             })
         }
