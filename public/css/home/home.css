@@ -23,3 +23,11 @@
 .buttons-list {
     margin-top: 20px;
 }
+
+.main-information-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 100px;
+}

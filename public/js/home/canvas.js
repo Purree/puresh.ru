@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    let canvas, canvasColor, ctx, circ, nodes, mouse, SENSITIVITY, SIBLINGS_LIMIT, DENSITY, NODES_QTY, ANCHOR_LENGTH, MOUSE_RADIUS, COLOR;
+    let canvas, canvasColor, ctx, circ, nodes, mouse, SENSITIVITY, SIBLINGS_LIMIT, DENSITY, NODES_QTY, ANCHOR_LENGTH,
+        MOUSE_RADIUS, wrappedElementsCoordinates;
 
     // how close next node must be to activate connection (in px)
     // shorter distance == better connection (line width)
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     canvas = document.querySelector('canvas');
     updateCanvasColor();
+    updateWrappedElementsCoordinates();
 
     resizeWindow();
     mouse = {
@@ -32,11 +34,23 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Ваш браузер не поддерживает canvas.");
     }
 
-    function updateCanvasColor() {
+    function updateCanvasColor()
+    {
         canvasColor = window.getComputedStyle(document.querySelector("canvas"))["color"];
     }
 
-    function getNodeColor(brightness) {
+    function updateWrappedElementsCoordinates()
+    {
+        wrappedElementsCoordinates = [];
+        const wrappedElements = [".main-information-block"];
+
+        wrappedElements.forEach((tag) => {
+            wrappedElementsCoordinates.push(document.querySelector(tag).getBoundingClientRect());
+        })
+    }
+
+    function getNodeColor(brightness)
+    {
         const canvasRBGValues = canvasColor.split("(")[1].split(")")[0].split(", ")
 
         return `rgba(${canvasRBGValues[0]}, ${canvasRBGValues[1]}, ${canvasRBGValues[2]}, ${brightness})`
@@ -94,6 +108,36 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 this.vy = Math.random() * 4 - 2;
             }
+            wrappedElementsCoordinates.forEach((el) => {
+                /*TODO: Refactor _____________*/
+
+                // If node inside wrapped element
+                if ((this.x >= el.x && this.x <= (el.x + el.width)) && (this.y >= el.y && this.y <= (el.y + el.height))) {
+                    const left = Math.abs(this.x-el.x)
+                    const right = Math.abs(this.x-(el.x + el.width))
+                    const top = Math.abs(this.y-el.y)
+                    const bottom = Math.abs(this.y-(el.y + el.height))
+
+                    // true - dot nearer vertical, false - horizontal
+                    if (Math.abs(left - right) < Math.abs(top - bottom)) {
+                        // true - top, false - bottom
+                        if (top < bottom) {
+                            this.y = el.y
+                        } else {
+                            this.y = el.y + el.height
+                        }
+                    } else {
+                        // true - left, false - right
+                        if (left < right) {
+                            this.x = el.x
+                        } else {
+                            this.x = el.x + el.width
+                        }
+                    }
+                    /*_____________*/
+
+                }
+            })
         }
         this.x += this.vx * this.energy / 100;
         this.y += this.vy * this.energy / 100;
@@ -181,10 +225,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function initHandlers()
     {
-        document.addEventListener('resize', resizeWindow, false);
+        window.addEventListener('resize', resizeWindowHandler, false);
         document.addEventListener('mousemove', mousemoveHandler, false);
         document.addEventListener('changeTheme', updateCanvasColor, false);
         document.addEventListener('touchmove', touchmoveHandler, false);
+    }
+
+    function resizeWindowHandler()
+    {
+        updateWrappedElementsCoordinates();
+        resizeWindow();
     }
 
     function resizeWindow()

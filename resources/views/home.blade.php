@@ -69,13 +69,15 @@
 <main class="main" role="main">
     <canvas></canvas>
     <div class="vh-100 d-flex flex-column justify-content-center align-items-center content">
-        <div class="main-information d-flex flex-column align-items-center">
-            <div class="avatar" style='background-image: url("{{ asset('pictures/main/avatar.jpg') }}")'></div>
-            <div class="name">{{ __('Kirill Malygin') }}</div>
-            <div class="competency">{{ __('Web developer') }}</div>
-        </div>
-        <div class="buttons-list">
-            <a class="btn btn-dark" href="https://t.me/ppuurree"><i class="bi bi-telegram"></i> {{ __('Contact me') }}</a>
+        <div class="main-information-block">
+            <div class="main-information d-flex flex-column align-items-center">
+                <div class="avatar" style='background-image: url("{{ asset('pictures/main/avatar.jpg') }}")'></div>
+                <div class="name">{{ __('Kirill Malygin') }}</div>
+                <div class="competency">{{ __('Web developer') }}</div>
+            </div>
+            <div class="buttons-list">
+                <a class="btn btn-dark" href="https://t.me/ppuurree"><i class="bi bi-telegram"></i> {{ __('Contact me') }}</a>
+            </div>
         </div>
     </div>
 </main>
