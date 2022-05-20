@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // avoid nodes spreading
     ANCHOR_LENGTH = 20;
     // highlight radius
-    MOUSE_RADIUS = 200;
+    MOUSE_RADIUS = 250;
 
     circ = 2 * Math.PI;
     nodes = [];
@@ -119,25 +119,27 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 this.vy = Math.random() * 4 - 2;
             }
-            wrappedElementsCoordinates.forEach((el) => {
-                // If node inside wrapped element
-                if ((this.x >= el['x'] && this.x <= (el['x'] + el['width'])) && (this.y >= el['y'] && this.y <= (el['y'] + el['height']))) {
-                    const left = Math.abs(this.x - el['x'])
-                    const right = Math.abs(this.x - (el['x'] + el['width']))
-                    const top = Math.abs(this.y - el['y'])
-                    const bottom = Math.abs(this.y - (el['y'] + el['height']))
-
-                    // true - dot nearer vertical, false - horizontal
-                    if (Math.abs(left - right) < Math.abs(top - bottom)) {
-                        // true - nearer to top, false - bottom
-                        this.y = top < bottom ? el['y'] : el['y'] + el['height']
-                    } else {
-                        // true - nearer to left, false - right
-                        this.x = left < right ? el['x'] : el['x'] + el['width']
-                    }
-                }
-            })
         }
+
+        wrappedElementsCoordinates.forEach((el) => {
+            // If node inside wrapped element
+            if ((this.x >= el['x'] && this.x <= (el['x'] + el['width'])) && (this.y >= el['y'] && this.y <= (el['y'] + el['height']))) {
+                const left = Math.abs(this.x - el['x'])
+                const right = Math.abs(this.x - (el['x'] + el['width']))
+                const top = Math.abs(this.y - el['y'])
+                const bottom = Math.abs(this.y - (el['y'] + el['height']))
+
+                // true - dot nearer vertical, false - horizontal
+                if (Math.abs(left - right) < Math.abs(top - bottom)) {
+                    // true - nearer to top, false - bottom
+                    this.y = top < bottom ? el['y'] : el['y'] + el['height']
+                } else {
+                    // true - nearer to left, false - right
+                    this.x = left < right ? el['x'] : el['x'] + el['width']
+                }
+            }
+        })
+
         this.x += this.vx * this.energy / 100;
         this.y += this.vy * this.energy / 100;
     };
@@ -146,6 +148,11 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         nodes = [];
+
+        if (screen.width < 480) {
+            return;
+        }
+
         for (let i = DENSITY; i < canvas.width; i += DENSITY) {
             for (let j = DENSITY; j < canvas.height; j += DENSITY) {
                 nodes.push(new Node(i, j));

@@ -31,3 +31,9 @@
     flex-direction: column;
     margin: 50px;
 }
+
+@media (max-width: 480px) {
+    .main-information-block {
+        margin: 0;
+    }
+}
