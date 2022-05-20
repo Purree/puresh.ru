@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         x: canvas.width / 2, y: canvas.height / 2
     };
     ctx = canvas.getContext('2d');
+
     if (!ctx) {
         alert("Ваш браузер не поддерживает canvas.");
     }
@@ -45,7 +46,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const wrappedElements = [".main-information-block"];
 
         wrappedElements.forEach((tag) => {
-            wrappedElementsCoordinates.push(document.querySelector(tag).getBoundingClientRect());
+            const element = document.querySelector(tag);
+            const elementCoordinates = element.getBoundingClientRect();
+            const elementStyles = window.getComputedStyle(element);
+            const x = elementCoordinates.x - parseInt(elementStyles['marginLeft']) - parseInt(elementStyles['paddingLeft'])
+            const y = elementCoordinates.y - parseInt(elementStyles['marginTop']) - parseInt(elementStyles['paddingTop'])
+            const width = elementCoordinates.width + parseInt(elementStyles['marginLeft']) + parseInt(elementStyles['marginRight'])
+                + parseInt(elementStyles['paddingLeft']) + parseInt(elementStyles['paddingRight'])
+            const height = elementCoordinates.height + parseInt(elementStyles['marginTop']) + parseInt(elementStyles['marginBottom'])
+                + parseInt(elementStyles['paddingTop']) + parseInt(elementStyles['paddingBottom'])
+
+            wrappedElementsCoordinates.push({"tag": tag, "x": x, "y": y, "width": width, "height": height});
         })
     }
 
@@ -110,19 +121,19 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             wrappedElementsCoordinates.forEach((el) => {
                 // If node inside wrapped element
-                if ((this.x >= el.x && this.x <= (el.x + el.width)) && (this.y >= el.y && this.y <= (el.y + el.height))) {
-                    const left = Math.abs(this.x-el.x)
-                    const right = Math.abs(this.x-(el.x + el.width))
-                    const top = Math.abs(this.y-el.y)
-                    const bottom = Math.abs(this.y-(el.y + el.height))
+                if ((this.x >= el['x'] && this.x <= (el['x'] + el['width'])) && (this.y >= el['y'] && this.y <= (el['y'] + el['height']))) {
+                    const left = Math.abs(this.x - el['x'])
+                    const right = Math.abs(this.x - (el['x'] + el['width']))
+                    const top = Math.abs(this.y - el['y'])
+                    const bottom = Math.abs(this.y - (el['y'] + el['height']))
 
                     // true - dot nearer vertical, false - horizontal
                     if (Math.abs(left - right) < Math.abs(top - bottom)) {
                         // true - nearer to top, false - bottom
-                        this.y = top < bottom ? el.y : el.y + el.height
+                        this.y = top < bottom ? el['y'] : el['y'] + el['height']
                     } else {
                         // true - nearer to left, false - right
-                        this.x = left < right ? el.x : el.x + el.width
+                        this.x = left < right ? el['x'] : el['x'] + el['width']
                     }
                 }
             })
@@ -187,6 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
         resizeWindow();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
         findSiblings();
         let i, node, distance;
         for (i = 0; i < NODES_QTY; i++) {
