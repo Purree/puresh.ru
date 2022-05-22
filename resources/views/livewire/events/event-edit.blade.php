@@ -20,7 +20,7 @@
         <div class="form-group">
             <label for="eventTitle">{{ __('Event name') }}</label>
             <input class="form-control @error('title') is-invalid @enderror" wire:model.defer="title"
-                   id="eventTitle" placeholder="Title" type="text"
+                   id="eventTitle" placeholder="{{ __('Title') }}" type="text"
                    name="title" maxlength="255" required>
         </div>
 
@@ -41,7 +41,7 @@
                 <label for="eventRepetition">{{ __('Time after which the event will repeat (in seconds)') }}</label>
                 <input class="form-control @error('repetition_in_seconds') is-invalid @enderror"
                        wire:model.defer="repetition_in_seconds" id="eventRepetition"
-                       placeholder="Repetition in seconds" type="number"
+                       placeholder="{{ __('Repetition in seconds') }}" type="number"
                        min="0" name="repetition_in_seconds">
             </div>
         </div>
