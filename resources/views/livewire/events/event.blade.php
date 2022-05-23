@@ -1,7 +1,7 @@
 <div class="unused" data-id="{{ $event->id }}">
     @if( !$isEventBeingEdited )
         <div class="mb-5 d-flex align-items-center justify-content-center">
-            <p class="h1 text-break">{{ $event->title }}</p>
+            <p class="h1 text-break">{{ __($event->title) }}</p>
             @can('manage_data', App\Models\Permission::class)
                 <div class="btn-group ms-3">
                     <button type="button" class="btn btn-secondary" wire:click="editEvent()"><i
