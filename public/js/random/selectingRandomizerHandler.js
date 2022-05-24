@@ -10,8 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.querySelector('.selected-randomizer-container')
         inputsCount++
         selectingBlockExample.querySelector('.selecting-random-id').innerText = inputsCount
-        if (!selectingBlockExample.querySelector('.delete-variant-button'))
+        if (!selectingBlockExample.querySelector('.delete-variant-button')) {
             selectingBlockExample.querySelector('.chance-container').innerHTML += "<button class=\"btn btn-dynamic delete-variant-button\"><i class=\"bi bi-backspace\"></i></button>";
+        }
 
         container.appendChild(selectingBlockExample)
         updateDeleteButtons()
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         resultOutput.innerText = selectRandomVariant(chances)
 
-            resultOutput.style = "transform: rotate(360deg); transition-duration: 0.2s;"
+        resultOutput.style = "transform: rotate(360deg); transition-duration: 0.2s;"
         setTimeout(() => {
             resultOutput.style = ""
         }, 200)
@@ -44,7 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateChanceInputsOnChange()
 })
 
-function selectRandomVariant(chances) {
+function selectRandomVariant(chances)
+{
     const randomizedChances = {}
     let previousIndex
 
@@ -55,10 +57,11 @@ function selectRandomVariant(chances) {
         if (!valueOfCurrentRandomizedChance) {
             randomizedChances[randomizedIndex] = 1
         } else {
-            if (previousIndex === randomizedIndex)
+            if (previousIndex === randomizedIndex) {
                 randomizedChances[randomizedIndex] += 1
-            else
+            } else {
                 randomizedChances[randomizedIndex] = 1
+            }
         }
 
         if (parseInt(chances[String(randomizedIndex)][0]) === randomizedChances[randomizedIndex]) {
@@ -69,7 +72,8 @@ function selectRandomVariant(chances) {
     }
 }
 
-function updateDeleteButtons() {
+function updateDeleteButtons()
+{
     document.querySelectorAll('.delete-variant-button').forEach((button) => {
         button.onclick = (event) => {
             event.preventDefault()
@@ -79,7 +83,8 @@ function updateDeleteButtons() {
     })
 }
 
-function generateChancesObject() {
+function generateChancesObject()
+{
     const chances = {}
     document.querySelectorAll('.random-chance').forEach((input, iteration) => {
         const inputWord = input.parentNode.parentNode.parentNode.querySelector('.random-word').value
@@ -95,7 +100,8 @@ function generateChancesObject() {
     return chances
 }
 
-function updateChanceInputsOnChange() {
+function updateChanceInputsOnChange()
+{
     document.querySelectorAll('.random-chance').forEach((input) => {
         input.onchange = () => {
             let inputValue = String(Math.floor(parseInt(input.value)))
