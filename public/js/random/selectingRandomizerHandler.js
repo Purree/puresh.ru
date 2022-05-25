@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault()
 
         const selectingBlockExample = document.querySelector('.select-random-element-example').cloneNode(true)
+        selectingBlockExample.querySelectorAll('input').forEach((el) => { el.value = "" })
         const container = document.querySelector('.selected-randomizer-container')
         inputsCount++
         selectingBlockExample.querySelector('.selecting-random-id').innerText = inputsCount
