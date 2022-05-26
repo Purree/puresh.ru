@@ -23,8 +23,6 @@ function findAndReplaceLinks(text)
 
 function findAndReplaceBr(text)
 {
-    console.log(text)
-
     const regexBr = /&laquo;br \/&raquo;/gi;
     return text.replaceAll(regexBr, () => {
         return '<br/>';
