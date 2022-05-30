@@ -72,70 +72,7 @@
             <button class="btn btn-primary" onclick="editDescription()"><i class="bi bi-pen"></i></button>
             <div class="fs-5 note-text text-break">{{ $noteDescription }}</div>
 
-            @if(!empty(current($noteImages))) {{--        Get first object element and check is it empty        --}}
-                @if($noteImages->count() === 1)
-                    <div class="d-flex justify-content-center mt-2 imgLoading imageContainer">
-                        <div class="d-none spinner-border" role="status"></div>
-                        <div class="w-100 h-100 d-flex justify-content-center align-items-center imageBlock">
-                            <div class="h-100 position-relative">
-                                <div class="position-absolute" style="right: 10px; top: 10px; z-index: 10">
-                                    <button type="button" class="btn btn-outline-danger delete-image-btn" wire:click="deleteImage({{ $noteImages->first()->id }})">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-
-                                <img class="note-image d-block h-100 w-100"
-                                    src="{{ self::getCorrectPath($noteImages->first()->note_image_path) }}"/>
-                            </div>
-                        </div>
-                    </div>
-                @else
-                    <div id="noteImagesCarousel{{ $note->id }}" class="carousel slide" data-bs-interval="false">
-                        <div class="carousel-indicators">
-                            @for($i = 0; $i < $noteImages->count(); $i++)
-                                <button type="button" data-bs-target="#noteImagesCarousel{{ $note->id }}"
-                                        data-bs-slide-to="{{ $i }}"
-                                        class="{{ $i === 0 ? 'active' : '' }}" aria-current="true"
-                                        aria-label="Slide {{ $i }}"></button>
-                            @endfor
-                        </div>
-                        <div class="carousel-inner">
-                            @foreach($noteImages as $image)
-                                <div
-                                    class="carousel-item {{ $loop->first ? 'active' : '' }} imgLoading w-100 imageContainer">
-                                    <div class="spinner-border position-absolute bottom-50 end-50 d-none"
-                                         role="status"></div>
-                                    <div class="w-100 h-100 d-flex justify-content-center align-items-center imageBlock">
-                                        <div class="h-100 position-relative">
-                                            <div class="position-absolute delete-image-btn" style="right: 10px; top: 10px; z-index: 10">
-                                                <button type="button" class="btn btn-outline-danger" wire:click="deleteImage({{ $image->id }})">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </div>
-
-                                            <img src="{{ self::getCorrectPath($image->note_image_path) }}"
-                                                 class="note-image d-block h-100 w-100 ms-auto me-auto"
-                                                 loading="lazy">
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <button class="carousel-control-prev" type="button"
-                                data-bs-target="#noteImagesCarousel{{ $note->id }}"
-                                data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button"
-                                data-bs-target="#noteImagesCarousel{{ $note->id }}"
-                                data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                @endif
-            @endif
+            <livewire:components.notes.notes-carousel :note="$note" />
             <div class="d-flex justify-content-center mt-3">
                 <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addNewPhotoModal">
                     {{ __('Select A New Photo') }}
