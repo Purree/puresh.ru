@@ -37,6 +37,8 @@ trait NotesFiltersTrait
 
         $this->notes = $filteredNotes->paginate(10);
         $this->filtered = true;
+
+        $this->dispatchBrowserEvent('contentChanged');
     }
 
     public function setFilters(array|string $filters = null, string $orderFilter = null)

@@ -9,12 +9,14 @@ class NotesFilters extends Component
     public string $notesOrderFilter;
     public array $filters;
 
-    public function changeNoteFilters() {
+    public function changeNoteFilters()
+    {
         $this->emitUp('changeFilters', $this->filters, $this->notesOrderFilter);
         $this->emitUp('refreshNotes');
     }
 
-    public function searchWithoutFilters() {
+    public function searchWithoutFilters()
+    {
         $this->emitUp('clearFilters');
     }
 

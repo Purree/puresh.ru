@@ -3,7 +3,8 @@
 document.addEventListener('contentChanged', photosModalHandler)
 document.addEventListener("DOMContentLoaded", photosModalHandler)
 
-function photosModalHandler() {
+function photosModalHandler()
+{
 
     const MODAL = document.querySelector(".image-modal");
 
@@ -44,7 +45,8 @@ function photosModalHandler() {
         }
     }
 
-    function onModalImageLoad() {
+    function onModalImageLoad()
+    {
         SPINNER.classList.add('d-none')
         MODAL_IMAGE.classList.remove('d-none')
     }
