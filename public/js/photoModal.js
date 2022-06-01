@@ -34,9 +34,8 @@ function photosModalHandler()
     })
 
     const MODAL_CLOSE_BUTTON = document.querySelector(".modal-close-button");
-
-    MODAL_CLOSE_BUTTON.onclick = MODAL.onclick = (event) => {
-        if (event.target !== MODAL_IMAGE) {
+    const closeModalHandler = (event) => {
+        if (event.target !== MODAL_IMAGE && !moved) {
             MODAL_IMAGE.dispatchEvent(new CustomEvent('wheelzoom.destroy'));
             MODAL.style.display = "none";
             SPINNER.classList.remove('d-none')
@@ -44,6 +43,21 @@ function photosModalHandler()
             document.body.classList.remove('overflow-hidden')
         }
     }
+
+    let moved = false
+
+    MODAL.addEventListener('mousedown', () => {
+        moved = false
+    })
+
+    MODAL.addEventListener('mousemove', () => {
+        moved = true
+    })
+
+    MODAL_CLOSE_BUTTON.onclick = closeModalHandler
+    MODAL.addEventListener('mouseup', closeModalHandler)
+
+
 
     function onModalImageLoad()
     {
