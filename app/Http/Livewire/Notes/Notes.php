@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Notes;
 
+use App\Http\Filters\NoteFilter;
 use App\Models\Note;
 use App\Models\Permission;
 use App\Services\Livewire\NotesFiltersService;
 use App\Traits\Controller\CheckIsPaginatorPageExists;
 use App\Traits\Livewire\NotesFiltersTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use JetBrains\PhpStorm\NoReturn;
@@ -16,7 +18,7 @@ use Livewire\WithPagination;
 
 class Notes extends Component
 {
-    use NotesFiltersTrait;
+//    use NotesFiltersTrait;
     use AuthorizesRequests;
     use WithPagination;
     use CheckIsPaginatorPageExists;
@@ -48,47 +50,31 @@ class Notes extends Component
         $this->updatePageNumber();
     }
 
-    private function selectNotes()
+    private function selectNotes(NoteFilter $filter)
     {
+        $note = Note::filter($filter);
+
         if (Gate::allows('manage_data', Permission::class)) {
-            return Note::with('user', 'images')->paginate(10);
+            $note = $note->with('user', 'images');
+        } else {
+            $note = $note->with('user', 'images')
+                ->where('user_id', Auth::id())
+                ->orWhereRelation('user', 'user_id', '=', Auth::id());
         }
 
-        return Note::with('user', 'images')
-            ->where('user_id', Auth::id())
-            ->orWhereRelation('user', 'user_id', '=', Auth::id())
-            ->paginate(10);
+        return $note->paginate(10);
     }
 
-    public function render()
+    public function render(NoteFilter $filter)
     {
-        if (isset($_GET['filtersString'], $_GET['orderFilter'])) {
-            $this->changeNoteFilters($_GET['filtersString'], $_GET['orderFilter']);
-        }
+        $filters = $filter->fields();
+        $this->notesOrderFilter = $filters['orderFilter'];
+        $this->filters = explode(",", $filters['filtersString']);
 
-        if (!isset($this->notesOrderFilter)) {
-            $this->notesOrderFilter = $this->allOrderFilters[2];
-
-            $this->filtered = false;
-        }
-
-        if (!isset($this->filters)) {
-            $this->filters = NotesFiltersService::associateFilters($this->allOptionalFilters);
-
-            $this->filtered = false;
-        }
-
-        if (!$this->filtered) {
-            $this->notes = $this->selectNotes();
-        }
-
-        if (!isset($this->notes) && $this->filtered) {
-            $this->changeNoteFilters($this->filters, $this->notesOrderFilter);
-        }
+        $this->notes = $this->selectNotes($filter);
 
         $this->paginator = $this->notes->onEachSide(1);
         $this->validatePageNumber($this->paginator, 'notes');
-
 
         return view('livewire.notes.notes', ['notes' => $this->notes, 'paginator' => $this->paginator]);
     }
