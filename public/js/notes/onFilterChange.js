@@ -1,7 +1,7 @@
 const relationRadiosWithCheckboxes = {
-    '#userNotesFilter': ['#showUserNotesFilter', {'disableOnParentClick': true, 'disableParentOnClick': true}],
-    '#memberNotesFilter': ['#showMemberNotesFilter', {'disableOnParentClick': true, 'disableParentOnClick': true}],
-    '#inIdOrderFilter': ['#showAllUsers', {'disableOnParentClick': false, 'disableParentOnClick': false}],
+    '#userNotesFilter': ['#showUserNotesFilter', {'disableParentOnClick': true}],
+    '#memberNotesFilter': ['#showMemberNotesFilter', {'disableParentOnClick': true}],
+    '#inIdOrderFilter': ['#showAllUsers', {'disableParentOnClick': false}],
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,40 +10,36 @@ document.addEventListener('DOMContentLoaded', () => {
         return document.querySelectorAll('.noteFilterCheckbox:checked')
     }
 
+    for (let relatedRadioSelector in relationRadiosWithCheckboxes) {
+        const filter = document.querySelector(relatedRadioSelector)
+        const relation = relationRadiosWithCheckboxes[relatedRadioSelector]
+        const filterParent = document.querySelector(relatedRadioSelector).parentElement
 
-    document.querySelectorAll('input[type="radio"][name="orderFilter"]').forEach((radio) => {
-        radio.addEventListener('change', () => {
-            document.querySelectorAll('.noteFilterCheckbox').forEach((toggle) => {
-                toggle.disabled = false
-            })
-        })
-    })
+        const toggle = document.querySelector(relation[0])
+        const disableParentOnElementClick = relation[1]['disableParentOnClick']
 
-for (let relatedRadioSelector in relationRadiosWithCheckboxes) {
-    let filter = document.querySelector(relatedRadioSelector)
-    let relation = relationRadiosWithCheckboxes[relatedRadioSelector]
+        const filterId = '#' + filter.id;
+        if (filterId in relationRadiosWithCheckboxes && relationRadiosWithCheckboxes[filterId][1]['disableParentOnClick']) {
+            toggleElement(filterParent, document.querySelector(relationRadiosWithCheckboxes[filterId][0]).checked)
+        }
 
-    let toggle = document.querySelector(relation[0])
-    let disableElementOnParentClick = relation[1]['disableOnParentClick']
-    let disableParentOnElementClick = relation[1]['disableParentOnClick']
+        toggle?.addEventListener('change', () => {
+            toggleElement(document.querySelector('.apply-filters'), checkedFilters().length !== 0)
 
-    if (disableElementOnParentClick) {
-        filter.addEventListener('change', () => {
-            toggle.checked = true
-            toggle.disabled = true
-            })
-    }
+            if (disableParentOnElementClick) {
+                toggleElement(filterParent, toggle.checked)
 
-    toggle?.addEventListener('change', () => {
-        document.querySelector('.apply-filters').disabled = checkedFilters().length === 0
-
-        if (disableParentOnElementClick) {
-            filter.disabled = !toggle.checked
-
-            if (filter.checked) {
                 filter.checked = false
             }
-        }
         })
-}
+    }
 })
+
+function toggleElement(element, enable = null)
+{
+    if (enable !== null) {
+        return element.classList.toggle('disabled', !enable)
+    }
+
+    return element.classList.toggle('disabled')
+}

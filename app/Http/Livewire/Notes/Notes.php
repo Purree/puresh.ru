@@ -6,12 +6,9 @@ use App\Http\Filters\NoteFilter;
 use App\Models\Note;
 use App\Models\Permission;
 use App\Traits\Controller\CheckIsPaginatorPageExists;
-use App\Traits\Livewire\NotesFiltersTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
 use Livewire\WithPagination;
 

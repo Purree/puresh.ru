@@ -4,18 +4,22 @@
     position: relative;
     padding: 10px;
 }
+
 .noteInformation {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
+
 .noteControl {
     display: flex;
 }
+
 .imageContainer {
     height: 50vh;
 }
+
 .doneNote {
     background-color: var(--done_background);
 }

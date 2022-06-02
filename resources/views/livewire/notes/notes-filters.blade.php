@@ -26,7 +26,7 @@
                                                             :filter-order="$orderBy"/>
                     @can('manage_data', App\Models\Permission::class)
                         <livewire:components.notes.filter-checkbox :filter-name="'showAllUsers'"
-                                                                   :filter-text="'Show other people\'s notes'"
+                                                                   :filter-text="'Show all notes'"
                                                                    :filter-value="'showAllUsers'" :filters="$filters"/>
                     @endcan
                 </div>
