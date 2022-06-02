@@ -23,13 +23,14 @@ abstract class QueryFilter
 
         foreach ($this->fields() as $field => $value) {
             $method = Str::camel($field);
+
             if (method_exists($this, $method)) {
-                call_user_func_array([$this, $method], (array)$value);
+                $this->$method($value);
             }
         }
     }
 
-    public function fields(): array
+    protected function fields(): array
     {
         return array_filter($this->request->all());
     }

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    document.querySelectorAll('input[type="radio"][name="notesOrderFilter"]').forEach((radio) => {
+    document.querySelectorAll('input[type="radio"][name="orderFilter"]').forEach((radio) => {
         radio.addEventListener('change', () => {
             document.querySelectorAll('.noteFilterCheckbox').forEach((toggle) => {
                 toggle.disabled = false

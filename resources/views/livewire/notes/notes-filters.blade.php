@@ -1,7 +1,7 @@
 <div>
     <script src="{{ asset('js/notes/onFilterChange.js') }}"></script>
 
-    <form class="card card-body" wire:submit.prevent="changeNoteFilters">
+    <form method="GET" class="card card-body">
         <div class="text-center h3">
             {{ __('Choose the filters you need') }}
         </div>
@@ -20,62 +20,40 @@
             <div class="mt-3 d-flex flex-column align-items-center">
 
                 <div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="inIdOrderFilter" required
-                               value="inIdOrder" wire:model.defer="notesOrderFilter" name="notesOrderFilter" checked>
-                        <label class="form-check-label" for="inIdOrderFilter">
-                            {{ __('In order of addition') }}
-                        </label>
-                    </div>
+                    <livewire:components.notes.filter-radio :filter-name="'inIdOrderFilter'"
+                                                            :filter-value="'inIdOrder'"
+                                                            :filter-text="'In order of addition'"
+                                                            :filter-order="$orderBy"/>
                     @can('manage_data', App\Models\Permission::class)
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input noteFilterCheckbox" type="checkbox" value="filter6"
-                                   id="showAllUsers" wire:model.defer="filters.showAllUsers" checked>
-                            <label class="form-check-label" for="showAllUsers">
-                                {{ __("Show other people's notes") }}
-                            </label>
-                        </div>
+                        <livewire:components.notes.filter-checkbox :filter-name="'showAllUsers'"
+                                                                   :filter-text="'Show other people\'s notes'"
+                                                                   :filter-value="'showAllUsers'" :filters="$filters"/>
                     @endcan
                 </div>
 
                 <div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="userNotesFilter"
-                               value="userNotes" wire:model.defer="notesOrderFilter" name="notesOrderFilter">
-                        <label class="form-check-label" for="userNotesFilter">
-                            {{ __('First my notes') }}
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input noteFilterCheckbox" type="checkbox" value="filter4"
-                               id="showUserNotesFilter" wire:model.defer="filters.showUserNotes" checked>
-                        <label class="form-check-label" for="showUserNotesFilter">
-                            {{ __('Show my notes') }}
-                        </label>
-                    </div>
+                    <livewire:components.notes.filter-radio :filter-name="'userNotesFilter'" :filter-value="'userNotes'"
+                                                            :filter-text="'First my notes'" :filter-order="$orderBy"/>
+                    <livewire:components.notes.filter-checkbox :filter-name="'showUserNotesFilter'"
+                                                               :filter-text="'Show my notes'"
+                                                               :filter-value="'showUserNotes'" :filters="$filters"/>
                 </div>
 
                 <div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="memberNotesFilter"
-                               value="memberNotes" wire:model.defer="notesOrderFilter" name="notesOrderFilter">
-                        <label class="form-check-label" for="memberNotesFilter">
-                            {{ __("First notes where I'm a member") }}
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input noteFilterCheckbox" type="checkbox" value="filter5"
-                               id="showMemberNotesFilter" wire:model.defer="filters.showMemberNotes" checked>
-                        <label class="form-check-label" for="showMemberNotesFilter">
-                            {{ __('Show notes where I am a member') }}
-                        </label>
-                    </div>
+                    <livewire:components.notes.filter-radio :filter-name="'memberNotesFilter'"
+                                                            :filter-value="'memberNotes'"
+                                                            :filter-text="'First notes where I\'m a member'"
+                                                            :filter-order="$orderBy"/>
+                    <livewire:components.notes.filter-checkbox :filter-name="'showMemberNotesFilter'"
+                                                               :filter-text="'Show notes where I am a member'"
+                                                               :filter-value="'showMemberNotes'" :filters="$filters"/>
                 </div>
             </div>
         </div>
         <div class="d-flex flex-row mt-3">
             <button class="btn btn-outline-success apply-filters w-100 me-1">{{ __('Apply filters') }}</button>
-            <button wire:click.prevent="searchWithoutFilters" class="btn btn-outline-danger w-100 ms-1">{{ __('Search without filters') }}</button>
+            <button wire:click.prevent="searchWithoutFilters"
+                    class="btn btn-outline-danger w-100 ms-1">{{ __('Search without filters') }}</button>
         </div>
     </form>
 </div>
