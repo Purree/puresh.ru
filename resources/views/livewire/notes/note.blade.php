@@ -32,7 +32,7 @@
         </div>
 
         <div class="fs-5 note-text text-break">{{ $note->text }}</div>
-        <livewire:components.notes.notes-carousel :note="$note" />
+        <livewire:components.notes.carousel :note="$note" />
     </div>
     @if(!empty(current($note->user))) {{--        Get first object element and check is it empty        --}}
     <div>

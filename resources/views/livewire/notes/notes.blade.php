@@ -3,7 +3,7 @@
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
 
-    @if($filtersString || !empty(current($notes)))
+    @if($filters || !empty(current($notes)))
         <div class="d-flex justify-content-between mb-3">
             <button class="btn btn-outline-success w-100 me-1" wire:click="createNewNote">{{ __('Add new note') }}
             </button>
@@ -13,8 +13,7 @@
             </button>
         </div>
         <div class="collapse mb-3" id="noteFilters">
-            <livewire:notes.notes-filters :wire:key="'filters'" :notesOrderFilter="$notesOrderFilter"
-                                          :filters="$filters"/>
+            <livewire:notes.notes-filters :filters="$filters" :wire:key="'filters'" :order-by="$orderFilter"/>
         </div>
     @endif
 
@@ -31,11 +30,11 @@
                     <div class="card-body border-bottom rounded-top">
                         <div class="mx-3 my-3">
                             <h3 class="h3 my-4">
-                                {{ __("You don't have any notes yet") }} {{ $filtersString ? ', ' . __('maybe this is due to the applied filters, try searching for notes without filters') : '' }}
+                                {{ __("You don't have any notes yet") }} {{ $filters ? ', ' . __('maybe this is due to the applied filters, try searching for notes without filters') : '' }}
                             </h3>
                         </div>
                     </div>
-                    @if (!$filtersString)
+                    @if (!$filters)
                         <div class="card-body">
                             <div class="mx-3 my-3">
                                 <div class="text">

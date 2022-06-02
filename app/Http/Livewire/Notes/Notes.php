@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire\Notes;
 
+use App\Http\Filters\NoteFilter;
 use App\Models\Note;
 use App\Models\Permission;
-use App\Services\Livewire\NotesFiltersService;
 use App\Traits\Controller\CheckIsPaginatorPageExists;
 use App\Traits\Livewire\NotesFiltersTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use JetBrains\PhpStorm\NoReturn;
@@ -16,7 +17,6 @@ use Livewire\WithPagination;
 
 class Notes extends Component
 {
-    use NotesFiltersTrait;
     use AuthorizesRequests;
     use WithPagination;
     use CheckIsPaginatorPageExists;
@@ -27,68 +27,43 @@ class Notes extends Component
 
     protected $listeners = [
         'setDeletedId',
-        'changeFilters' => 'changeNoteFilters',
         'refreshNotes' => '$refresh',
         'clearFilters' => 'clearFilters',
     ];
 
-    public string $filtersString = '';
+    public array $filters = [];
     public string $orderFilter = '';
 
     protected $queryString = [
         'orderFilter' => ['except' => ''],
-        'filtersString' => ['except' => ''],
+        'filters' => ['except' => ''],
     ];
 
     public array $deletedNote = [];
-    public bool $filtered = false;
 
     public function mount()
     {
         $this->updatePageNumber();
     }
 
-    private function selectNotes()
+    private function selectNotes(NoteFilter $filter)
     {
-        if (Gate::allows('manage_data', Permission::class)) {
-            return Note::with('user', 'images')->paginate(10);
+        $note = Note::with('user', 'images');
+
+        if (!Gate::allows('manage_data', Permission::class)) {
+            $note = $note->where('user_id', Auth::id())
+                ->orWhereRelation('user', 'user_id', '=', Auth::id());
         }
 
-        return Note::with('user', 'images')
-            ->where('user_id', Auth::id())
-            ->orWhereRelation('user', 'user_id', '=', Auth::id())
-            ->paginate(10);
+        return $note->filter($filter)->paginate(10);
     }
 
-    public function render()
+    public function render(NoteFilter $filter)
     {
-        if (isset($_GET['filtersString'], $_GET['orderFilter'])) {
-            $this->changeNoteFilters($_GET['filtersString'], $_GET['orderFilter']);
-        }
-
-        if (!isset($this->notesOrderFilter)) {
-            $this->notesOrderFilter = $this->allOrderFilters[2];
-
-            $this->filtered = false;
-        }
-
-        if (!isset($this->filters)) {
-            $this->filters = NotesFiltersService::associateFilters($this->allOptionalFilters);
-
-            $this->filtered = false;
-        }
-
-        if (!$this->filtered) {
-            $this->notes = $this->selectNotes();
-        }
-
-        if (!isset($this->notes) && $this->filtered) {
-            $this->changeNoteFilters($this->filters, $this->notesOrderFilter);
-        }
+        $this->notes = $this->selectNotes($filter);
 
         $this->paginator = $this->notes->onEachSide(1);
         $this->validatePageNumber($this->paginator, 'notes');
-
 
         return view('livewire.notes.notes', ['notes' => $this->notes, 'paginator' => $this->paginator]);
     }
@@ -113,14 +88,14 @@ class Notes extends Component
      *
      * @param $note
      */
-    #[NoReturn] public function setDeletedId($note): void
+    public function setDeletedId($note): void
     {
         $this->deletedNote = $note;
 
         $this->dispatchBrowserEvent('showConfirmationModal');
     }
 
-    #[NoReturn] public function deleteNote($id): void
+    public function deleteNote($id): void
     {
         $note = Note::findOrFail($id);
 
@@ -129,5 +104,11 @@ class Notes extends Component
         $note->delete();
 
         $this->emit('refreshNotes');
+    }
+
+    public function clearFilters(): void
+    {
+        $this->filters = [];
+        $this->orderFilter = '';
     }
 }

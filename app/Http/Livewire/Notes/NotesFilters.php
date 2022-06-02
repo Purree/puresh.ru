@@ -6,12 +6,12 @@ use Livewire\Component;
 
 class NotesFilters extends Component
 {
-    public string $notesOrderFilter;
-    public array $filters;
+    public array $filters = [];
+    public string $orderBy = '';
 
     public function changeNoteFilters()
     {
-        $this->emitUp('changeFilters', $this->filters, $this->notesOrderFilter);
+        $this->emitUp('changeFilters');
         $this->emitUp('refreshNotes');
     }
 
