@@ -24,3 +24,7 @@ If you need to start server in http mode just uncomment #http config in nginx.co
 # Queue start
 1. Run `docker-compose exec app bash`.
 2. Run `nohup php artisan queue:work --daemon > /tmp/nohup.log &`
+
+# Cloudflare
+If you need to get real ip instead of cloudflare, you need to use `ngx_http_realip_module` and actualize ips in 
+setRealIPs.conf with https://www.cloudflare.com/ips-v4 and https://www.cloudflare.com/ips-v6
