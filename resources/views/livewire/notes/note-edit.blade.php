@@ -72,7 +72,7 @@
             <button class="btn btn-primary" onclick="editDescription()"><i class="bi bi-pen"></i></button>
             <div class="fs-5 note-text text-break">{{ $noteDescription }}</div>
 
-            <livewire:components.notes.carousel :note="$note" />
+            <livewire:components.notes.carousel :note="$note" :isEditable="true"/>
             <div class="d-flex justify-content-center mt-3">
                 <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addNewPhotoModal">
                     {{ __('Select A New Photo') }}

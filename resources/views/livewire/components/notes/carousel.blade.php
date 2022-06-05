@@ -23,6 +23,14 @@
                         <div class="carousel-item {{ $loop->first ? 'active' : '' }} imgLoading w-100 imageContainer">
                             <div class="spinner-border position-absolute bottom-50 end-50 d-none" role="status"></div>
                             <div class="d-flex h-100 mx-auto justify-content-center align-items-center">
+                                @if($isEditable)
+                                    <div class="position-absolute" style="right: 100px; top: 10px; z-index: 10">
+                                        <button type="button" class="btn btn-outline-danger delete-image-btn"
+                                                wire:click="deleteImage({{ $image->id }})">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                @endif
                                 <img
                                     src="{{ \App\Http\Livewire\Notes\NoteEdit::getCorrectPath($image->note_image_path) }}"
                                     class="note-image d-block" loading="lazy" style="max-width: 90%">

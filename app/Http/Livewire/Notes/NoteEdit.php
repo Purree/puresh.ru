@@ -32,7 +32,11 @@ class NoteEdit extends Component
         'noteDescription' => 'required|string|max:2000',
     ];
 
-    protected $listeners = ['refreshNoteImages' => '$refresh', 'refreshUsers' => '$refresh'];
+    protected $listeners = [
+        'refreshNoteImages' => '$refresh',
+        'refreshUsers' => '$refresh',
+        'deleteImage' => 'deleteImage',
+    ];
 
     public string $previous;
     public object $note;
