@@ -4,6 +4,14 @@
         @if($note->images->count() === 1)
             <div class="d-flex justify-content-center mt-2 imgLoading imageContainer" wire:ignore>
                 <div class="d-none spinner-border" role="status"></div>
+                @if($isEditable)
+                    <div class="position-relative" style="left: 50px; top: 10px; z-index: 10">
+                        <button type="button" class="btn btn-outline-danger delete-image-btn"
+                                wire:click="deleteImage({{ $note->images->first()->id }})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                @endif
                 <img class="note-image h-100 ml-auto mr-auto"
                      src="{{ \App\Http\Livewire\Notes\NoteEdit::getCorrectPath($note->images->first()->note_image_path) }}"
                      style="max-width: 100%">
