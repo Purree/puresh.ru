@@ -125,7 +125,6 @@ class NoteEdit extends Component
     public function saveTextChanges(): void
     {
         $this->validate();
-        $this->dispatchBrowserEvent('contentChanged');
         $this->dispatchBrowserEvent('changesSaved');
 
         if (Gate::allows('update', $this->note)) {
