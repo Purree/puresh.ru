@@ -64,7 +64,10 @@ class NoteEdit extends Component
     public function render(): Factory|View|Application
     {
         $this->authorize('update', $this->note);
+
+        $this->noteDescription = (str_replace("<br />\n", "\n", $this->noteDescription));
         $this->noteDescription = nl2br($this->noteDescription);
+
         $this->dispatchBrowserEvent('contentChanged');
 
         return view('livewire.notes.note-edit', [
@@ -126,8 +129,6 @@ class NoteEdit extends Component
     {
         $this->validate();
         $this->dispatchBrowserEvent('changesSaved');
-
-        $this->noteDescription = (str_replace("<br />\n", "\n", $this->noteDescription));
 
         if (Gate::allows('update', $this->note)) {
             $this->note->title = trim($this->noteTitle);
