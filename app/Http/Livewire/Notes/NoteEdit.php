@@ -127,6 +127,8 @@ class NoteEdit extends Component
         $this->validate();
         $this->dispatchBrowserEvent('changesSaved');
 
+        $this->noteDescription = (str_replace("<br />\n", "\n", $this->noteDescription));
+
         if (Gate::allows('update', $this->note)) {
             $this->note->title = trim($this->noteTitle);
             $this->note->text = $this->noteDescription;
