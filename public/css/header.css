@@ -93,6 +93,7 @@
 
 .active {
     color: var(--nav_brand);
+    font-weight: bold;
 }
 
 @media (max-width: 991px) {
