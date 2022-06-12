@@ -14,6 +14,6 @@ class AdminPanel extends Component
      */
     public function render()
     {
-        return view('admin.layouts.admin-panel');
+        return view('layouts.admin.admin-panel');
     }
 }
