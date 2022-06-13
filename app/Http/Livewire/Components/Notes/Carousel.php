@@ -15,9 +15,4 @@ class Carousel extends Component
     {
         return view('livewire.components.notes.carousel');
     }
-
-    public function deleteImage(int $id): void
-    {
-        $this->emitUp('deleteImage', $id);
-    }
 }
