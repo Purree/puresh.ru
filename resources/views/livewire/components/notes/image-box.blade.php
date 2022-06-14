@@ -1,8 +1,6 @@
 <div
     class="{{ $isInCarousel ? 'carousel-item ' . ($isActive ? 'active' : '') : '' }} imgLoading imageContainer w-100"
 >
-{{--    {{ dump($isInCarousel) }}--}}
-{{--    {{ dump($isActive) }}--}}
     <div class="d-flex position-relative h-100 mx-auto justify-content-center align-items-center">
         <div class="spinner-border position-absolute bottom-50 end-50 d-none" role="status"></div>
         @if($isEditable)

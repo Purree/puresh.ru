@@ -157,6 +157,8 @@ class NoteEdit extends Component
         $this->emit('refreshNoteImages');
         session()->flash('updated', __("Photo deleted successfully."));
 
+
+
         return true;
     }
 

@@ -8,7 +8,7 @@ use stdClass;
 class ImageBox extends Component
 {
     public $listeners = [
-        'test' => '$refresh'
+        'deleteImage' => '$refresh',
     ];
 
     public $image;
@@ -18,8 +18,7 @@ class ImageBox extends Component
 
     public function deleteImage(int $id): void
     {
-        $this->emitUp('deleteImage', $id);
-        $this->emitUp('refreshNoteImages');
+        $this->emit('deleteImage', $id);
     }
 
     public function render()

@@ -18,7 +18,6 @@
                 </div>
                 <div class="carousel-inner">
                     @foreach($note->images as $image)
-
                         <livewire:components.notes.image-box wire:key="{{ $loop->index . $image->id  }}"
                                                              :image="$image"
                                                              :is-editable="$isEditable"
@@ -39,5 +38,4 @@
             </div>
         @endif
     @endif
-{{--    TODO: Пофиксить удаление и добавление новых фоток --}}
 </div>
