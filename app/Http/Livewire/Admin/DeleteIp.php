@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Models\RestrictedIp;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
@@ -11,7 +10,7 @@ use Livewire\Redirector;
 class DeleteIp extends Component
 {
     protected array $rules = [
-        'ip' => 'required'
+        'ip' => 'required',
     ];
 
     public object $ip;
@@ -36,7 +35,7 @@ class DeleteIp extends Component
 
         return redirect($this->page)
             ->with('message', __(
-                "Ip :ip deleted successfully.",
+                'Ip :ip deleted successfully.',
                 ['ip' => $this->ip->ip]
             ));
     }

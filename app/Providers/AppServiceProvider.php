@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use RateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
+use RateLimiter;
 
 class AppServiceProvider extends ServiceProvider
 {

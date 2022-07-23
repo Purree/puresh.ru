@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Permission;
-use App\Models\User;
-use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PermissionFactory extends Factory
@@ -19,8 +17,7 @@ class PermissionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->text
+            'name' => $this->faker->text,
         ];
     }
 }
-

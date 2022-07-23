@@ -6,7 +6,6 @@ use Illuminate\View\Component;
 
 class AdminPanel extends Component
 {
-
     /**
      * Get the view / contents that represent the component.
      *

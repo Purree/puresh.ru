@@ -11,11 +11,11 @@ class NoteFilter extends QueryFilter
 {
     public function filters(array $filters): void
     {
-        if (in_array('showAllUsers', $filters, true) && !\Gate::allows('manage_data', Permission::class)) {
+        if (in_array('showAllUsers', $filters, true) && ! \Gate::allows('manage_data', Permission::class)) {
             throw new UnauthorizedException(__('You do not have the required access rights'));
         }
 
-        if (!in_array('showAllUsers', $filters, true)) {
+        if (! in_array('showAllUsers', $filters, true)) {
             if (in_array('showUserNotes', $filters, true)) {
                 $this->builder->where('notes.user_id', Auth::id());
             }

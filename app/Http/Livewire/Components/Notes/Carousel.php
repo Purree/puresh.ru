@@ -7,6 +7,7 @@ use Livewire\Component;
 class Carousel extends Component
 {
     public $note;
+
     public bool $isEditable = false;
 
     protected $listeners = ['refreshNoteImages' => '$refresh'];

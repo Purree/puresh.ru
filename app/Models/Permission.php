@@ -4,15 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Schema;
-use phpDocumentor\Reflection\Types\Self_;
 
 class Permission extends Model
 {
     use HasFactory;
-
 
     /**
      * Delete timestamps from Creat method
@@ -20,7 +16,6 @@ class Permission extends Model
      * @var bool
      */
     public $timestamps = false;
-
 
     /**
      * The attributes that are not mass assignable.

@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Events;
 
-use App\Models\Permission;
 use App\Models\Event as EventModel;
+use App\Models\Permission;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -23,10 +23,12 @@ class EventEdit extends Component
     ];
 
     public string $title = 'Event name';
-    public string $happen_at = '2039-01-02T12:19:00';
-    public bool $is_event_recurrent = true;
-    public int|null $repetition_in_seconds = null;
 
+    public string $happen_at = '2039-01-02T12:19:00';
+
+    public bool $is_event_recurrent = true;
+
+    public int|null $repetition_in_seconds = null;
 
     public function render()
     {
@@ -36,7 +38,6 @@ class EventEdit extends Component
             $this->is_event_recurrent = $this->event?->is_event_recurrent;
             $this->repetition_in_seconds = $this->event?->repetition_in_seconds;
         }
-
 
         return view('livewire.events.event-edit');
     }

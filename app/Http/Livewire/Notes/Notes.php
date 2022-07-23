@@ -19,7 +19,9 @@ class Notes extends Component
     use CheckIsPaginatorPageExists;
 
     protected object $notes;
+
     protected object $paginator;
+
     protected string $paginationTheme = 'bootstrap';
 
     protected $listeners = [
@@ -29,6 +31,7 @@ class Notes extends Component
     ];
 
     public array $filters = [];
+
     public string $orderFilter = '';
 
     protected $queryString = [
@@ -47,7 +50,7 @@ class Notes extends Component
     {
         $note = Note::with('user', 'images');
 
-        if (!Gate::allows('manage_data', Permission::class)) {
+        if (! Gate::allows('manage_data', Permission::class)) {
             $note = $note->where('user_id', Auth::id())
                 ->orWhereRelation('user', 'user_id', '=', Auth::id());
         }

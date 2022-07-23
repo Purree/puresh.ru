@@ -13,7 +13,8 @@ class Note extends Model
     use Filterable;
     use HasFactory;
 
-    public $timestamps = ["created_at"]; // only want to used created_at column
+    public $timestamps = ['created_at']; // only want to used created_at column
+
     public const UPDATED_AT = null; // and updated by default null set
 
     protected $guarded = ['id'];
@@ -26,7 +27,6 @@ class Note extends Model
         'completed_at' => 'timestamp',
     ];
 
-
     /**
      * Get the user who owns the note
      *
@@ -36,7 +36,6 @@ class Note extends Model
     {
         return $this->belongsToMany(User::class);
     }
-
 
     /**
      * Get the note images
@@ -48,13 +47,12 @@ class Note extends Model
         return $this->hasMany(NoteImage::class);
     }
 
-
     /**
      * Change is complete status to the opposite
      */
     public function changeCheckedStatus(): void
     {
-        $this->is_completed = !$this->is_completed;
+        $this->is_completed = ! $this->is_completed;
         $this->save();
     }
 }

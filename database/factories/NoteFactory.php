@@ -17,7 +17,6 @@ class NoteFactory extends Factory
      */
     protected $model = Note::class;
 
-
     /**
      * Return random date between -1 year and now or null.
      *
@@ -32,24 +31,26 @@ class NoteFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws Exception
      */
     #[ArrayShape([
-        'user_id' => "mixed",
-        'text' => "string",
-        'title' => "string",
-        'is_completed' => "bool",
+        'user_id' => 'mixed',
+        'text' => 'string',
+        'title' => 'string',
+        'is_completed' => 'bool',
         'created_at' => \DateTime::class,
-        'completed_at' => \DateTime::class
-    ])] public function definition(): array
-    {
-        return [
-            'user_id' => User::inRandomOrder()->first(),
-            'text' => $this->faker->text,
-            'title' => $this->faker->name,
-            'is_completed' => $this->faker->boolean,
-            'created_at' => $this->faker->dateTimeBetween('-2 years', '-1 year'),
-            'completed_at' => $this->randomizeCompletedAt(),
-        ];
-    }
+        'completed_at' => \DateTime::class,
+    ])]
+ public function definition(): array
+ {
+     return [
+         'user_id' => User::inRandomOrder()->first(),
+         'text' => $this->faker->text,
+         'title' => $this->faker->name,
+         'is_completed' => $this->faker->boolean,
+         'created_at' => $this->faker->dateTimeBetween('-2 years', '-1 year'),
+         'completed_at' => $this->randomizeCompletedAt(),
+     ];
+ }
 }

@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Laravel\Fortify\Fortify;
 
 class LogFailedAuthAttempt implements ShouldQueue

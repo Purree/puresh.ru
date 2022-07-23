@@ -23,7 +23,7 @@ Route::get('/old', static function () {
 })->name('main-old');
 
 Route::post('language/{locale}', static function ($locale) {
-    if (in_array($locale, config("app.available_locales"), true)) {
+    if (in_array($locale, config('app.available_locales'), true)) {
         app()->setLocale($locale);
         session()->put('locale', $locale);
     }
@@ -39,7 +39,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/profile/show', static function () {
         return redirect()->route('profile.settings');
     })->name('profile.show');
-
 
     Route::name('admin.')->prefix('admin')
         ->middleware(['can:manage_data,App\Models\Permission', 'password.confirm'])->group(

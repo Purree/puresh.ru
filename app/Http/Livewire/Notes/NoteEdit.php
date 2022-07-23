@@ -12,7 +12,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\MessageBag;
 use Livewire\Component;
@@ -39,16 +38,21 @@ class NoteEdit extends Component
     ];
 
     public string $previous;
+
     public object $note;
+
     public string $email = '';
+
     public string $noteTitle;
+
     public string $noteDescription;
+
     public $uploadedImage;
 
     public function mount($id): void
     {
         $this->note = Note::findOrFail($id);
-        if (!isset($this->previous)) {
+        if (! isset($this->previous)) {
             $this->previous = url()->previous() !== url()->current() ? url()->previous() : route('notes');
         }
 
@@ -84,7 +88,7 @@ class NoteEdit extends Component
     {
         if (Gate::allows('forceDelete', $this->note)) {
             $this->note->user()->detach($id);
-            session()->flash('message', __("User deleted successfully"));
+            session()->flash('message', __('User deleted successfully'));
             $this->emit('refreshUsers');
         } else {
             $this->addError('permissions', __('You do not have the required access rights'));
@@ -96,12 +100,12 @@ class NoteEdit extends Component
         $this->validate($this->emailRules);
 
         $userId = User::where('email', $this->email)->first();
-        if (!$userId) {
+        if (! $userId) {
             // The user does not exist,
             // this is a stub so that it is not clear to the requestor that there is no such user
             session()->flash(
                 'message',
-                __("If the user with email :mail exists, it will be added", ['mail' => $this->email])
+                __('If the user with email :mail exists, it will be added', ['mail' => $this->email])
             );
 
             return 0;
@@ -118,7 +122,7 @@ class NoteEdit extends Component
         $this->note->user()->attach($userId);
         session()->flash(
             'message',
-            __("If the user with email :mail exists, it will be added", ['mail' => $this->email])
+            __('If the user with email :mail exists, it will be added', ['mail' => $this->email])
         );
         $this->emit('refreshUsers');
 
@@ -134,7 +138,7 @@ class NoteEdit extends Component
             $this->note->title = trim($this->noteTitle);
             $this->note->text = $this->noteDescription;
             $this->note->save();
-            session()->flash('updated', __("Note updated successfully"));
+            session()->flash('updated', __('Note updated successfully'));
         } else {
             $this->addError('permissions', __("You haven't permissions"));
         }
@@ -150,14 +154,12 @@ class NoteEdit extends Component
         $image = $this->note->images()->where('id', $imageId)->first();
         $imageDeletionResult = $image->deleteImage($image);
 
-        if (!$imageDeletionResult->success) {
+        if (! $imageDeletionResult->success) {
             return $this->addError($imageDeletionResult->errorMessage[0], $imageDeletionResult->errorMessage[1]);
         }
 
         $this->emit('refreshNoteImages');
-        session()->flash('updated', __("Photo deleted successfully."));
-
-
+        session()->flash('updated', __('Photo deleted successfully.'));
 
         return true;
     }
@@ -168,7 +170,7 @@ class NoteEdit extends Component
             'uploadedImage' => 'required|file|mimes:png,jpg,jpeg|max:1024',
         ]);
 
-        if (!Gate::allows('update', $this->note)) {
+        if (! Gate::allows('update', $this->note)) {
             return $this->addError('permissions', __("You haven't permissions"));
         }
 
@@ -186,7 +188,7 @@ class NoteEdit extends Component
 
         $this->emit('refreshNoteImages');
         $this->dispatchBrowserEvent('imageUploaded');
-        session()->flash('updated', __("Photo added successfully."));
+        session()->flash('updated', __('Photo added successfully.'));
 
         return true;
     }

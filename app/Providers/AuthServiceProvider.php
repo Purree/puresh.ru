@@ -7,7 +7,6 @@ use App\Models\Permission;
 use App\Policies\NotePolicy;
 use App\Policies\PermissionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {

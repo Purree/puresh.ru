@@ -13,14 +13,19 @@ class EditUser extends Component
         'name' => 'required|max:255',
         'email' => 'required|email',
     ];
+
     protected array $allPermissions;
 
     public object $user;
+
     public array $permissions;
 
     public string $name;
+
     public string $email;
+
     public bool $deletePhoto;
+
     public array $givenPermissions = [];
 
     public $page;
@@ -66,24 +71,24 @@ class EditUser extends Component
             return redirect($this->page)->with(
                 'error',
                 __(
-                    "User with e-mail address :mail already exists.",
+                    'User with e-mail address :mail already exists.',
                     ['mail' => $this->email]
                 )
             );
         }
 
         foreach ($this->givenPermissions as $permission => $value) {
-            if (!in_array($permission, $this->allPermissions, true)) {
+            if (! in_array($permission, $this->allPermissions, true)) {
                 continue;
             }
 
             // If set permission
-            if ($value && !PermissionPolicy::isUserHasPermission($this->user, $permission)) {
+            if ($value && ! PermissionPolicy::isUserHasPermission($this->user, $permission)) {
                 $this->user->permissions()->attach(array_search($permission, $this->allPermissions, true) + 1);
             }
 
             // If delete permission
-            if (!$value && PermissionPolicy::isUserHasPermission($this->user, $permission)) {
+            if (! $value && PermissionPolicy::isUserHasPermission($this->user, $permission)) {
                 $this->user->permissions()->detach(array_search($permission, $this->allPermissions, true) + 1);
             }
         }
@@ -94,7 +99,7 @@ class EditUser extends Component
             ->with(
                 'message',
                 __(
-                    "User #:id (:name) edited successfully.",
+                    'User #:id (:name) edited successfully.',
                     ['id' => $this->user->id, 'name' => $this->user->name]
                 )
             );

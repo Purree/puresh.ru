@@ -15,7 +15,6 @@ class Note extends Component
 
     public object $note;
 
-
     public function render(): Factory|View|Application
     {
         return view('livewire.notes.note');

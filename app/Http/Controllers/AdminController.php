@@ -27,7 +27,7 @@ class AdminController extends Controller
 
         return view('admin.users', [
             'users' => $users,
-            'permissions' => $allPermissions
+            'permissions' => $allPermissions,
         ]);
     }
 
@@ -54,7 +54,7 @@ class AdminController extends Controller
         $this->validatePageNumber($blockedIPs, 'admin.IPs');
 
         return view('admin.blockedIPs', [
-            'blockedIPs' => $blockedIPs
+            'blockedIPs' => $blockedIPs,
         ]);
     }
 }

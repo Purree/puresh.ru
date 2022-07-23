@@ -20,14 +20,12 @@ class Event extends Model
      */
     public $timestamps = false;
 
-
     /**
      * The attributes that are not mass assignable.
      *
      * @var string[]
      */
     protected $guarded = ['id'];
-
 
     /**
      * The attributes that should be cast.
@@ -38,7 +36,6 @@ class Event extends Model
         'is_event_recurrent' => 'boolean',
         'happen_at' => 'datetime',
     ];
-
 
     /**
      * Set happen at.
@@ -59,7 +56,7 @@ class Event extends Model
             throw new InvalidDateException('This date is bigger when unix can store.');
         }
 
-        if (!is_a($value, 'DateTime') && !is_string($value)) {
+        if (! is_a($value, 'DateTime') && ! is_string($value)) {
             throw new InvalidDateException('Incorrect date type');
         }
 
@@ -82,12 +79,11 @@ class Event extends Model
         }
     }
 
-
     /**
      * Update dates according to $actionsOverTime
      *
-     * @param string $actionsOverTime
-     * @param Collection $dates
+     * @param  string  $actionsOverTime
+     * @param  Collection  $dates
      */
     public static function updateDates(string $actionsOverTime, Collection $dates): void
     {
@@ -109,20 +105,21 @@ class Event extends Model
 
         if ($date->repetition_in_seconds) {
             $differenceBetweenDates = now()->timestamp - $date->happen_at->timestamp;
-            $differenceBetweenDates = floor($differenceBetweenDates/$date->repetition_in_seconds) + 1;
+            $differenceBetweenDates = floor($differenceBetweenDates / $date->repetition_in_seconds) + 1;
+
             return date($dateFormat, $date->happen_at->timestamp +
                 $date->repetition_in_seconds * $differenceBetweenDates);
         }
 
         $validatedYear = date('Y');
 
-        if (date($dateFormat, strtotime($date->happen_at . $validatedYear)) < now()) {
-            ++$validatedYear;
+        if (date($dateFormat, strtotime($date->happen_at.$validatedYear)) < now()) {
+            $validatedYear++;
         }
 
         return date(
             $dateFormat,
-            strtotime($date->happen_at .
+            strtotime($date->happen_at.
             $validatedYear)
         );
     }
@@ -130,7 +127,7 @@ class Event extends Model
     /**
      * Delete events from db
      *
-     * @param Collection|array $events
+     * @param  Collection|array  $events
      */
     public static function deleteEvents(Collection | array $events): void
     {
@@ -144,7 +141,7 @@ class Event extends Model
      *
      * @return array
      */
-    #[ArrayShape(['expiredNonRecurrentEvents' => "mixed", 'expiredRecurrentEvents' => "mixed"])]
+    #[ArrayShape(['expiredNonRecurrentEvents' => 'mixed', 'expiredRecurrentEvents' => 'mixed'])]
     public static function getExpiredEvents(): array
     {
         $expiredRecurrentDates = self::where('happen_at', '<', now())
@@ -157,7 +154,7 @@ class Event extends Model
 
         return [
             'expiredNonRecurrentEvents' => $expiredDates->count() > 0 ? $expiredDates : false,
-            'expiredRecurrentEvents' => $expiredRecurrentDates->count() > 0 ? $expiredRecurrentDates : false
+            'expiredRecurrentEvents' => $expiredRecurrentDates->count() > 0 ? $expiredRecurrentDates : false,
         ];
     }
 }

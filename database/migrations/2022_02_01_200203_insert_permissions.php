@@ -15,9 +15,9 @@ class InsertPermissions extends Migration
     {
         foreach ($this->permissions as $permission) {
             DB::table('permissions')->insert(
-                array(
-                    'name' => $permission
-                )
+                [
+                    'name' => $permission,
+                ]
             );
         }
     }

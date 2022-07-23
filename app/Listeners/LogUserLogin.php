@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class LogUserLogin implements ShouldQueue
 {
@@ -26,6 +25,6 @@ class LogUserLogin implements ShouldQueue
      */
     public function handle(Login $event)
     {
-        \Log::info('New Login: ' . $event->user->getAuthIdentifier());
+        \Log::info('New Login: '.$event->user->getAuthIdentifier());
     }
 }

@@ -31,15 +31,16 @@ class NoteImage extends Model
     {
         $note = Note::where('id', $noteImage->note_id)->first();
 
-        if (!Gate::allows('update', $note)) {
+        if (! Gate::allows('update', $note)) {
             return FunctionResult::error(['permissions', __("You haven't permissions")]);
         }
 
-        if (!Storage::disk(self::profilePhotoDisk())->has($noteImage->note_image_path)) {
+        if (! Storage::disk(self::profilePhotoDisk())->has($noteImage->note_image_path)) {
             return FunctionResult::success($noteImage->delete());
         }
 
         Storage::disk(self::profilePhotoDisk())->delete($noteImage->note_image_path);
+
         return FunctionResult::success($noteImage->delete());
     }
 
@@ -50,6 +51,6 @@ class NoteImage extends Model
      */
     public static function profilePhotoDisk(): string
     {
-        return !empty(config('filesystems.disks')['s3']['key']) ? 's3' : 'public';
+        return ! empty(config('filesystems.disks')['s3']['key']) ? 's3' : 'public';
     }
 }

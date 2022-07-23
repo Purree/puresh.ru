@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\Admin;
 
-use Livewire\Component;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Livewire\Component;
 
 class DeleteSession extends Component
 {
     protected array $rules = [
-        'session' => 'required'
+        'session' => 'required',
     ];
 
     public object $session;
@@ -34,6 +34,6 @@ class DeleteSession extends Component
         $this->session->delete();
 
         return redirect($this->page)
-            ->with('message', __("Session #:id deleted successfully.", ['id' => $this->session->id]));
+            ->with('message', __('Session #:id deleted successfully.', ['id' => $this->session->id]));
     }
 }

@@ -2,17 +2,14 @@
 
 namespace App\Models;
 
-use Exception;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
-use Laravel\JetStream\Features;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\JetStream\Features;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -66,7 +63,6 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-
     /**
      * Get user permissions.
      */
@@ -74,7 +70,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class);
     }
-
 
     /**
      * Get user notes.
@@ -92,7 +87,6 @@ class User extends Authenticatable
         return $this->hasMany(Session::class);
     }
 
-
     /**
      * Delete the user's profile photo.
      *
@@ -100,7 +94,7 @@ class User extends Authenticatable
      */
     public function deleteProfilePhotoFromDirectory(): void
     {
-        if ($this->profile_photo_path === null || !Features::managesProfilePhotos()) {
+        if ($this->profile_photo_path === null || ! Features::managesProfilePhotos()) {
             return;
         }
 

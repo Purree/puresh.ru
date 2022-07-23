@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class LogNewUserRegistration implements ShouldQueue
 {
@@ -26,6 +25,6 @@ class LogNewUserRegistration implements ShouldQueue
      */
     public function handle(Registered $event)
     {
-        \Log::info('New user: ' . $event->user->getAuthIdentifier());
+        \Log::info('New user: '.$event->user->getAuthIdentifier());
     }
 }

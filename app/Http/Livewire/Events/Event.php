@@ -22,16 +22,21 @@ class Event extends Component
 
     protected $listeners = [
         'successfullyFinishEventEditing' => 'stopEventEditing',
-        'stopEventEditing' => 'stopEventEditing'
+        'stopEventEditing' => 'stopEventEditing',
     ];
 
     public object $event;
+
     public array $separators;
+
     public bool $isEventBeingEdited = false;
 
     public string $title;
+
     public string $happen_at;
+
     public bool $is_event_recurrent;
+
     public int|null $repetition_in_seconds = null;
 
     public function render(): Factory|View|Application

@@ -3,11 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Auth\Access\Gate;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
 
 class CanAny
 {
@@ -21,7 +17,7 @@ class CanAny
     /**
      * Create a new middleware instance.
      *
-     * @param Gate $gate
+     * @param  Gate  $gate
      * @return void
      */
     public function __construct(Gate $gate)
@@ -29,14 +25,13 @@ class CanAny
         $this->gate = $gate;
     }
 
-
     /**
      * Check if user have all gates
      *
      * @param $request
-     * @param Closure $next
+     * @param  Closure  $next
      * @param $model
-     * @param mixed ...$permissions
+     * @param  mixed  ...$permissions
      * @return mixed
      */
     public function handle($request, Closure $next, $model, ...$permissions): mixed

@@ -15,7 +15,6 @@ class Tab extends Component
     ) {
     }
 
-
     public function render(): View|Factory|Application
     {
         return view('components.admin.tab');

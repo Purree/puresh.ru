@@ -8,10 +8,10 @@ use Livewire\Component;
 class BanIp extends Component
 {
     protected array $rules = [
-        'ip' => 'required|ip|unique:restricted_ips'
+        'ip' => 'required|ip|unique:restricted_ips',
     ];
 
-    public string $ip = "";
+    public string $ip = '';
 
     public function render()
     {

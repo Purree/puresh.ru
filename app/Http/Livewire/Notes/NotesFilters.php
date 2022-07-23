@@ -7,6 +7,7 @@ use Livewire\Component;
 class NotesFilters extends Component
 {
     public array $filters = [];
+
     public string $orderBy = '';
 
     public function changeNoteFilters()

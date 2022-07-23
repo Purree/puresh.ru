@@ -16,14 +16,18 @@ class Events extends Component
     use CheckIsPaginatorPageExists;
 
     protected $listeners = ['deleteEvent', 'successfullyFinishEventEditing' => 'reloadTimers', 'refresh' => '$refresh'];
+
     protected object $paginator;
+
     protected string $paginationTheme = 'bootstrap';
 
-    public function updatedPaginators() {
+    public function updatedPaginators()
+    {
         $this->reloadTimers();
     }
 
-    public function mount() {
+    public function mount()
+    {
         $this->updatePageNumber();
     }
 
@@ -39,11 +43,12 @@ class Events extends Component
         return view('livewire.events.events', [
             'events' => $events,
             'separators' => ['days', 'hours', 'minutes', 'seconds'],
-            'paginator' => $this->paginator
+            'paginator' => $this->paginator,
         ]);
     }
 
-    public function deleteEvent($id) {
+    public function deleteEvent($id)
+    {
         $event = Event::findOrFail($id);
 
         $this->authorize('manage_data', Permission::class);
@@ -55,7 +60,8 @@ class Events extends Component
         $this->emit('refresh');
     }
 
-    public function createNewEventButtonPressed() {
+    public function createNewEventButtonPressed()
+    {
         $this->authorize('manage_data', Permission::class);
 
         $event = new Event();
@@ -64,7 +70,8 @@ class Events extends Component
         $event->save();
     }
 
-    public function reloadTimers() {
+    public function reloadTimers()
+    {
         $this->emitSelf('refresh');
         $this->dispatchBrowserEvent('activateInactiveTimers');
     }

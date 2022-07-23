@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Components\Notes;
 
 use Livewire\Component;
-use stdClass;
 
 class ImageBox extends Component
 {
@@ -12,8 +11,11 @@ class ImageBox extends Component
     ];
 
     public $image;
+
     public bool $isEditable;
+
     public bool $isInCarousel;
+
     public ?bool $isActive;
 
     public function deleteImage(int $id): void
