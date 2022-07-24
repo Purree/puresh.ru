@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "03e52e7c2451a774ea5168c822af486a",
+    "content-hash": "a080a154f016222be693808f11849fcf",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -175,6 +175,60 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "danharrin/livewire-rate-limiting",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/danharrin/livewire-rate-limiting.git",
+                "reference": "b99facf5b607fb0cde92a6f254f437295339f7de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/danharrin/livewire-rate-limiting/zipball/b99facf5b607fb0cde92a6f254f437295339f7de",
+                "reference": "b99facf5b607fb0cde92a6f254f437295339f7de",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0|^9.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "livewire/livewire": "^2.3",
+                "orchestra/testbench": "^6.2|^7.0",
+                "phpunit/phpunit": "^9.4",
+                "symplify/monorepo-builder": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DanHarrin\\LivewireRateLimiting\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dan Harrin",
+                    "email": "dan@danharrin.com"
+                }
+            ],
+            "description": "Apply rate limiters to Laravel Livewire actions.",
+            "homepage": "https://github.com/danharrin/livewire-rate-limiting",
+            "support": {
+                "issues": "https://github.com/danharrin/livewire-rate-limiting/issues",
+                "source": "https://github.com/danharrin/livewire-rate-limiting"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/danharrin",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-01-21T11:26:58+00:00"
         },
         {
             "name": "dasprid/enum",

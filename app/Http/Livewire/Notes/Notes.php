@@ -6,6 +6,8 @@ use App\Http\Filters\NoteFilter;
 use App\Models\Note;
 use App\Models\Permission;
 use App\Traits\Controller\CheckIsPaginatorPageExists;
+use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
+use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -17,6 +19,7 @@ class Notes extends Component
     use AuthorizesRequests;
     use WithPagination;
     use CheckIsPaginatorPageExists;
+    use WithRateLimiting;
 
     protected object $notes;
 
@@ -70,16 +73,24 @@ class Notes extends Component
 
     public function createNewNote()
     {
-        $note = new Note();
-        $note->user_id = Auth::id();
-        $note->title = __('Note title');
-        $note->text = __('Note text');
-        $note->is_completed = false;
-        $note->save();
+        try {
+            $this->rateLimit(5, 60);
 
-        $this->redirect(route('notes.edit', $id = $note->id));
+            $note = new Note();
+            $note->user_id = Auth::id();
+            $note->title = __('Note title');
+            $note->text = __('Note text');
+            $note->is_completed = false;
+            $note->save();
 
-        return false;
+            $this->redirect(route('notes.edit', $id = $note->id));
+
+            return false;
+        } catch (TooManyRequestsException $exception) {
+            $this->addError('text', 'Too many requests');
+
+            return false;
+        }
     }
 
     /**
