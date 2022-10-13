@@ -9,6 +9,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="module" src="{{ asset('js/mainPage/activeElementsHighlighting.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/home/old-home.css') }}">
+    @stack('styles')
 </head>
 <body>
     <x-header>

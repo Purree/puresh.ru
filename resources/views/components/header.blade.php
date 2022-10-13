@@ -1,9 +1,9 @@
-<head>
+<header class="d-flex py-4">
+
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
+
     <script src="{{ asset('js/theme.js') }}"></script>
-</head>
-<header class="d-flex py-4">
     <nav class="navbar header navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('main') }}">{{ __('Dashboard') }}</a>

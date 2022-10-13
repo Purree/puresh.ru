@@ -1,5 +1,7 @@
 <div>
-    <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
+    @prepend('styles')
+        <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
+    @endprepend
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
 

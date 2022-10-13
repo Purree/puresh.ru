@@ -1,5 +1,7 @@
 <div class="image-modal">
-    <link rel="stylesheet" href="{{ asset('css/photo-modal.css') }}">
+    @prepend('styles')
+        <link rel="stylesheet" href="{{ asset('css/photo-modal.css') }}">
+    @endprepend
     <script src="{{ asset('js/wheelzoom.js') }}"></script>
     <script src="{{ asset('js/photoModal.js') }}"></script>
 

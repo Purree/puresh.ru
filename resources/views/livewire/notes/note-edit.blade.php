@@ -1,5 +1,7 @@
 <div key="note-edit">
-    <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
+    @prepend('styles')
+        <link rel="stylesheet" href="{{ asset('css/notes/note.css') }}">
+    @endprepend
     <script src="{{ asset('js/notes/preventTabClosingOnNoteEditing.js') }}"></script>
     <script src="{{ asset('js/notes/imgLoading.js') }}"></script>
     <script src="{{ asset('js/notes/replaceLinksAndBrInText.js') }}"></script>
@@ -9,7 +11,8 @@
     <x-photo-modal/>
 
     <!-- Upload photos modal -->
-    <form wire:ignore.self wire:submit.prevent="uploadImage" class="modal fade" id="addNewPhotoModal" tabindex="-1" aria-labelledby="addNewPhotoModalLabel" aria-hidden="true">
+    <form wire:ignore.self wire:submit.prevent="uploadImage" class="modal fade" id="addNewPhotoModal" tabindex="-1"
+          aria-labelledby="addNewPhotoModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -17,10 +20,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @error('uploadedImage') <span class="d-flex justify-content-center alert-danger mb-3 previewError">{{ $message }}</span> @enderror
+                    @error('uploadedImage') <span
+                        class="d-flex justify-content-center alert-danger mb-3 previewError">{{ $message }}</span> @enderror
                     <div class="d-flex justify-content-center align-items-center flex-column flex-wrap">
-                        <img wire:ignore class="selectedPhotoPreview d-none h-100 w-100 mb-3" style="max-height: 70vh" src="#" alt="Selected image" />
-                        <input class="selectPhoto" wire:model="uploadedImage" wire:key="photoModal" type="file" accept="image/jpeg,image/png,image/jpg">
+                        <img wire:ignore class="selectedPhotoPreview d-none h-100 w-100 mb-3" style="max-height: 70vh"
+                             src="#" alt="Selected image"/>
+                        <input class="selectPhoto" wire:model="uploadedImage" wire:key="photoModal" type="file"
+                               accept="image/jpeg,image/png,image/jpg">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -33,10 +39,10 @@
 
     <div class="noteContainer mb-5">
         @error('noteTitle')
-            <div class="alert alert-danger">{{ $message }}</div>
+        <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         @error('noteDescription')
-            <div class="alert alert-danger">{{ $message }}</div>
+        <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
         @if (session()->has('updated'))
@@ -44,8 +50,9 @@
                 {{ session('updated') }}
             </div>
         @endif
-        <input type="text" class="form-control d-none" maxlength="50" placeholder="Название" aria-label="Название" id="titleEdit" wire:model.lazy="noteTitle">
-        <div class="noteInformation" >
+        <input type="text" class="form-control d-none" maxlength="50" placeholder="Название" aria-label="Название"
+               id="titleEdit" wire:model.lazy="noteTitle">
+        <div class="noteInformation">
             <button class="btn btn-primary" onclick="editTitle()"><i class="bi bi-pen"></i></button>
             <div class="fw-bold fs-3 text-truncate">
                 {{ $noteTitle }}
@@ -68,7 +75,8 @@
         </div>
 
         <div class="mb-3">
-            <textarea type="text" class="form-control d-none" maxlength="2000" placeholder="Описание" aria-label="Описание" id="descriptionEdit" wire:model.lazy="noteDescription" rows="5"></textarea>
+            <textarea type="text" class="form-control d-none" maxlength="2000" placeholder="Описание"
+                      aria-label="Описание" id="descriptionEdit" wire:model.lazy="noteDescription" rows="5"></textarea>
             <button class="btn btn-primary" onclick="editDescription()"><i class="bi bi-pen"></i></button>
             <div class="fs-5 note-text text-break">{{ $noteDescription }}</div>
 
@@ -82,15 +90,15 @@
         @if(Gate::allows('forceDelete', $this->note))
 
             @error('permissions')
-                <div class="alert alert-danger" role="alert">{{ __($message) }}</div>
+            <div class="alert alert-danger" role="alert">{{ __($message) }}</div>
             @enderror
 
             @error('email')
-                <div class="alert alert-danger">{{ $message }}</div>
+            <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             @error('alreadyExist')
-                <div class="alert alert-danger">{{ $message }}</div>
+            <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             @if (session()->has('message'))
@@ -104,7 +112,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">@</span>
                     </div>
-                    <input wire:model="email" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                    <input wire:model="email" type="text" class="form-control" placeholder="Email" aria-label="Email"
+                           aria-describedby="basic-addon1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-success" wire:click="addUser">
                             <i class="bi bi-plus-circle"></i>
@@ -131,6 +140,7 @@
     function editTitle() {
         document.querySelector('#titleEdit').classList.remove('d-none')
     }
+
     function editDescription() {
         document.querySelector('#descriptionEdit').classList.remove('d-none')
     }
