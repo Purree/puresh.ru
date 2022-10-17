@@ -12,6 +12,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\JetStream\Features;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Str;
 
 class User extends Authenticatable
 {
@@ -99,5 +100,11 @@ class User extends Authenticatable
         }
 
         Storage::disk($this->profilePhotoDisk())->delete($this->profile_photo_path);
+    }
+
+    public function regenerateRememberToken(): void
+    {
+        $this->remember_token = Str::random(60);
+        $this->save();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 class Session extends Model
@@ -24,5 +25,10 @@ class Session extends Model
     public function getFormatedLastActivityAttribute()
     {
         return Carbon::parse($this->last_activity)->format('d.m.Y H:i:s');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

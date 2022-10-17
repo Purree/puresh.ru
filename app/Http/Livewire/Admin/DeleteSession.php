@@ -31,7 +31,9 @@ class DeleteSession extends Component
     {
         $this->validate();
 
-        $this->session->delete();
+        if ($this->session->user) {
+            $this->session->user->regenerateRememberToken();
+        }
 
         return redirect($this->page)
             ->with('message', __('Session #:id deleted successfully.', ['id' => $this->session->id]));
