@@ -8,6 +8,8 @@ use Illuminate\Support\Carbon;
 
 class Session extends Model
 {
+    public $incrementing = false;
+
     protected $appends = ['expires_at'];
 
     public function isExpired()
