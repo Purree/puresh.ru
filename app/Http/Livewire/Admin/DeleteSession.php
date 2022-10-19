@@ -31,6 +31,7 @@ class DeleteSession extends Component
     {
         $this->validate();
 
+        $this->session->delete();
         if ($this->session->user) {
             $this->session->user->regenerateRememberToken();
         }
