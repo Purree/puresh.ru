@@ -1,4 +1,4 @@
-<header class="d-flex py-4">
+<header class="">
 
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">

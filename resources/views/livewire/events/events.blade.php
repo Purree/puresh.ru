@@ -1,4 +1,4 @@
-<div class="row h-100 justify-content-center my-5 mt-5">
+<div class="row h-100 justify-content-center">
     @prepend('styles')
         <link rel="stylesheet" href="{{ asset('css/events/timer.css') }}">
     @endprepend

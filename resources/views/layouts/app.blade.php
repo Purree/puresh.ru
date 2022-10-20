@@ -49,7 +49,7 @@
     </x-header>
     <x-check-browser-support></x-check-browser-support>
 
-    <main class="container my-5">
+    <main class="container py-3 bg-theme">
         {{ $slot }}
     </main>
 
