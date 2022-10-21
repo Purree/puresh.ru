@@ -49,7 +49,7 @@
     </x-header>
     <x-check-browser-support></x-check-browser-support>
 
-    <main class="container py-3 bg-theme">
+    <main class="container py-3 bg-theme" style="min-height: calc(100vh - var(--header-size));">
         {{ $slot }}
     </main>
 
