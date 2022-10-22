@@ -4,7 +4,7 @@
     --sun_icon: var(--big_icon_size);
     --animation_speed: 1s;
     --text_animation_speed: 0.25s;
-    --header-size: 63px;
+    --header_height: 63px;
 }
 
 :root[data-theme='dark'] {
@@ -26,11 +26,11 @@
 }
 
 .navbar {
-    height: var(--header-size);
+    height: var(--header_height);
 }
 
 header {
-    padding-bottom: var(--header-size);
+    padding-bottom: var(--header_height);
 }
 
 .navbar-brand, .navbar-brand:hover {
