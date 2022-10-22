@@ -81,9 +81,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user notes.
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
+    }
+
+    /**
      * Get user sessions.
      */
-    public function sessions()
+    public function sessions(): HasMany
     {
         return $this->hasMany(Session::class);
     }
