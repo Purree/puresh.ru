@@ -50,4 +50,9 @@ class PermissionPolicy
     {
         return self::isUserHasPermission($user, 'randomize');
     }
+
+    public function see_files(User $user): bool
+    {
+        return self::isUserHasPermission($user, 'files');
+    }
 }
