@@ -23,10 +23,15 @@
                                     {{ $file->user->name }}
                                 </div>
                             </div>
-                            <div class="w-100">
-                                <button type="button" class="btn w-100 btn-outline-danger">
-                                    {{ __('Delete') }}
+                            <div class="w-100 d-flex">
+                                <button type="button" class="btn w-100 btn-outline-success me-1">
+                                    {{ __('Download') }}
                                 </button>
+                                @can('delete', $file)
+                                    <button type="button" class="btn w-100 btn-outline-danger ms-1">
+                                        {{ __('Delete') }}
+                                    </button>
+                                @endcan
                             </div>
                         </div>
                         @if (!$loop->last)

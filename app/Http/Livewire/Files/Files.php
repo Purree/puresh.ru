@@ -14,8 +14,6 @@ class Files extends Component
     use WithPagination;
     use CheckIsPaginatorPageExists;
 
-    protected $listeners = ['deleteEvent', 'successfullyFinishEventEditing' => 'reloadTimers', 'refresh' => '$refresh'];
-
     protected object $paginator;
 
     protected string $paginationTheme = 'bootstrap';
