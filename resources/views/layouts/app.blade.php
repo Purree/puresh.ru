@@ -45,7 +45,11 @@
                 <a class="nav-link {{ Route::is('randomizer') ? 'active fw-bold' : '' }}" href="{{ route('randomizer') }}">{{ __('Randomizer') }}</a>
             </li>
         @endcan
-
+        @can('see_files', App\Models\Permission::class)
+            <li class="nav-item">
+                <a class="nav-link {{ Route::is('files') ? 'active fw-bold' : '' }}" href="{{ route('files') }}">{{ __('Files') }}</a>
+            </li>
+        @endcan
     </x-header>
     <x-check-browser-support></x-check-browser-support>
 

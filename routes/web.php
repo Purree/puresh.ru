@@ -73,4 +73,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::view('/random', 'random.randomizer')
             ->name('randomizer');
     });
+
+    Route::middleware('can:see_files, App\Models\Permission')->group(function () {
+        Route::get('/files', App\Http\Livewire\Files\Files::class)
+            ->name('files');
+    });
 });
