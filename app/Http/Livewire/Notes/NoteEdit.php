@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Notes;
 
+use App\Helpers\Files\FileDrivers;
 use App\Models\Note;
 use App\Models\NoteImage;
 use App\Models\User;
@@ -179,7 +180,7 @@ class NoteEdit extends Component
         }
 
         $fileName = $this->uploadedImage
-            ->storePubliclyAs('note-images', uniqid('', true).'.png', NoteImage::profilePhotoDisk());
+            ->storePubliclyAs('note-images', uniqid('', true).'.png', FileDrivers::getDisk());
 
         $this->note->images()->create([
             'note_id' => $this->note->id,
@@ -195,7 +196,7 @@ class NoteEdit extends Component
 
     public static function getCorrectPath($fileName): string
     {
-        if (Storage::disk(NoteImage::profilePhotoDisk())->has($fileName)) {
+        if (Storage::disk(FileDrivers::getDisk())->has($fileName)) {
             return Storage::url($fileName);
         }
 

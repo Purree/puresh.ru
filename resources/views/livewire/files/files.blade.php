@@ -24,7 +24,8 @@
                                 </div>
                             </div>
                             <div class="w-100 d-flex">
-                                <button type="button" class="btn w-100 btn-outline-success me-1">
+                                <button type="button" wire:click="download('{{$file->path}}')"
+                                        class="btn w-100 btn-outline-success me-1">
                                     {{ __('Download') }}
                                 </button>
                                 @can('delete', $file)
