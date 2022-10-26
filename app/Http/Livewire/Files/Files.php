@@ -34,9 +34,4 @@ class Files extends Component
             'paginator' => $this->paginator,
         ]);
     }
-
-    public function download($path): StreamedResponse
-    {
-        return Storage::disk(FileDrivers::getDisk())->download($path);
-    }
 }
