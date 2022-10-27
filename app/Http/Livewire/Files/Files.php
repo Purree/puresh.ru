@@ -18,8 +18,11 @@ class Files extends Component
     use CheckIsPaginatorPageExists;
 
     protected object $paginator;
+    protected $listeners = ['addError' => 'throwError'];
 
     protected string $paginationTheme = 'bootstrap';
+
+    public array $errors = [];
 
     public function render()
     {
@@ -33,5 +36,10 @@ class Files extends Component
             'files' => $files,
             'paginator' => $this->paginator,
         ]);
+    }
+
+    public function throwError(string $message): void
+    {
+        $this->addError('key', __($message));
     }
 }

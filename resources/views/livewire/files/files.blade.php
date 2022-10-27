@@ -2,6 +2,15 @@
     @prepend('styles')
         <link rel="stylesheet" href="{{ asset('css/files/files.css') }}">
     @endprepend
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     @can('manage_data', App\Models\Permission::class)
         <div class="d-flex justify-content-center flex-column">
             <button type="button" class="btn btn-outline-success mb-3 w-100">

@@ -17,13 +17,22 @@ class FileBlock extends Component
         return view('livewire.files.file-block', ['file' => $this->file]);
     }
 
-    public function download(): StreamedResponse
+    public function download(): ?StreamedResponse
     {
-        return Storage::disk(FileDrivers::getDisk())->download($this->file->path);
+        if (Storage::disk(FileDrivers::getDisk())->exists($this->file->path)) {
+            return Storage::disk(FileDrivers::getDisk())->download($this->file->path);
+        }
+
+        $this->emit('addError', 'File not found');
+
+        return null;
     }
 
     public function delete(): void
     {
-        $this->file->delete();
+        $fileDeleteAttempt = $this->file->delete();
+        if (!$fileDeleteAttempt->success) {
+            $this->emit('addError', $fileDeleteAttempt->errorMessage);
+        }
     }
 }
