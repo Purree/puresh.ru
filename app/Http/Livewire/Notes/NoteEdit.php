@@ -179,7 +179,7 @@ class NoteEdit extends Component
         }
 
         $fileName = $this->uploadedImage
-            ->storePubliclyAs('note-images', uniqid('', true).'.png', FileDrivers::getDisk());
+            ->storePubliclyAs('note-images', uniqid('', true).time().'.png', FileDrivers::getDisk());
 
         $this->note->images()->create([
             'note_id' => $this->note->id,

@@ -11,11 +11,23 @@
             </ul>
         </div>
     @endif
+    @if (session('fileUploaded'))
+        <div class="alert alert-success">
+            {{ session('fileUploaded') }}
+        </div>
+    @endif
     @can('manage_data', App\Models\Permission::class)
         <div class="d-flex justify-content-center flex-column">
-            <button type="button" class="btn btn-outline-success mb-3 w-100">
+            <button type="button" class="btn btn-outline-success mb-3 w-100" data-bs-toggle="collapse"
+                    data-bs-target="#newFileCollapse" aria-expanded="false" aria-controls="newFileCollapse">
                 {{ __('Add new file') }}
             </button>
+
+            <div class="collapse mb-3" id="newFileCollapse">
+                <div class="card card-body">
+                    <livewire:files.file-upload :wire:key="'newFile'"/>
+                </div>
+            </div>
         </div>
     @endcan
     <div class="card shadow">

@@ -16,7 +16,12 @@ class Files extends Component
 
     protected object $paginator;
 
-    protected $listeners = ['addError' => 'throwError', 'deleteFile' => '$refresh'];
+    protected $listeners = [
+        'addError' => 'throwError',
+        'deleteFile' => '$refresh',
+        'fileUploaded' => 'fileUploadHandler',
+        'refresh' => '$refresh',
+    ];
 
     protected string $paginationTheme = 'bootstrap';
 
@@ -38,5 +43,11 @@ class Files extends Component
     public function throwError(string $message): void
     {
         $this->addError('key', __($message));
+    }
+
+    public function fileUploadHandler(): void
+    {
+        $this->emitSelf('refresh');
+        session()->flash('fileUploaded', __('File added successfully'));
     }
 }
