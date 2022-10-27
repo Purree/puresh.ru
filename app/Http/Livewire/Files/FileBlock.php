@@ -20,7 +20,12 @@ class FileBlock extends Component
     public function download(): ?StreamedResponse
     {
         if (Storage::disk(FileDrivers::getDisk())->exists($this->file->path)) {
-            return Storage::disk(FileDrivers::getDisk())->download($this->file->path);
+            $fileExtension = pathinfo(storage_path($this->file->path), PATHINFO_EXTENSION);
+
+            return Storage::disk(FileDrivers::getDisk())->download(
+                $this->file->path,
+                $this->file->name . ($fileExtension ? ".$fileExtension" : '')
+            );
         }
 
         $this->emit('addError', 'File not found');
@@ -31,7 +36,7 @@ class FileBlock extends Component
     public function delete(): void
     {
         $fileDeleteAttempt = $this->file->delete();
-        if (! $fileDeleteAttempt->success) {
+        if (!$fileDeleteAttempt->success) {
             $this->emit('addError', $fileDeleteAttempt->errorMessage);
         } else {
             $this->emit('deleteFile', $this->file);
