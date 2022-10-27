@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Notes;
 
 use App\Helpers\Files\FileDrivers;
 use App\Models\Note;
-use App\Models\NoteImage;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

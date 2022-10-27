@@ -22,6 +22,7 @@ class File extends Model
     {
         if (Storage::disk(FileDrivers::getDisk())->exists($this->path)) {
             Storage::disk(FileDrivers::getDisk())->delete($this->path);
+
             return FunctionResult::success();
         }
 
@@ -30,14 +31,11 @@ class File extends Model
 
     public function delete(): FunctionResult
     {
-        if (!Gate::allows('delete', $this)) {
+        if (! Gate::allows('delete', $this)) {
             return FunctionResult::error(__('You can\'t delete this file'));
         }
 
-        $fileDeleteAttempt = $this->deleteFile();
-        if (!$fileDeleteAttempt->success) {
-            return $fileDeleteAttempt;
-        }
+        $this->deleteFile();
 
         if (parent::delete()) {
             return FunctionResult::success();

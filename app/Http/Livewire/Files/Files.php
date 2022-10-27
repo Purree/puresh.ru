@@ -2,14 +2,11 @@
 
 namespace App\Http\Livewire\Files;
 
-use App\Helpers\Files\FileDrivers;
 use App\Models\File;
 use App\Traits\Controller\CheckIsPaginatorPageExists;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Files extends Component
 {
@@ -18,7 +15,8 @@ class Files extends Component
     use CheckIsPaginatorPageExists;
 
     protected object $paginator;
-    protected $listeners = ['addError' => 'throwError'];
+
+    protected $listeners = ['addError' => 'throwError', 'deleteFile' => '$refresh'];
 
     protected string $paginationTheme = 'bootstrap';
 
@@ -30,7 +28,6 @@ class Files extends Component
         $this->paginator = $files->onEachSide(1);
 
         $this->validatePageNumber($this->paginator, 'events');
-
 
         return view('livewire.files.files', [
             'files' => $files,

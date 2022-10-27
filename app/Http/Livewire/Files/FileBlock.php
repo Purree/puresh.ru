@@ -31,8 +31,10 @@ class FileBlock extends Component
     public function delete(): void
     {
         $fileDeleteAttempt = $this->file->delete();
-        if (!$fileDeleteAttempt->success) {
+        if (! $fileDeleteAttempt->success) {
             $this->emit('addError', $fileDeleteAttempt->errorMessage);
+        } else {
+            $this->emit('deleteFile', $this->file);
         }
     }
 }
