@@ -34,7 +34,7 @@ class FileUpload extends Component
     ];
 
     protected array $fileRules = [
-        'file' => 'required|file|max:12288',
+        'file' => 'required|file',
     ];
 
     public function render(): Factory|View|Application

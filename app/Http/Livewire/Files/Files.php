@@ -27,12 +27,17 @@ class Files extends Component
 
     public array $errors = [];
 
+    public function mount()
+    {
+        $this->updatePageNumber();
+    }
+
     public function render()
     {
         $files = File::paginate(10);
         $this->paginator = $files->onEachSide(1);
 
-        $this->validatePageNumber($this->paginator, 'events');
+        $this->validatePageNumber($this->paginator, 'files');
 
         return view('livewire.files.files', [
             'files' => $files,
