@@ -106,6 +106,10 @@ header {
 }
 
 @media (max-width: 991px) {
+    .navbar:has(.navbar-collapse.show), .navbar:has(.navbar-collapse.collapsing) {
+        height: inherit;
+    }
+
     .bi-moon {
         display: none;
     }
