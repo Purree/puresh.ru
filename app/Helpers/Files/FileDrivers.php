@@ -6,7 +6,7 @@ enum FileDrivers: string
 {
     case public = 'public';
 
-    public static function getDisk(): string
+    public static function getDriver(): string
     {
         return self::public->value;
     }

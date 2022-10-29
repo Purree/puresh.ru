@@ -19,10 +19,10 @@ class FileBlock extends Component
 
     public function download(): ?StreamedResponse
     {
-        if (Storage::disk(FileDrivers::getDisk())->exists($this->file->path)) {
+        if (Storage::disk(FileDrivers::getDriver())->exists($this->file->path)) {
             $fileExtension = pathinfo(storage_path($this->file->path), PATHINFO_EXTENSION);
 
-            return Storage::disk(FileDrivers::getDisk())->download(
+            return Storage::disk(FileDrivers::getDriver())->download(
                 $this->file->path,
                 $this->file->name . ($fileExtension ? ".$fileExtension" : '')
             );

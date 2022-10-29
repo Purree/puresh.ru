@@ -179,7 +179,7 @@ class NoteEdit extends Component
         }
 
         $fileName = $this->uploadedImage
-            ->storePubliclyAs('note-images', uniqid('', true).time().'.png', FileDrivers::getDisk());
+            ->storePubliclyAs('note-images', uniqid('', true).time().'.png', FileDrivers::getDriver());
 
         $this->note->images()->create([
             'note_id' => $this->note->id,
@@ -195,7 +195,7 @@ class NoteEdit extends Component
 
     public static function getCorrectPath($fileName): string
     {
-        if (Storage::disk(FileDrivers::getDisk())->has($fileName)) {
+        if (Storage::disk(FileDrivers::getDriver())->has($fileName)) {
             return Storage::url($fileName);
         }
 

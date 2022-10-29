@@ -12,6 +12,14 @@
                 class="btn w-100 btn-outline-success me-1">
             {{ __('Download') }}
         </button>
+        @can('manage_data', App\Models\Permission::class)
+            <a type="button"
+               href="{{ config('filesystems.disks.' . App\Helpers\Files\FileDrivers::getDriver() . '.url') . '/' . ($file->path) }}"
+               target="_blank"
+               class="btn w-100 btn-outline-info mx-1">
+                {{ __('Show Content') }}
+            </a>
+        @endcan
         @can('delete', $file)
             <button type="button" wire:click="delete"
                     class="btn w-100 btn-outline-danger ms-1">

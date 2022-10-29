@@ -20,8 +20,8 @@ class File extends Model
 
     private function deleteFile(): FunctionResult
     {
-        if (Storage::disk(FileDrivers::getDisk())->exists($this->path)) {
-            Storage::disk(FileDrivers::getDisk())->delete($this->path);
+        if (Storage::disk(FileDrivers::getDriver())->exists($this->path)) {
+            Storage::disk(FileDrivers::getDriver())->delete($this->path);
 
             return FunctionResult::success();
         }

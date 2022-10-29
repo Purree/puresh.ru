@@ -51,7 +51,7 @@ class FileUpload extends Component
         $filePath = self::FILES_FOLDER . '/' . $fileName;
 
         $this->file
-            ->storePubliclyAs(self::FILES_FOLDER, $fileName, FileDrivers::getDisk());
+            ->storePubliclyAs(self::FILES_FOLDER, $fileName, FileDrivers::getDriver());
 
         try {
             $this->userId = auth()->id();

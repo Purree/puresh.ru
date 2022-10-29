@@ -36,11 +36,11 @@ class NoteImage extends Model
             return FunctionResult::error(['permissions', __("You haven't permissions")]);
         }
 
-        if (! Storage::disk(FileDrivers::getDisk())->has($noteImage->note_image_path)) {
+        if (! Storage::disk(FileDrivers::getDriver())->has($noteImage->note_image_path)) {
             return FunctionResult::success($noteImage->delete());
         }
 
-        Storage::disk(FileDrivers::getDisk())->delete($noteImage->note_image_path);
+        Storage::disk(FileDrivers::getDriver())->delete($noteImage->note_image_path);
 
         return FunctionResult::success($noteImage->delete());
     }
