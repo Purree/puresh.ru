@@ -12,11 +12,11 @@
                             <img class="rounded-circle" width="80" height="80"
                                  src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}"/>
                         </div>
-                        <div class="row flex-column justify-content-center">
-                            <div class="name">
+                        <div class="row flex-column justify-content-center text-truncate">
+                            <div class="name text-truncate">
                                 {{ Auth::user()->name }}
                             </div>
-                            <div class="email d-none d-sm-block">
+                            <div class="email d-none d-sm-block text-truncate">
                                 {{ Auth::user()->email }}
                             </div>
                         </div>
