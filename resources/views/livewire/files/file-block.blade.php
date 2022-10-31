@@ -9,6 +9,7 @@
     </div>
     <div class="w-100 d-flex">
         <button type="button" wire:click="download"
+                wire:loading.attr="disabled"
                 class="btn w-100 btn-outline-success me-1">
             {{ __('Download') }}
         </button>
@@ -21,7 +22,7 @@
             </a>
         @endcan
         @can('delete', $file)
-            <button type="button" wire:click="delete"
+            <button type="button" wire:click="delete" wire:loading.attr="disabled"
                     class="btn w-100 btn-outline-danger ms-1">
                 {{ __('Delete') }}
             </button>
