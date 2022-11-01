@@ -21,6 +21,7 @@
             <div class="mb-3" x-data="{photoName: null, photoPreview: null}">
                 <!-- Profile Photo File Input -->
                 <input type="file" hidden
+                       accept=".gif,.jpg,.jpeg,.png"
                        wire:model="photo"
                        x-ref="photo"
                        x-on:change="
