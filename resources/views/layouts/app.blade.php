@@ -8,6 +8,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+        <link href="{{ asset('css/main/main.css') }}" rel="stylesheet">
 
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
@@ -51,7 +52,7 @@
     </x-header>
     <x-check-browser-support></x-check-browser-support>
 
-    <main class="container py-3 bg-theme" style="min-height: calc(100vh - var(--header_height));">
+    <main class="container py-3 bg-theme">
         {{ $slot }}
     </main>
 

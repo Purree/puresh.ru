@@ -31,6 +31,7 @@
 
 header {
     padding-bottom: var(--header_height);
+    box-shadow: 0 2px #f5f5f5;
 }
 
 .navbar-brand, .navbar-brand:hover {
@@ -103,6 +104,10 @@ header {
 .active {
     color: var(--nav_brand);
     font-weight: bold;
+}
+
+:root[data-theme='dark'] header {
+    box-shadow: 0 2px #242424;
 }
 
 @media (max-width: 991px) {
