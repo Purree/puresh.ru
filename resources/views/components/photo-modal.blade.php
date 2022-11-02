@@ -2,7 +2,7 @@
     @prepend('styles')
         <link rel="stylesheet" href="{{ asset('css/photo-modal.css') }}">
     @endprepend
-    <script src="{{ asset('js/wheelzoom.js') }}"></script>
+    @vite(['resources/js/notes/wheelzoom.js'])
     <script src="{{ asset('js/photoModal.js') }}"></script>
 
     <span class="modal-close-button">&times;</span>

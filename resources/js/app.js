@@ -1,4 +1,6 @@
-window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+import * as bootstrap from 'bootstrap'
+
+window.bootstrap = bootstrap;
 
 import Alpine from 'alpinejs';
 

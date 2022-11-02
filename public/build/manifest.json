@@ -1,0 +1,22 @@
+{
+  "resources/js/app.js": {
+    "file": "assets/app.8efc41d6.js",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/home/canvas.js": {
+    "file": "assets/canvas.7d0fde7a.js",
+    "src": "resources/js/home/canvas.js",
+    "isEntry": true
+  },
+  "resources/js/notes/wheelzoom.js": {
+    "file": "assets/wheelzoom.b1ba171d.js",
+    "src": "resources/js/notes/wheelzoom.js",
+    "isEntry": true
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app.8bf0bf25.css",
+    "src": "resources/sass/app.scss",
+    "isEntry": true
+  }
+}

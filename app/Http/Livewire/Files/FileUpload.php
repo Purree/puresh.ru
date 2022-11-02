@@ -22,8 +22,10 @@ class FileUpload extends Component
     protected const FILES_FOLDER = 'uploaded-files';
 
     public int $userId = 0; // File uploader id
-    public string $name = ""; // File name, if user doesn't provide it, it will be taken from file name
-    public string $path = ""; // File path after upload
+
+    public string $name = ''; // File name, if user doesn't provide it, it will be taken from file name
+
+    public string $path = ''; // File path after upload
 
     public $file;
 
@@ -47,8 +49,8 @@ class FileUpload extends Component
         $this->authorize('manage_data', Permission::class);
         $this->validate($this->fileRules);
 
-        $fileName = uniqid('', true) . time() . '.' . $this->file->extension();
-        $filePath = self::FILES_FOLDER . '/' . $fileName;
+        $fileName = uniqid('', true).time().'.'.$this->file->extension();
+        $filePath = self::FILES_FOLDER.'/'.$fileName;
 
         $this->file
             ->storePubliclyAs(self::FILES_FOLDER, $fileName, FileDrivers::getDriver());

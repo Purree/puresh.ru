@@ -9,7 +9,7 @@
 
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 
         @livewireStyles
@@ -17,8 +17,6 @@
         <!--Styles-->
         @stack('styles')
         <!--Styles end-->
-
-        <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
     <x-header>

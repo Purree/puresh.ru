@@ -5,9 +5,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Pure</title>
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/home/canvas.js') }}"></script>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/home/canvas.js'])
     <link rel="stylesheet" href="{{ asset('css/home/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home/canvas.css') }}">
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
