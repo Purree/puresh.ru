@@ -7,12 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault()
 
         const selectingBlockExample = document.querySelector('.select-random-element-example').cloneNode(true)
-        selectingBlockExample.querySelectorAll('input').forEach((el) => { el.value = "" })
+        selectingBlockExample.querySelectorAll('input').forEach((el) => {
+            el.value = ""
+        })
         const container = document.querySelector('.selected-randomizer-container')
         inputsCount++
         selectingBlockExample.querySelector('.selecting-random-id').innerText = inputsCount
         if (!selectingBlockExample.querySelector('.delete-variant-button')) {
-            selectingBlockExample.querySelector('.chance-container').innerHTML += "<button class=\"btn btn-dynamic delete-variant-button\"><i class=\"bi bi-backspace\"></i></button>";
+            selectingBlockExample.querySelector('.chance-container').innerHTML += "<button class=\"btn btn-dynamic delete-variant-button\"><i class=\"bi bi-backspace text-theme-reversed\"></i></button>";
         }
 
         container.appendChild(selectingBlockExample)
@@ -46,13 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateChanceInputsOnChange()
 })
 
-function selectRandomVariant(chances)
-{
+function selectRandomVariant(chances) {
     const randomizedChances = {}
     let previousIndex
 
     while (true) {
-        const randomizedIndex = randomInteger(0, Object.keys(chances).length-1)
+        const randomizedIndex = randomInteger(0, Object.keys(chances).length - 1)
         let valueOfCurrentRandomizedChance = randomizedChances[randomizedIndex]
 
         if (!valueOfCurrentRandomizedChance) {
@@ -73,8 +74,7 @@ function selectRandomVariant(chances)
     }
 }
 
-function updateDeleteButtons()
-{
+function updateDeleteButtons() {
     document.querySelectorAll('.delete-variant-button').forEach((button) => {
         button.onclick = (event) => {
             event.preventDefault()
@@ -84,8 +84,7 @@ function updateDeleteButtons()
     })
 }
 
-function generateChancesObject()
-{
+function generateChancesObject() {
     const chances = {}
     document.querySelectorAll('.random-chance').forEach((input, iteration) => {
         const inputWord = input.parentNode.parentNode.parentNode.querySelector('.random-word').value
@@ -101,8 +100,7 @@ function generateChancesObject()
     return chances
 }
 
-function updateChanceInputsOnChange()
-{
+function updateChanceInputsOnChange() {
     document.querySelectorAll('.random-chance').forEach((input) => {
         input.onchange = () => {
             let inputValue = String(Math.floor(parseInt(input.value)))

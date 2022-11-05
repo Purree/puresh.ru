@@ -234,3 +234,7 @@ body, .table, .bi, .form-select, .input-group-text, .btn-outline-dark, .btn-outl
 .bg-theme {
     background-color: var(--body-background-color)!important;
 }
+
+.text-theme-reversed {
+    color: var(--dynamic_color)!important;
+}
