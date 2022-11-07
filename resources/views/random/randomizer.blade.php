@@ -49,7 +49,7 @@
                         <label for="selectRandomElementNumber">{{ __('Chance') }}
                             <a href="#" data-bs-toggle="tooltip" data-bs-original-title=
                                "{{ __('An integer with information about how many times in a row a number must fall out in order for this element to get out (the more, the less chance)') }}">
-                                <i class="bi bi-info-circle"></i>
+                                <i class="bi bi-info-circle" style="color: #2a73b0"></i>
                             </a>
                         </label>
                         <div class="d-flex">
