@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class ExternalService extends Component
+class ExternalIntegration extends Component
 {
     /**
      * Create a new component instance.
@@ -17,7 +17,7 @@ class ExternalService extends Component
         public string $serviceDescription,
         public string $cardColor = 'inherit',
         public bool $isLinked = false,
-        public string $link = '#',
+        public string $serviceAuthorizationLink = '#',
     ) {
         //
     }
@@ -29,6 +29,6 @@ class ExternalService extends Component
      */
     public function render()
     {
-        return view('components.external-service');
+        return view('components.external-integration');
     }
 }

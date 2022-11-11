@@ -5,7 +5,7 @@
 
             <x-jet-section-border />
 
-            @include('profile.external-linked-services', ['title' => 'kek', 'description' => 'lol'])
+            @include('profile.external-integrations')
 
             <x-jet-section-border />
         @endif

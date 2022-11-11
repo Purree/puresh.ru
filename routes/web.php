@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Livewire\Integrations\LinkVk;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,9 +33,14 @@ Route::post('language/{locale}', static function ($locale) {
 })->name('localization');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/user', static function () {
-        return view('user');
-    })->name('user');
+    Route::prefix('/user')->group(static function () {
+        Route::get('/', static function () {
+            return view('user');
+        })->name('user');
+
+        // Link vk account to user. Use "get" method because vk return code by this method
+        Route::get('/integrations/vk', LinkVk::class)->name('link-vk-to-account');
+    });
 
     Route::get('/profile/show', static function () {
         return redirect()->route('profile.settings');
