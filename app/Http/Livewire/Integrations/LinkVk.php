@@ -9,7 +9,9 @@ use Throwable;
 class LinkVk extends Component
 {
     public string $code = '';
+
     public array $errors = [];
+
     protected vk $vk;
 
     protected $queryString = ['code'];
@@ -20,11 +22,11 @@ class LinkVk extends Component
             $this->vk = $vk;
 
             $getUserTokenResponse = $vk->getUserTokenByCode($this->code);
-            if (!$getUserTokenResponse->success) {
+            if (! $getUserTokenResponse->success) {
                 $this->errors[] = $getUserTokenResponse->errorMessage['error_description'];
             }
         } catch (Throwable $exception) {
-            $this->errors[] = "Something went wrong. Try again later.";
+            $this->errors[] = 'Something went wrong. Try again later.';
         }
     }
 

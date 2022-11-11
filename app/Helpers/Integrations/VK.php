@@ -44,6 +44,7 @@ class VK
             return FunctionResult::success($this->jsonDecode($response->getBody()));
         } catch (ClientException $exception) {
             $response = $exception->getResponse();
+
             return FunctionResult::error($this->jsonDecode($response->getBody()));
         }
     }
