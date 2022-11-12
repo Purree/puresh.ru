@@ -22,8 +22,11 @@ class LinkVk extends Component
             $this->vk = $vk;
 
             $getUserTokenResponse = $vk->getUserTokenByCode($this->code);
+
             if (! $getUserTokenResponse->success) {
                 $this->errors[] = $getUserTokenResponse->errorMessage['error_description'];
+            } elseif ($getUserTokenResponse->returnValue['expires_in'] !== 0) {
+                $this->errors[] = 'You must allow the token to be stored indefinitely.';
             }
         } catch (Throwable $exception) {
             $this->errors[] = 'Something went wrong. Try again later.';
