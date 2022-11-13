@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         })->name('user');
 
         // Link vk account to user. Use "get" method because vk return code by this method
-        Route::get('/integrations/vk', LinkVk::class)->name('link-vk-to-account');
+        Route::get('/integrations/vk', LinkVk::class)->middleware('throttle:vk-linking')->name('link-vk-to-account');
     });
 
     Route::get('/profile/show', static function () {

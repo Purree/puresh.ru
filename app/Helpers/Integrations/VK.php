@@ -38,6 +38,7 @@ class VK
                         'redirect_uri' => route('link-vk-to-account'),
                         'code' => $code,
                     ],
+                    'connect_timeout' => 1
                 ]
             );
             $responseData = $this->jsonDecode($response->getBody());
