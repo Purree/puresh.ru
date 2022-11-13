@@ -21,4 +21,10 @@
     <div class="alert alert-info">
         {{ __('You can close this page. It will automatically close after 10 seconds.') }}
     </div>
+
+    <script>
+        setTimeout(function () {
+            location.href = "{{ route('profile.settings') }}";
+        }, 10000);
+    </script>
 </div>
