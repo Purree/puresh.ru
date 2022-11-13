@@ -35,6 +35,6 @@ class LinkVk extends Component
 
     public function render()
     {
-        return view('livewire.integrations.link-vk');
+        return view('livewire.integrations.link-vk', ['token_validation_errors' => $this->errors]);
     }
 }
