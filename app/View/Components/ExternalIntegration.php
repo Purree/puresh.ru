@@ -14,7 +14,6 @@ class ExternalIntegration extends Component
     public function __construct(
         public string $serviceLogo,
         public string $serviceName,
-        public string $serviceDescription,
         public string $cardColor = 'inherit',
         public bool $isLinked = false,
         public string $serviceAuthorizationLink = '#',
