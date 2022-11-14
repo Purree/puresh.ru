@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\JetStream\Features;
@@ -101,12 +101,11 @@ class User extends Authenticatable
         return $this->hasMany(Session::class);
     }
 
-
     protected function vkToken(): Attribute
     {
         return Attribute::make(
-            get: static fn($value) => $value === null ? $value : Crypt::decryptString($value),
-            set: static fn($value) => $value === null ? $value : Crypt::encryptString($value)
+            get: static fn ($value) => $value === null ? $value : Crypt::decryptString($value),
+            set: static fn ($value) => $value === null ? $value : Crypt::encryptString($value)
         );
     }
 
@@ -117,7 +116,7 @@ class User extends Authenticatable
      */
     public function deleteProfilePhotoFromDirectory(): void
     {
-        if ($this->profile_photo_path === null || !Features::managesProfilePhotos()) {
+        if ($this->profile_photo_path === null || ! Features::managesProfilePhotos()) {
             return;
         }
 
