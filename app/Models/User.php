@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -32,6 +34,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_banned',
+        'vk_token',
+        'vk_id',
     ];
 
     /**
@@ -44,6 +48,7 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'vk_token',
     ];
 
     /**
@@ -96,6 +101,15 @@ class User extends Authenticatable
         return $this->hasMany(Session::class);
     }
 
+
+    protected function vkToken(): Attribute
+    {
+        return Attribute::make(
+            get: static fn($value) => $value === null ? $value : Crypt::decryptString($value),
+            set: static fn($value) => $value === null ? $value : Crypt::encryptString($value)
+        );
+    }
+
     /**
      * Delete the user's profile photo.
      *
@@ -103,7 +117,7 @@ class User extends Authenticatable
      */
     public function deleteProfilePhotoFromDirectory(): void
     {
-        if ($this->profile_photo_path === null || ! Features::managesProfilePhotos()) {
+        if ($this->profile_photo_path === null || !Features::managesProfilePhotos()) {
             return;
         }
 

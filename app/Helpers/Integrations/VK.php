@@ -43,8 +43,13 @@ class VK
             );
             $responseData = $this->jsonDecode($response->getBody());
 
-            if (! $responseData['access_token'] || ! $responseData['expires_in'] || ! $responseData['user_id']) {
-                return FunctionResult::error('VK sent incorrect data. Try later.');
+            if (!isset($responseData['access_token'], $responseData['expires_in'], $responseData['user_id'])) {
+                return FunctionResult::error(
+                    [
+                        'error' => 'incorrect data',
+                        'error_description' => 'VK sent incorrect data. Try later.',
+                    ]
+                );
             }
 
             return FunctionResult::success($responseData);

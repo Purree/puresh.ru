@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Integrations;
 
 use App\Helpers\Integrations\VK;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Throwable;
 
@@ -27,8 +28,14 @@ class LinkVk extends Component
                 $this->errors[] = $getUserTokenResponse->errorMessage['error_description'];
             } elseif ($getUserTokenResponse->returnValue['expires_in'] !== 0) {
                 $this->errors[] = 'You must allow the token to be stored indefinitely.';
+            } else {
+                auth()->user()->update([
+                    'vk_token' => $getUserTokenResponse->returnValue['access_token'],
+                    'vk_id' => $getUserTokenResponse->returnValue['user_id'],
+                ]);
             }
         } catch (Throwable $exception) {
+            Log::error($exception);
             $this->errors[] = 'Something went wrong. Try again later.';
         }
     }
