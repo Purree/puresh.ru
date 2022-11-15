@@ -3,7 +3,6 @@
 namespace App\Services\Integrations;
 
 use App\Exceptions\InvalidVKTokenException;
-use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
 
