@@ -1,5 +1,5 @@
 <div style="background-color: {{ $cardColor }}"
-     class="d-flex align-items-center p-3 rounded justify-content-between">
+     class="d-flex align-items-center p-3 rounded justify-content-between flex-wrap flex-sm-nowrap">
     <div class="d-flex align-items-center">
         <img class="me-3" width="48px" height="48px" src="{{ asset($serviceLogo) }}" alt="{{ $serviceName }} logo">
         <div>
@@ -7,7 +7,7 @@
             <span>{{ $serviceDescription }}</span>
         </div>
     </div>
-    <div>
+    <div class="col-12 col-sm-2">
         {{ $serviceLinking }}
     </div>
 </div>

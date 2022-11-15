@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body border-bottom">
                 <div class="mx-3 my-3">
                     <h3 class="h3 my-4">
                         {{ __('Permissions') }}:
@@ -53,6 +53,17 @@
                         @if (Auth::user()->is_banned)
                             <p class="text-danger">{{ __('Also you are banned') }}</p>
                         @endif
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mx-3 my-3">
+                    <h3 class="h3 my-4">
+                        {{ __('External integrations') }}:
+                    </h3>
+
+                    <div class="text">
+                        <x-external-integrations/>
                     </div>
                 </div>
             </div>
