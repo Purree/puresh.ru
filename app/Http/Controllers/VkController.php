@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LinkVKRequest;
 use App\Services\Integrations\VK;
+use Illuminate\Http\RedirectResponse;
 use Throwable;
 
 class VkController extends Controller
@@ -12,7 +13,7 @@ class VkController extends Controller
     {
     }
 
-    public function link(LinkVKRequest $request)
+    public function link(LinkVKRequest $request): RedirectResponse
     {
         try {
             $this->vk->link($request->code);
@@ -23,8 +24,14 @@ class VkController extends Controller
         return redirect()->route('profile.settings')->with('success', 'VK account linked');
     }
 
-    public function unlink()
+    public function unlink(): RedirectResponse
     {
-        dd('unlink');
+        try {
+            $this->vk->unlink();
+        } catch (Throwable $e) {
+            return redirect()->route('profile.settings')->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('profile.settings')->with('success', 'VK account unlinked');
     }
 }

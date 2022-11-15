@@ -16,7 +16,7 @@ class VK
     /**
      * @throws GuzzleException
      * @throws JsonException
-     * @throws Exception
+     * @throws InvalidVKTokenException
      */
     public function link(string $code): void
     {
@@ -33,6 +33,14 @@ class VK
         auth()->user()->update([
             'vk_token' => $getUserTokenResponse->returnValue['access_token'],
             'vk_id' => $getUserTokenResponse->returnValue['user_id'],
+        ]);
+    }
+
+    public function unlink(): void
+    {
+        auth()->user()->update([
+            'vk_token' => null,
+            'vk_id' => null,
         ]);
     }
 }
