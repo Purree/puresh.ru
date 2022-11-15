@@ -8,10 +8,6 @@
         </div>
     </div>
     <div>
-        @if($isLinked)
-            <button class="btn btn-danger text-light">{{ __('Unlink') }}</button>
-        @else
-            <a class="btn btn-light" href="{{ $serviceAuthorizationLink }}">{{ __('Link') }}</a>
-        @endif
+        {{ $serviceLinking }}
     </div>
 </div>

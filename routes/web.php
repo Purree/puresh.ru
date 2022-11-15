@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VkController;
 use App\Http\Livewire\Integrations\LinkVk;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +40,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         })->name('user');
 
         // Link vk account to user. Use "get" method because vk return code by this method
-        Route::get('/integrations/vk', LinkVk::class)->middleware('throttle:vk-linking')->name('link-vk-to-account');
+        Route::get('/integrations/vk', [VkController::class, 'link'])->middleware('throttle:vk-linking')
+            ->name('link-vk-to-account');
+        Route::delete('/integrations/vk', [VkController::class, 'unlink'])->name('unlink-vk-from-account');
     });
 
     Route::get('/profile/show', static function () {

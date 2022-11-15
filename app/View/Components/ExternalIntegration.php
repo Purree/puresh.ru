@@ -15,8 +15,6 @@ class ExternalIntegration extends Component
         public string $serviceLogo,
         public string $serviceName,
         public string $cardColor = 'inherit',
-        public bool $isLinked = false,
-        public string $serviceAuthorizationLink = '#',
     ) {
         //
     }
