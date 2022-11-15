@@ -22,7 +22,7 @@ class VK
     {
         $getUserTokenResponse = $this->vk->getUserTokenByCode($code);
 
-        if (!$getUserTokenResponse->success) {
+        if (! $getUserTokenResponse->success) {
             throw new InvalidVKTokenException($getUserTokenResponse->errorMessage['error_description']);
         }
 

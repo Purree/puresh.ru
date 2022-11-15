@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VkController;
-use App\Http\Livewire\Integrations\LinkVk;
 use Illuminate\Support\Facades\Route;
 
 /*
