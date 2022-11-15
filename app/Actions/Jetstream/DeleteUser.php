@@ -2,6 +2,7 @@
 
 namespace App\Actions\Jetstream;
 
+use App\Models\User;
 use Laravel\Jetstream\Contracts\DeletesUsers;
 
 class DeleteUser implements DeletesUsers
@@ -12,8 +13,9 @@ class DeleteUser implements DeletesUsers
      * @param  mixed  $user
      * @return void
      */
-    public function delete($user)
+    public function delete(mixed $user): void
     {
+        $user->files()->delete();
         $user->deleteProfilePhotoFromDirectory();
         $user->tokens->each->delete();
         $user->delete();
