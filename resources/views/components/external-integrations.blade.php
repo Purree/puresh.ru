@@ -21,7 +21,7 @@
                     <button class="btn btn-danger text-light w-100">{{ __('Unlink') }}</button>
                 </form>
             @else
-                <a class="btn btn-light" href="https://oauth.vk.com/authorize?client_id={{ config('vk.APP_ID') }}&display=page&redirect_uri={{ route('link-vk-to-account') }}&scope=friends,notify,photos,audio,video,stories,pages,status,notes,wall,ads,offline,docs,groups,notifications,stats,email,market&response_type=code&v=5.131">
+                <a class="btn btn-light w-100" href="https://oauth.vk.com/authorize?client_id={{ config('vk.APP_ID') }}&display=page&redirect_uri={{ route('link-vk-to-account') }}&scope=friends,notify,photos,audio,video,stories,pages,status,notes,wall,ads,offline,docs,groups,notifications,stats,email,market&response_type=code&v=5.131">
                     {{ __('Link') }}
                 </a>
             @endif

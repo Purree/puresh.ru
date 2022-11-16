@@ -43,7 +43,7 @@ class VK
             );
             $responseData = $this->jsonDecode($response->getBody());
 
-            if (! isset($responseData['access_token'], $responseData['expires_in'], $responseData['user_id'])) {
+            if (!isset($responseData['access_token'], $responseData['expires_in'], $responseData['user_id'])) {
                 return FunctionResult::error(
                     [
                         'error' => 'incorrect data',
@@ -57,6 +57,13 @@ class VK
             $response = $exception->getResponse();
 
             return FunctionResult::error($this->jsonDecode($response->getBody()));
+        } catch (GuzzleException $exception) {
+            return FunctionResult::error(
+                [
+                    'error' => 'connection error',
+                    'error_description' => 'Connection error. Try later.',
+                ]
+            );
         }
     }
 }
