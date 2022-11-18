@@ -6,8 +6,7 @@
             @if(auth()->user()->vk_id)
                 {{ __('Your') }}
                 <a class="text-white" target="_blank"
-                   href="https://vk.com/id{{ auth()->user()->vk_id }}">{{ mb_strtolower(__('Account')) }}
-                </a>
+                   href="https://vk.com/id{{ auth()->user()->vk_id }}">{{ mb_strtolower(__('Account')) }}</a>
                 {{ mb_strtolower(__('Successfully linked')) }}.
             @else
                 {{ __('The service is not linked yet.') }}
