@@ -14,7 +14,7 @@
         </x-slot:serviceDescription>
         <x-slot:serviceLinking>
             @if(auth()->user()->vk_id !== null)
-                <form method="POST" action="{{ route('unlink-vk-from-account') }}">
+                <form method="POST" class="mt-3 mt-sm-0" action="{{ route('unlink-vk-from-account') }}">
                     @method('delete')
                     @csrf
                     <button class="btn btn-danger text-light w-100">{{ __('Unlink') }}</button>
