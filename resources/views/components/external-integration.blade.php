@@ -7,7 +7,7 @@
             <span>{{ $serviceDescription }}</span>
         </div>
     </div>
-    <div class="col-12 col-sm-2">
+    <div class="col-12 col-sm-3 col-lg-2">
         {{ $serviceLinking }}
     </div>
 </div>
