@@ -102,7 +102,7 @@ header {
 }
 
 .active {
-    color: var(--nav_brand);
+    color: var(--nav_brand) !important;
     font-weight: bold;
 }
 
