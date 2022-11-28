@@ -34,7 +34,7 @@
                                 <td><img class="rounded-circle" width="32" height="32" src="{{ $user->profile_photo_url }}" alt="{{ $user->profile_photo_url }}"/></td>
                                 @foreach($permissions as $permission)
                                     <td>
-                                    {{ \App\Policies\PermissionPolicy::isUserHasPermission($user, $permission) ? __('True') : __('False') }}
+                                    {{ \App\Policies\PermissionPolicy::isUserHasPermission($user, $permission) ? __('+') : __('-') }}
                                     </td>
                                 @endforeach
                                 <td><a href="{{ route('admin.editUser', ['userId'=>$user->id]) }}" class="btn btn-warning">{{ __('Edit') }}</a></td>
