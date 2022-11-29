@@ -55,4 +55,14 @@ class PermissionPolicy
     {
         return self::isUserHasPermission($user, 'files');
     }
+
+    public function see_integrations(User $user): bool
+    {
+        return $this->interact_with_vk($user);
+    }
+
+    public function interact_with_vk(User $user): bool
+    {
+        return (bool)$user->vk_token;
+    }
 }

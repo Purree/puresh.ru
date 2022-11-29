@@ -14,7 +14,7 @@
 </head>
 <body>
 <header class="d-flex py-4 position-fixed">
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-xl fixed-top">
         <div class="navbar-collapse justify-content-end">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item align-self-center" onclick="changeTheme()">

@@ -4,7 +4,7 @@
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
 
     <script src="{{ asset('js/theme.js') }}"></script>
-    <nav class="navbar header navbar-expand-lg fixed-top">
+    <nav class="navbar header navbar-expand-xl fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('main') }}">{{ __('Dashboard') }}</a>
             <button aria-controls="headerNav" aria-expanded="false" aria-label="Toggle navigation"

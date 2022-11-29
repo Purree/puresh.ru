@@ -49,6 +49,11 @@
                 <a class="nav-link {{ Route::is('files') ? 'active fw-bold' : '' }}" href="{{ route('files') }}">{{ __('Files') }}</a>
             </li>
         @endcan
+        @can('see_integrations', App\Models\Permission::class)
+            <li class="nav-item">
+                <a class="nav-link {{ Route::is('integrations') ? 'active fw-bold' : '' }}" href="{{ route('integrations') }}">{{ __('Integrations') }}</a>
+            </li>
+        @endcan
     </x-header>
     <x-check-browser-support></x-check-browser-support>
 

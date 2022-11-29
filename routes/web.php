@@ -86,4 +86,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/files', App\Http\Livewire\Files\Files::class)
             ->name('files');
     });
+
+    Route::middleware('can:see_files, App\Models\Permission')->group(function () {
+        Route::get('/files', App\Http\Livewire\Files\Files::class)
+            ->name('files');
+    });
+
+    Route::middleware('can:see_integrations, App\Models\Permission')->group(function () {
+        Route::get('/integrations', App\Http\Livewire\Integrations\Integrations::class)
+            ->name('integrations');
+    });
 });
