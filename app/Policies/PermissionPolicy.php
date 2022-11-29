@@ -63,6 +63,6 @@ class PermissionPolicy
 
     public function interact_with_vk(User $user): bool
     {
-        return (bool)$user->vk_token;
+        return (bool) $user->vk_token;
     }
 }

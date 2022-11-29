@@ -129,7 +129,7 @@ class Event extends Model
      *
      * @param  Collection|array  $events
      */
-    public static function deleteEvents(Collection | array $events): void
+    public static function deleteEvents(Collection|array $events): void
     {
         foreach ($events as $event) {
             $event->delete();
