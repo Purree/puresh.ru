@@ -1,3 +1,3 @@
 <div>
-    <x-external-integrations/>
+    <x-integrations.vk/>
 </div>
