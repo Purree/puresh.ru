@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <x-external-integrations/>
+        <x-integrations.all/>
     </x-slot>
 
 </x-jet-action-section>

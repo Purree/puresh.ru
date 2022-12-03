@@ -1,20 +1,18 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Integrations;
 
 use Illuminate\View\Component;
 
-class ExternalIntegration extends Component
+class All extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(
-        public string $serviceLogo,
-        public string $cardColor = 'inherit',
-    ) {
+    public function __construct()
+    {
         //
     }
 
@@ -25,6 +23,6 @@ class ExternalIntegration extends Component
      */
     public function render()
     {
-        return view('components.external-integration');
+        return view('components.integrations.all');
     }
 }

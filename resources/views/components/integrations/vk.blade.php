@@ -1,5 +1,5 @@
 <div>
-    <x-external-integration service-logo="pictures/main/vk_logo_light.png"
+    <x-integrations.block service-logo="pictures/main/vk_logo_light.png"
                             card-color="#07f">
         <x-slot:serviceData>
             <h5 class="fw-bold mb-0 text-light">{{ __('VKontakte') }}</h5>
@@ -28,5 +28,5 @@
                 </a>
             @endif
         </x-slot:serviceLinking>
-    </x-external-integration>
+    </x-integrations.block>
 </div>

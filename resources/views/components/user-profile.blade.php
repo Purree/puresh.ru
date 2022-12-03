@@ -63,7 +63,7 @@
                     </h3>
 
                     <div class="text">
-                        <x-external-integrations/>
+                        <x-integrations.all/>
                     </div>
                 </div>
             </div>
