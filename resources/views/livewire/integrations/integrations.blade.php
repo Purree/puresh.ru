@@ -13,9 +13,9 @@
                 </div>
                 <div class="collapse card-body" id="showVKDataCollapse">
                     <div class="d-flex align-items-center">
-                        {{-- @TODO: On avatar click open "photo_max_orig" link from api --}}
                         <div class="me-3">
-                            <img width="70px" height="70px" class="rounded-circle"
+                            <img width="70px" height="70px" class="rounded-circle cursor-pointer"
+                                 onclick="window.open('https://vk.com', '_blank').focus()"
                                  src="https://vk.com/images/camera_200.png" alt="vk profile avatar"/>
                         </div>
                         <div>
