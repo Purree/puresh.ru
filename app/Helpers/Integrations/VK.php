@@ -27,7 +27,7 @@ class VK
         $params['v'] = config('vk.API_VERSION');
 
         try {
-            $response = $this->client->request('GET', 'https://api.vk.com/method/' . $method, [
+            $response = $this->client->request('GET', 'https://api.vk.com/method/'.$method, [
                 'query' => $params,
                 'connect_timeout' => 2,
             ]);
