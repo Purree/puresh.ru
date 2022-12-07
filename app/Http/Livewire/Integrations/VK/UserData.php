@@ -11,12 +11,19 @@ class UserData extends Component
     protected VK $vk;
 
     public string $name = '';
+
     public string $surname = '';
+
     public string $nickname = '';
+
     public string $maidenName = '';
+
     public int $userId = 0;
+
     public string $domain = '';
+
     public string $photo = '';
+
     public string $photoMaxSize = '';
 
     public function boot(VK $vk): void
