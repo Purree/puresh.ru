@@ -57,6 +57,13 @@ class VK
         return FunctionResult::success($response['response']);
     }
 
+    public function useApiMethodFromAuthenticatedUser(string $method, array $params = []): FunctionResult
+    {
+        $params['access_token'] = auth()->user()->vk_token;
+
+        return $this->useApiMethod($method, $params);
+    }
+
     /**
      * @throws JsonException
      */
