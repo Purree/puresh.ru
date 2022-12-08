@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-center flex-column">
         <div class="mb-3">
             <div>
-                @if($isVKUserDataNewToShow)
+                @if($isVKUserDataNeedToShow)
                     <div class="card">
                         <livewire:integrations.vk.user-data/>
                     </div>

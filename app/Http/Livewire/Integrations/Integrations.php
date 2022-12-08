@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Integrations extends Component
 {
-    public bool $isVKUserDataNewToShow = false;
+    public bool $isVKUserDataNeedToShow = false;
 
     public function render()
     {
@@ -15,6 +15,6 @@ class Integrations extends Component
 
     public function showVKUserData(): void
     {
-        $this->isVKUserDataNewToShow = true;
+        $this->isVKUserDataNeedToShow = true;
     }
 }
