@@ -10,7 +10,7 @@
                     </div>
                 @else
                     <div>
-                        <button type="button" class="btn btn-info mt-3 w-100 text-white" data-bs-toggle="collapse"
+                        <button type="button" class="btn btn-outline-info mt-3 w-100" data-bs-toggle="collapse"
                                 data-bs-target="#showVKDataCollapse" aria-expanded="false" wire:loading.attr="disabled"
                                 aria-controls="showVKDataCollapse" wire:click="showVKUserData">
                             {{ __('Profile Information') }}
