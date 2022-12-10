@@ -13,6 +13,7 @@
                         <button type="button" class="btn btn-outline-info mt-3 w-100" data-bs-toggle="collapse"
                                 data-bs-target="#showVKDataCollapse" aria-expanded="false" wire:loading.attr="disabled"
                                 aria-controls="showVKDataCollapse" wire:click="showVKUserData">
+                            <i class="bi bi-info-circle"></i>
                             {{ __('Profile Information') }}
                         </button>
                     </div>

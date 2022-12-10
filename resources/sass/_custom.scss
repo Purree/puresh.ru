@@ -246,3 +246,13 @@ body, .table, .bi, .form-select, .input-group-text, .btn-outline-dark, .btn-outl
 .cursor-pointer {
     cursor: pointer;
 }
+
+button.btn {
+    & * {
+        color: var(--bs-btn-color);
+    }
+
+    &:hover * {
+        color: var(--bs-btn-hover-color);
+    }
+}
