@@ -2,7 +2,7 @@
     <x-integrations.vk/>
 
     <div class="d-flex justify-content-center flex-column">
-        <div class="mb-3">
+        <div class="my-3">
             <div>
                 @if($isVKUserDataNeedToShow)
                     <div class="card">
