@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Exceptions\InsufficientPermissionsException;
 use App\Helpers\Files\FileDrivers;
-use App\Helpers\Results\FunctionResult;
 use Gate;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
@@ -18,29 +19,30 @@ class File extends Model
         return $this->belongsTo(User::class);
     }
 
-    private function deleteFile(): FunctionResult
+    /**
+     * @throws FileNotFoundException
+     */
+    private function deleteFile(): void
     {
-        if (Storage::disk(FileDrivers::getDriver())->exists($this->path)) {
-            Storage::disk(FileDrivers::getDriver())->delete($this->path);
-
-            return FunctionResult::success();
+        if ($this->path === null || $this->path === "" || !Storage::disk(FileDrivers::getDriver())->exists($this->path)) {
+            throw new FileNotFoundException(__('File not found'));
         }
 
-        return FunctionResult::error(__('File not found'));
+        Storage::disk(FileDrivers::getDriver())->delete($this->path);
     }
 
-    public function delete(): FunctionResult
+    /**
+     * @throws FileNotFoundException
+     * @throws InsufficientPermissionsException
+     */
+    public function delete(): ?bool
     {
-        if (! Gate::allows('delete', $this)) {
-            return FunctionResult::error(__('You can\'t delete this file'));
+        if (!Gate::check('delete', $this)) {
+            throw new InsufficientPermissionsException(__('You can\'t delete this file'));
         }
 
         $this->deleteFile();
 
-        if (parent::delete()) {
-            return FunctionResult::success();
-        }
-
-        return FunctionResult::error(__('Something went wrong'));
+        return parent::delete();
     }
 }

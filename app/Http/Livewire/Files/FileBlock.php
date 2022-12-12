@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Files;
 
+use App\Exceptions\InsufficientPermissionsException;
 use App\Helpers\Files\FileDrivers;
 use App\Models\File;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -28,18 +30,18 @@ class FileBlock extends Component
             );
         }
 
-        $this->emit('addError', 'File not found');
+        $this->emit('addError', __('File not found'));
 
         return null;
     }
 
     public function delete(): void
     {
-        $fileDeleteAttempt = $this->file->delete();
-        if (! $fileDeleteAttempt->success) {
-            $this->emit('addError', $fileDeleteAttempt->errorMessage);
-        } else {
+        try {
+            $this->file->delete();
             $this->emit('deleteFile', $this->file);
+        } catch (InsufficientPermissionsException|FileNotFoundException $e) {
+            $this->emit('addError', $e->getMessage());
         }
     }
 }
