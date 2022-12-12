@@ -24,7 +24,7 @@ class File extends Model
      */
     private function deleteFile(): void
     {
-        if ($this->path === null || $this->path === "" || !Storage::disk(FileDrivers::getDriver())->exists($this->path)) {
+        if ($this->path === null || $this->path === '' || ! Storage::disk(FileDrivers::getDriver())->exists($this->path)) {
             throw new FileNotFoundException(__('File not found'));
         }
 
@@ -37,7 +37,7 @@ class File extends Model
      */
     public function delete(): ?bool
     {
-        if (!Gate::check('delete', $this)) {
+        if (! Gate::check('delete', $this)) {
             throw new InsufficientPermissionsException(__('You can\'t delete this file'));
         }
 
