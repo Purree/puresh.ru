@@ -199,13 +199,18 @@ body, .table, .bi, .form-select, .input-group-text, .btn-outline-dark, .btn-outl
     border-color: var(--dynamic_second_color);
 }
 
+.btn-dynamic:hover {
+    background-color: var(--dynamic_second_color);
+}
+
 .btn-outline-dynamic {
     color: var(--dynamic_second_color);
     border-color: var(--dynamic_second_color);
 }
 
 .btn-outline-dynamic:hover {
-    color: var(--dynamic_second_color);
+    color: var(--dynamic_color);
+    background: var(--dynamic_second_color);
 }
 
 .btn-dynamic:hover {
@@ -256,3 +261,4 @@ button.btn {
         color: var(--bs-btn-hover-color);
     }
 }
+
