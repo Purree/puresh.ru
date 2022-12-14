@@ -158,6 +158,7 @@ class NoteEdit extends Component
             $image->deleteImage($image);
         } catch (InsufficientPermissionsException|FileNotFoundException $e) {
             $this->emit('addError', $e->getMessage());
+
             return false;
         }
 

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Exceptions\InsufficientPermissionsException;
 use App\Helpers\Files\FileDrivers;
-use App\Helpers\Results\FunctionResult;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
