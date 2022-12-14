@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Notes;
 
+use App\Exceptions\InsufficientPermissionsException;
 use App\Helpers\Files\FileDrivers;
 use App\Models\Note;
 use App\Models\User;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -149,13 +151,14 @@ class NoteEdit extends Component
         $this->mount($this->note->id);
     }
 
-    public function deleteImage($imageId): bool|MessageBag
+    public function deleteImage($imageId): bool
     {
         $image = $this->note->images()->where('id', $imageId)->first();
-        $imageDeletionResult = $image->deleteImage($image);
-
-        if (! $imageDeletionResult->success) {
-            return $this->addError($imageDeletionResult->errorMessage[0], $imageDeletionResult->errorMessage[1]);
+        try {
+            $image->deleteImage($image);
+        } catch (InsufficientPermissionsException|FileNotFoundException $e) {
+            $this->emit('addError', $e->getMessage());
+            return false;
         }
 
         $this->emit('refreshNoteImages');

@@ -38,12 +38,11 @@
     </form>
 
     <div class="noteContainer mb-5">
-        @error('noteTitle')
-        <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        @error('noteDescription')
-        <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endforeach
+        @endif
 
         @if (session()->has('updated'))
             <div class="alert alert-success">
