@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\Integrations\VK;
 
+use App\Exceptions\VKAPIException;
 use App\Helpers\Integrations\VK;
 use App\Helpers\Results\FunctionResult;
+use Illuminate\Http\Client\ConnectionException;
+use JsonException;
 use Livewire\Component;
 
 class UserData extends Component
@@ -31,11 +34,16 @@ class UserData extends Component
         $this->vk = $vk;
     }
 
-    protected function getUserData(): FunctionResult
+    /**
+     * @throws VKAPIException
+     * @throws ConnectionException
+     * @throws JsonException
+     */
+    protected function getUserData(): array
     {
         return $this->vk->useApiMethodFromAuthenticatedUser('users.get', [
             'fields' => 'about, domain, photo_100, maiden_name, nickname, photo_max_orig',
-        ]);
+        ])[0];
     }
 
     protected function fillUserDataVariables(array $userData): void
@@ -52,12 +60,12 @@ class UserData extends Component
 
     public function render()
     {
-        $rawUserData = $this->getUserData();
+        try {
+            $userData = $this->getUserData();
 
-        if ($rawUserData->success) {
-            $this->fillUserDataVariables($rawUserData->returnValue[0]);
-        } else {
-            $this->addError('apiRequest', $rawUserData->errorMessage['error_description']);
+            $this->fillUserDataVariables($userData);
+        } catch (VKAPIException|JsonException|ConnectionException $e) {
+            $this->addError('apiRequest', $e->getMessage());
         }
 
         return view('livewire.integrations.vk.user-data');
