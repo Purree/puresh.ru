@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Integrations\VK;
 
 use App\Exceptions\VKAPIException;
 use App\Helpers\Integrations\VK;
-use App\Helpers\Results\FunctionResult;
 use Illuminate\Http\Client\ConnectionException;
 use JsonException;
 use Livewire\Component;

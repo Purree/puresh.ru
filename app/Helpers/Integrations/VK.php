@@ -105,7 +105,7 @@ class VK
             );
             $responseData = $this->jsonDecode($response->getBody());
 
-            if (!isset($responseData['access_token'], $responseData['expires_in'], $responseData['user_id'])) {
+            if (! isset($responseData['access_token'], $responseData['expires_in'], $responseData['user_id'])) {
                 return FunctionResult::error(
                     [
                         'error' => 'incorrect data',
