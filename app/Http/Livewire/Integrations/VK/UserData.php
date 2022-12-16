@@ -4,12 +4,16 @@ namespace App\Http\Livewire\Integrations\VK;
 
 use App\Exceptions\VKAPIException;
 use App\Helpers\Integrations\VK;
+use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
+use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 use Illuminate\Http\Client\ConnectionException;
 use JsonException;
 use Livewire\Component;
 
 class UserData extends Component
 {
+    use WithRateLimiting;
+
     protected VK $vk;
 
     public string $name = '';
@@ -60,11 +64,14 @@ class UserData extends Component
     public function render()
     {
         try {
+            $this->rateLimit(10);
             $userData = $this->getUserData();
 
             $this->fillUserDataVariables($userData);
         } catch (VKAPIException|JsonException|ConnectionException $e) {
-            $this->addError('apiRequest', $e->getMessage());
+            $this->addError('apiRequest', __($e->getMessage()));
+        } catch (TooManyRequestsException $e) {
+            $this->addError('apiRequest', __('Too Many Requests'));
         }
 
         return view('livewire.integrations.vk.user-data');
