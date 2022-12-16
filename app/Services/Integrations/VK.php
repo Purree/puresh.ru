@@ -3,7 +3,9 @@
 namespace App\Services\Integrations;
 
 use App\Exceptions\InvalidVKTokenException;
+use App\Exceptions\VKAPIException;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\Client\ConnectionException;
 use JsonException;
 
 class VK
@@ -19,19 +21,19 @@ class VK
      */
     public function link(string $code): void
     {
-        $getUserTokenResponse = $this->vk->getUserTokenByCode($code);
-
-        if (! $getUserTokenResponse->success) {
-            throw new InvalidVKTokenException($getUserTokenResponse->errorMessage['error_description']);
+        try {
+            $getUserTokenResponse = $this->vk->getUserTokenByCode($code);
+        } catch (VKAPIException|ConnectionException|JsonException $e) {
+            throw new InvalidVKTokenException(\App\Helpers\Integrations\VK::STANDARD_EXCEPTION_MESSAGE);
         }
 
-        if ($getUserTokenResponse->returnValue['expires_in'] !== 0) {
+        if ($getUserTokenResponse['expires_in'] !== 0) {
             throw new InvalidVKTokenException('You must allow the token to be stored indefinitely.');
         }
 
         auth()->user()->update([
-            'vk_token' => $getUserTokenResponse->returnValue['access_token'],
-            'vk_id' => $getUserTokenResponse->returnValue['user_id'],
+            'vk_token' => $getUserTokenResponse['access_token'],
+            'vk_id' => $getUserTokenResponse['user_id'],
         ]);
     }
 

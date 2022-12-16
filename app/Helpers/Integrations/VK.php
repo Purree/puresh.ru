@@ -3,7 +3,6 @@
 namespace App\Helpers\Integrations;
 
 use App\Exceptions\VKAPIException;
-use App\Helpers\Results\FunctionResult;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -13,7 +12,7 @@ use Log;
 
 class VK
 {
-    protected const STANDARD_EXCEPTION_MESSAGE = 'VK sent incorrect data. Try later.';
+    public const STANDARD_EXCEPTION_MESSAGE = 'VK sent incorrect data. Try later.';
 
     public function __construct(protected Client $client)
     {
@@ -27,17 +26,20 @@ class VK
         return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
     }
 
+    protected function getErrorFromApiResponse(array $response): string
+    {
+        return $response['error']['error_msg'] ?? self::STANDARD_EXCEPTION_MESSAGE;
+    }
+
     /**
      * @throws VKAPIException
      */
-    protected function throwVKAPIExceptionAndLogErrorFromResponse(array $responseContent): void
+    protected function throwVKAPIExceptionAndLogResponse(string $error, array $responseContent): void
     {
-        $responseError = $responseContent['error']['error_msg'] ?? __(self::STANDARD_EXCEPTION_MESSAGE);
-
-        Log::error($responseError, [
+        Log::error($error, [
             'response' => $responseContent,
         ]);
-        throw new VKAPIException($responseError);
+        throw new VKAPIException($error);
     }
 
     /**
@@ -58,7 +60,10 @@ class VK
             $response = $exception->getResponse();
             $responseContent = $this->jsonDecode($response->getBody());
 
-            $this->throwVKAPIExceptionAndLogErrorFromResponse($responseContent);
+            $this->throwVKAPIExceptionAndLogResponse(
+                $this->getErrorFromApiResponse($responseContent),
+                $responseContent
+            );
         } catch (GuzzleException $exception) {
             Log::error($exception);
             throw new ConnectionException(__(self::STANDARD_EXCEPTION_MESSAGE));
@@ -67,7 +72,10 @@ class VK
         $responseContent = $this->jsonDecode($response->getBody());
 
         if (isset($responseContent['error'])) {
-            $this->throwVKAPIExceptionAndLogErrorFromResponse($responseContent);
+            $this->throwVKAPIExceptionAndLogResponse(
+                $this->getErrorFromApiResponse($responseContent),
+                $responseContent
+            );
         }
 
         return $responseContent['response'];
@@ -87,8 +95,9 @@ class VK
 
     /**
      * @throws JsonException
+     * @throws ConnectionException|VKAPIException
      */
-    public function getUserTokenByCode(string $code): FunctionResult
+    public function getUserTokenByCode(string $code): array
     {
         try {
             $response = $this->client->get(
@@ -105,27 +114,25 @@ class VK
             );
             $responseData = $this->jsonDecode($response->getBody());
 
-            if (! isset($responseData['access_token'], $responseData['expires_in'], $responseData['user_id'])) {
-                return FunctionResult::error(
-                    [
-                        'error' => 'incorrect data',
-                        'error_description' => 'VK sent incorrect data. Try later.',
-                    ]
+            if (!isset($responseData['access_token'], $responseData['expires_in'], $responseData['user_id'])) {
+                $this->throwVKAPIExceptionAndLogResponse(
+                    self::STANDARD_EXCEPTION_MESSAGE,
+                    $responseData
                 );
             }
 
-            return FunctionResult::success($responseData);
+            return $responseData;
         } catch (ClientException $exception) {
             $response = $exception->getResponse();
+            $responseData = $this->jsonDecode($response->getBody());
 
-            return FunctionResult::error($this->jsonDecode($response->getBody()));
-        } catch (GuzzleException $exception) {
-            return FunctionResult::error(
-                [
-                    'error' => 'connection error',
-                    'error_description' => 'Connection error. Try later.',
-                ]
+            $this->throwVKAPIExceptionAndLogResponse(
+                $responseData['error_description'] ?? self::STANDARD_EXCEPTION_MESSAGE,
+                $responseData
             );
+        } catch (GuzzleException $exception) {
+            Log::error($exception);
+            throw new ConnectionException(__(self::STANDARD_EXCEPTION_MESSAGE));
         }
     }
 }
