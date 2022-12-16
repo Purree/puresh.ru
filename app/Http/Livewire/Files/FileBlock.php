@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Files;
 use App\Exceptions\InsufficientPermissionsException;
 use App\Helpers\Files\FileDrivers;
 use App\Models\File;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\StreamedResponse;
