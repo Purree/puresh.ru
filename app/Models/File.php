@@ -9,6 +9,7 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
+use Log;
 
 class File extends Model
 {
@@ -22,7 +23,7 @@ class File extends Model
     /**
      * @throws FileNotFoundException
      */
-    private function deleteFile(): void
+    private function deleteFileFromStorage(): void
     {
         if ($this->path === null || $this->path === '' || ! Storage::disk(FileDrivers::getDriver())->exists($this->path)) {
             throw new FileNotFoundException(__('File not found'));
@@ -32,7 +33,6 @@ class File extends Model
     }
 
     /**
-     * @throws FileNotFoundException
      * @throws InsufficientPermissionsException
      */
     public function delete(): ?bool
@@ -41,7 +41,11 @@ class File extends Model
             throw new InsufficientPermissionsException(__('You can\'t delete this file'));
         }
 
-        $this->deleteFile();
+        try {
+            $this->deleteFileFromStorage();
+        } catch (FileNotFoundException $e) {
+            Log::critical($e);
+        }
 
         return parent::delete();
     }

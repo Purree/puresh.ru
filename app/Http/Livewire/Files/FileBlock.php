@@ -40,7 +40,7 @@ class FileBlock extends Component
         try {
             $this->file->delete();
             $this->emit('deleteFile', $this->file);
-        } catch (InsufficientPermissionsException|FileNotFoundException $e) {
+        } catch (InsufficientPermissionsException $e) {
             $this->emit('addError', $e->getMessage());
         }
     }
