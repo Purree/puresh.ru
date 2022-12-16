@@ -114,7 +114,7 @@ class VK
             );
             $responseData = $this->jsonDecode($response->getBody());
 
-            if (!isset($responseData['access_token'], $responseData['expires_in'], $responseData['user_id'])) {
+            if (! isset($responseData['access_token'], $responseData['expires_in'], $responseData['user_id'])) {
                 $this->throwVKAPIExceptionAndLogResponse(
                     self::STANDARD_EXCEPTION_MESSAGE,
                     $responseData
